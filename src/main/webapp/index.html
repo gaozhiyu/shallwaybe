@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+	<script type="text/javascript" src="js/jquery-1.4.min.js"></script>
+	<script type="text/javascript" src="js/jquery.json-2.4.min.js"></script>
+	</head>
+	<body>	
+<!-- 		<form id="login" name="login" method="post" action="/newWebApp/CoreServlet/login"> -->
+			<form id="login" name="login">
+			<table id="regTable">
+				<tbody>
+					<tr>
+						<td>case_id :</td>
+						<td><input id="case_id" type="text" name="case_id" />
+						</td>
+					</tr>
+					<tr>
+						<td>version_no :</td>
+						<td><input id="version_no" type="text" name="version_no" />
+						</td>
+					</tr>
+					<tr>
+						<td>competitor_ticker_id :</td>
+						<td><input id="competitor_ticker_id" type="text" name="competitor_ticker_id" />
+						</td>
+					</tr>
+					<tr>
+						<td>competitor_gcin :</td>
+						<td><input id="competitor_gcin" type="text" name="competitor_gcin" />
+						</td>
+					</tr>					
+					<tr>
+						<td>dso :</td>
+						<td><input id="dso" type="text" name="dso" />
+						</td>
+					</tr>
+					<tr>
+						<td>dpo :</td>
+						<td><input id="dpo" type="text" name="dpo" />
+						</td>
+					</tr>
+					<tr>
+						<td>dio :</td>
+						<td><input id="dio" type="text" name="dio" />
+						</td>
+					</tr>
+					<tr>
+						<td>ccc :</td>
+						<td><input id="ccc" type="text" name="ccc" />
+						</td>
+					</tr>					
+					<tr>
+						<td>current_ratio :</td>
+						<td><input id="current_ratio" type="text" name="current_ratio" />
+						</td>
+					</tr>
+					<tr>
+						<td>quick_ratio :</td>
+						<td><input id="quick_ratio" type="text" name="quick_ratio" />
+						</td>
+					</tr>					
+					<tr>
+						<td>competitor_customer_name :</td>
+						<td><input id="competitor_customer_name" type="text" name="competitor_customer_name" />
+						</td>
+					</tr>
+					<tr>
+						<td>source_type :</td>
+						<td><input id="source_type" type="text" name="source_type" />
+						</td>
+					</tr>					
+					<tr>
+						<td>logic :</td>
+						<td><input id="logic" type="text" name="logic" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="button" id="loginButton" name="loginButton" value="Register" />
+			</form>
+	</body>
+</html>
+<script type="text/javascript">
+$(function(){
+	$("#loginButton").click(function(){
+		//document.form[0].submit();
+		/*
+		var data1={
+			"username":"user1",
+			"password":"pass2"
+		}*/
+		//alert ($.toJSON($('#login').serializeJSON()));
+		var array= $('#login').serializeArray();
+		//alert($.toJSON(array));
+		var json={};
+		jQuery.each(array,function(){
+			json[this.name] = this.value || '';
+		});
+//		alert($.toJSON(json));
+ 		var data2= {};
+ 		data2.username=$('#name').val();
+ 		data2.password="pass1";
+		
+		var data = [data2];
+		alert($.toJSON(data));
+		$.post("http://localhost/newWebApp/LoginService/login",$.toJSON(data),function(res){
+			window.location = "jsp/home.jsp?words="+res.case_id;
+		},"json");
+	});
+});
+</script>

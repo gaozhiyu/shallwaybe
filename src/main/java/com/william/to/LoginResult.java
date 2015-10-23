@@ -1,0 +1,18 @@
+package com.william.to;
+
+public class LoginResult {
+
+		// TODO Auto-generated method stub
+	String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+		
+
+
+}
