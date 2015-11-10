@@ -1,1 +1,8 @@
 file:///C:\Users\gaozhiyu\Dropbox\Personal\GoWithMiBE
+
+
+
+Redis
+https://github.com/MSOpenTech/redis/releases
+http://javapointers.com/tutorial/use-redis-java-using-jedis/
+http://javapointers.com/tutorial/install-redis/
