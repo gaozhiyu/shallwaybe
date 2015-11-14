@@ -2,6 +2,7 @@ package com.william.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.william.DAO.SearchDAO;
 import com.william.to.User;
 
 public class LoginService {
@@ -13,6 +14,8 @@ public class LoginService {
 		String str="";
 		try {
 			 str = mapper.writeValueAsString(cto);
+			 SearchDAO searchDAO = new SearchDAO();
+			 searchDAO.search();
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
