@@ -14,8 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.william.to.LoginResult;
+import com.william.util.JedisUtil;
 
 public class CoreServlet extends HttpServlet {
 	
@@ -42,10 +45,31 @@ public class CoreServlet extends HttpServlet {
 			logger.info(utilJson + "Baby I know you are here"
 					+ request.getRequestURI());
 
-			String returnValue = invokeService(request.getRequestURI(), utilJson);
+			Object returnValue = invokeService(request.getRequestURI(), utilJson);
 
-			// User garima = new ObjectMapper().readValue(utilJson, User.class);
-			out.write(returnValue);
+			
+			ObjectMapper mapper= new ObjectMapper();
+			String str="";
+			try {
+				 str = mapper.writeValueAsString(returnValue);
+					if(request.getRequestURI().contains("/LoginService/login")){
+						logger.info("Store the datat to memory");
+						LoginResult tmp = (LoginResult)returnValue;
+						if("Y".equalsIgnoreCase(tmp.getStatus())){
+							logger.info("Userid\t"+ tmp.getUserid());
+							String sessionId = request.getSession().getId();
+							logger.info("Sessionid\t"+  sessionId);
+							JedisUtil.set(tmp.getUserid(), sessionId);
+							JedisUtil.set(sessionId, tmp.getUserid());
+						}
+					}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				logger.error(e.getMessage());
+			}
+			System.out.println("Parse from java to Json\t"+ str);
+			
+			out.write(str);
 			out.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -53,11 +77,11 @@ public class CoreServlet extends HttpServlet {
 		}
 	}
 
-	public String invokeService(String uri, String utilJson) {
+	public Object invokeService(String uri, String utilJson) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String[] uriArray = uri.split("/");
-		String returnvalue="";
-		StringBuffer servicString = new StringBuffer("com.william.service.");
+		Object returnvalue="";
+		StringBuffer servicString = new StringBuffer("com.william.service.");//FIXME
 		// recursive go through the folder
 		if (uriArray.length > 1) {
 			servicString.append(uriArray[uriArray.length - 2]);
@@ -95,7 +119,7 @@ public class CoreServlet extends HttpServlet {
             }
 			// Class cls = Class.forName("com.ncs.service.LoginService");
 			// Method c=cls.getMethod("print", new Class[]{String.class});
-			returnvalue=(String) method.invoke(serviceProvider.newInstance(), params);
+			returnvalue= method.invoke(serviceProvider.newInstance(), params);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

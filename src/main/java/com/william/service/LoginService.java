@@ -1,27 +1,23 @@
 package com.william.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.william.DAO.SearchDAO;
+import org.apache.log4j.Logger;
+
+import com.william.to.LoginResult;
 import com.william.to.User;
 
 public class LoginService {
-	public String login(User cto)
+	
+	private final Logger logger =  Logger.getLogger(this.getClass());
+	
+	public LoginResult login(User cto)
 	{
-		System.out.println("Excute LoginService print method ");
-		//System.out.println(user.getPassword()+"\t"+user.getPassword());
-		ObjectMapper mapper= new ObjectMapper();
-		String str="";
-		try {
-			 str = mapper.writeValueAsString(cto);
-			 SearchDAO searchDAO = new SearchDAO();
-			 searchDAO.search();
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("Parse from java to Json\t"+ str);
-		return str;
+		logger.info("Excute LoginService print method ");
+
+		
+		LoginResult result = new LoginResult();
+		result.setStatus("Y");
+		result.setUserid(cto.getUsername());
+		return result;
 	}
 
 }

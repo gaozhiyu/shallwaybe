@@ -1,0 +1,35 @@
+package com.william.util;
+
+import redis.clients.jedis.Jedis;
+
+public class JedisUtil {
+	private static Jedis jedis;
+	
+	public static Jedis getinstance()
+	{
+		if(jedis == null){
+			jedis = new Jedis("localhost");
+		    System.out.println("Connection to server sucessfully");
+		} 
+		return jedis;
+	}
+	
+	public static void set(String key, String value){
+		getinstance().set(key, value);
+		getinstance().expire(key, 15*60);
+	}
+	
+	
+	public static String get(String key){
+		return getinstance().get(key);
+//		getinstance().expire(key, 15*60);
+	}
+	
+	public static void main(String[] args){
+	      System.out.println("Connection to server sucessfully");
+	      //set the data in redis string
+	      set("tutorial-name", "Redis tutorial");
+	     // Get the stored data and print it
+	     System.out.println("Stored string in redis:: "+ get("tutorial-name"));
+	}
+}
