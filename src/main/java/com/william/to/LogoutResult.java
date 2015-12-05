@@ -1,19 +1,11 @@
 package com.william.to;
 
-public class LoginResult {
+public class LogoutResult {
 
 		// TODO Auto-generated method stub
 	String status;
 	String userid;
-	String sessionID;
 
-	public String getSessionID() {
-		return sessionID;
-	}
-
-	public void setSessionID(String sessionID) {
-		this.sessionID = sessionID;
-	}
 
 	public String getStatus() {
 		return status;

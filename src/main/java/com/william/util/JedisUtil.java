@@ -25,6 +25,22 @@ public class JedisUtil {
 //		getinstance().expire(key, 15*60);
 	}
 	
+	
+	public static boolean del(String key){
+		Long result = getinstance().del(key);
+		if(result>0)
+			return true;
+		else{
+			String str = get(key);
+			if(str!=null && !"".equals(str))
+				return false;
+			else 
+				return true;
+		}
+			
+//		getinstance().expire(key, 15*60);
+	}
+	
 	public static void main(String[] args){
 	      System.out.println("Connection to server sucessfully");
 	      //set the data in redis string

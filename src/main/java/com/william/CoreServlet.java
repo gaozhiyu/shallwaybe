@@ -10,6 +10,7 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -57,10 +58,22 @@ public class CoreServlet extends HttpServlet {
 						LoginResult tmp = (LoginResult)returnValue;
 						if("Y".equalsIgnoreCase(tmp.getStatus())){
 							logger.info("Userid\t"+ tmp.getUserid());
+							//Fixme update the logic
+							HttpSession session = request.getSession();
+							session.setAttribute("userid", tmp.getUserid());
+							
+							
 							String sessionId = request.getSession().getId();
 							logger.info("Sessionid\t"+  sessionId);
 							JedisUtil.set(tmp.getUserid(), sessionId);
-							JedisUtil.set(sessionId, tmp.getUserid());
+							JedisUtil.set(sessionId, tmp.getUserid());//fixme remove this line
+							//Logic to logout previous login;
+							tmp.setSessionID(sessionId);
+							str = mapper.writeValueAsString(tmp);
+						}
+						
+						if(request.getRequestURI().contains("/LoginService/logout")){
+							request.getSession().removeAttribute("userid");
 						}
 					}
 			} catch (Exception e) {
@@ -117,7 +130,6 @@ public class CoreServlet extends HttpServlet {
                                             break;
                             }
             }
-			// Class cls = Class.forName("com.ncs.service.LoginService");
 			// Method c=cls.getMethod("print", new Class[]{String.class});
 			returnvalue= method.invoke(serviceProvider.newInstance(), params);
 			
