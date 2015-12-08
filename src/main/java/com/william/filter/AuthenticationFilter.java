@@ -31,7 +31,7 @@ public class AuthenticationFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		 HttpServletRequest req = (HttpServletRequest) request;
-		 HttpSession session = req.getSession(false);
+		 HttpSession session = req.getSession();
 		 //This part need to be further changed
          //String id = session.getId();
          chain.doFilter(request, response);

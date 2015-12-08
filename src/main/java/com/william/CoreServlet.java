@@ -66,7 +66,7 @@ public class CoreServlet extends HttpServlet {
 							String sessionId = request.getSession().getId();
 							logger.info("Sessionid\t"+  sessionId);
 							JedisUtil.set(tmp.getUserid(), sessionId);
-							JedisUtil.set(sessionId, tmp.getUserid());//fixme remove this line
+							//JedisUtil.set(sessionId, tmp.getUserid());//fixme remove this line
 							//Logic to logout previous login;
 							tmp.setSessionID(sessionId);
 							str = mapper.writeValueAsString(tmp);
