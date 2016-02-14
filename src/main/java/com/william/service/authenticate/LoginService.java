@@ -1,4 +1,4 @@
-package com.william.service;
+package com.william.service.authenticate;
 
 import org.apache.log4j.Logger;
 
@@ -10,18 +10,6 @@ import com.william.util.JedisUtil;
 public class LoginService {
 	
 	private final Logger logger =  Logger.getLogger(this.getClass());
-	
-	public LoginResult login(User cto)
-	{
-		logger.info("Excute LoginService print method ");
-
-		
-		LoginResult result = new LoginResult();
-		result.setStatus("Y");
-		result.setUserid(cto.getUsername());
-		return result;
-	}
-
 	
 	public LogoutResult logout(String id)
 	{

@@ -96,7 +96,8 @@ public class CoreServlet extends HttpServlet {
 		Object returnvalue="";
 		StringBuffer servicString = new StringBuffer("com.william.service.");//FIXME
 		// recursive go through the folder
-		if (uriArray.length > 1) {
+		if (uriArray.length > 3) {
+			servicString.append(uriArray[2]+".");
 			servicString.append(uriArray[uriArray.length - 2]);
 		}
 		try {
