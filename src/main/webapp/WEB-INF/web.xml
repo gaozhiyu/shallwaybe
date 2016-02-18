@@ -16,8 +16,17 @@
     <!-- url-pattern中配置的/coreServlet用于指定该Servlet的访问路径 -->  
     <servlet-mapping>  
         <servlet-name>coreServlet</servlet-name>  
-        <url-pattern>/*</url-pattern>  
+        <url-pattern>/unauthenticate/*</url-pattern>  
     </servlet-mapping>  
+        <servlet-mapping>  
+        <servlet-name>coreServlet</servlet-name>  
+        <url-pattern>/authenticate/*</url-pattern>  
+    </servlet-mapping> 
+     
+    <servlet-mapping>  
+        <servlet-name>fileUploadServlet</servlet-name>  
+        <url-pattern>/fileupload</url-pattern>  
+    </servlet-mapping>     
   
   
   
@@ -25,6 +34,13 @@
         <servlet-name>coreServlet</servlet-name>  
         <servlet-class>  
             com.william.CoreServlet  
+        </servlet-class>  
+    </servlet>
+    
+    <servlet>  
+        <servlet-name>fileUploadServlet</servlet-name>  
+        <servlet-class>  
+            com.william.FileUploadServlet  
         </servlet-class>  
     </servlet>
     

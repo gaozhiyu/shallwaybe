@@ -37,7 +37,7 @@ public class AuthenticationFilter implements Filter {
          String id = session.getId();
          String userid = (String) session.getAttribute("userid");
          System.out.println(req.getContextPath()+"/unauthenticate");
-         if(req.getRequestURI().startsWith(req.getContextPath()+"/authenticate")){
+         if(!req.getRequestURI().startsWith(req.getContextPath()+"/unauthenticate")){
         	 if(session == null || id == null || "".equals(id)){
  	            this.context.log("Unauthorized access request");
  	            LoginResult  result = new LoginResult();
