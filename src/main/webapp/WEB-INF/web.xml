@@ -27,7 +27,10 @@
         <servlet-name>fileUploadServlet</servlet-name>  
         <url-pattern>/fileupload</url-pattern>  
     </servlet-mapping>     
-  
+    <servlet-mapping>  
+        <servlet-name>fileDownloadServlet</servlet-name>  
+        <url-pattern>/filedownload</url-pattern>  
+    </servlet-mapping>   
   
   
     <servlet>  
@@ -43,6 +46,13 @@
             com.william.FileUploadServlet  
         </servlet-class>  
     </servlet>
+    
+    <servlet>  
+        <servlet-name>fileDownloadServlet</servlet-name>  
+        <servlet-class>  
+            com.william.FileDownloadServlet  
+        </servlet-class>  
+    </servlet>    
     
     <filter>
 	    <filter-name>LoginFilter</filter-name>
