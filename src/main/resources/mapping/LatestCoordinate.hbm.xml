@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.william.entity.LatestCoordinateEntity" table="latestcoordinate" catalog="shallway">
+        <id name="shallWayID" type="string" >
+            <column name="ShallWayID" length="64" not-null="true" unique="true" />
+        </id>
+        
+        <property name="longitude" type="java.lang.Double">
+            <column name="Longitude" />
+        </property>        
+        <property name="latitude" type="java.lang.Double">
+            <column name="Latitude" />
+        </property>
+        <property name="lastShakeTime" type="java.util.Date">
+            <column name="LastShakeTime" />
+        </property>
+        <property name="country" type="string">
+            <column name="Country" length="64" />
+        </property> 
+        <property name="city" type="string">
+            <column name="City" length="64" />
+        </property>
+         <property name="lastAddressUpdate" type="java.util.Date">
+            <column name="LastAddressUpdate" />
+        </property>         
+
+    </class>
+</hibernate-mapping>

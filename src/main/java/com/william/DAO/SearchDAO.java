@@ -1,14 +1,17 @@
 package com.william.DAO;
 
 import java.util.List;
+import com.william.util.HibernateUtil;
 
 import javax.transaction.SystemException;
 
+import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.william.to.Stock;
+import com.william.entity.ShallWayEntity;
+import com.william.entity.StockEntity;
 
 public class SearchDAO {
 
@@ -17,18 +20,18 @@ public class SearchDAO {
 	 * @throws SystemException 
 	 * @throws IllegalStateException 
 	 */
-	public Stock search()  {
+	public StockEntity search()  {
 		// TODO Auto-generated method stub
         System.out.println("Maven + Hibernate + MySQL");
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
-        Stock stock= null;
-        try{
+        StockEntity stock= null;
+        try {
            tx = (Transaction) session.beginTransaction();
            String sql = "select * from stock";
            SQLQuery query = session.createSQLQuery(sql);
-           query.addEntity(Stock.class);
-           List<Stock> data = query.list();
+           query.addEntity(StockEntity.class);
+           List<StockEntity> data = query.list();
            
            
            if(data!= null)

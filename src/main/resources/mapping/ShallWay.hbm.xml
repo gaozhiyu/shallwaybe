@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.william.entity.ShallWayEntity" table="shallway" catalog="shallway">
+        <id name="id" type="string" >
+            <column name="ID" length="64" not-null="true" unique="true" />
+        </id>
+        
+        <property name="shallWayID" type="string">
+            <column name="ShallWayID" length="64" not-null="true" unique="true" />
+        </property>        
+        <property name="country" type="string">
+            <column name="Country" length="128" />
+        </property>
+        <property name="city" type="string">
+            <column name="City" length="128" />
+        </property>
+         <property name="place" type="string">
+            <column name="Place" length="128" />
+        </property>
+        <property name="startTime" type="java.util.Date">
+            <column name="StartTime" />
+        </property>
+        <property name="endTime" type="java.util.Date">
+            <column name="EndTime" />
+        </property> 
+        <property name="postTime" type="java.util.Date">
+            <column name="PostTime" />
+        </property>
+         <property name="carPool" type="boolean">
+            <column name="CarPool" />
+        </property> 
+        <property name="freeTour" type="boolean">
+            <column name="FreeTour" />
+        </property>
+        <property name="hotelShare" type="boolean">
+            <column name="HotelShare" />
+        </property>         
+        <property name="freeGuide" type="boolean">
+            <column name="FreeGuide" />
+        </property>
+         <property name="title" type="string">
+            <column name="Title" length="512" />
+        </property>         
+         <property name="contact" type="string">
+            <column name="Contact" length="128" />
+        </property>  
+         <property name="description" type="string">
+            <column name="Description" />
+        </property> 
+                
+    </class>
+</hibernate-mapping>

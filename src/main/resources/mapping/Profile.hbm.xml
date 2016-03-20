@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.william.entity.ProfileEntity" table="profile" catalog="shallway">
+        <id name="shallWayID" type="string" >
+            <column name="ShallWayID" length="64" not-null="true" unique="true" />
+        </id>
+        
+        <property name="email" type="string">
+            <column name="Email" length="128" not-null="true" unique="true" />
+        </property>        
+        <property name="password" type="string">
+            <column name="Password" length="64" />
+        </property>
+        <property name="nickName" type="string">
+            <column name="NickName" length="32" />
+        </property>
+         <property name="gender" type="string">
+            <column name="Gender" length="4" />
+        </property>
+        <property name="dateOfBirth" type="java.util.Date">
+            <column name="DateOfBirth" />
+        </property>
+        <property name="country" type="string">
+            <column name="Country" length="64" />
+        </property> 
+        <property name="city" type="string">
+            <column name="City" length="64" />
+        </property>              
+        <property name="lastUpdate" type="java.util.Date">
+            <column name="LastUpdate" />
+        </property> 
+        <property name="createTime" type="java.util.Date">
+            <column name="CreateTime" />
+        </property>
+         <property name="lastAddressUpdate" type="java.util.Date">
+            <column name="LastAddressUpdate" />
+        </property> 
+        <property name="status" type="string">
+            <column name="Status" length="1024" />
+        </property> 
+                
+    </class>
+</hibernate-mapping>
