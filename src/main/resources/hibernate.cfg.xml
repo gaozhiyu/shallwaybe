@@ -14,6 +14,7 @@
         <mapping resource="mapping/LatestCoordinate.hbm.xml"></mapping>
         <mapping resource="mapping/Profile.hbm.xml"></mapping>
         <mapping resource="mapping/ShallWay.hbm.xml"></mapping>
+        <mapping resource="mapping/AddressHistory.hbm.xml"></mapping>       
         <mapping resource="mapping/Stock.hbm.xml"></mapping>
     </session-factory>
 </hibernate-configuration>

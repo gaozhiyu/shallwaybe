@@ -17,6 +17,7 @@ public class ProfileEntity implements java.io.Serializable {
 	private String gender;
 	private Date dateOfBirth;
 	private String country;
+	private String province;
 	private String city;
 	private Date lastUpdate; 
 	private Date createTime;   
@@ -28,7 +29,7 @@ public class ProfileEntity implements java.io.Serializable {
 	}
 
 	public ProfileEntity(String shallWayID, String email, String password, String nickName, String gender, Date dateOfBirth,
-			String country, String city, Date lastUpdate, Date createTime, Date lastAddressUpdate, String status) {
+			String country, String province,String city, Date lastUpdate, Date createTime, Date lastAddressUpdate, String status) {
 		super();
 		this.shallWayID = shallWayID;
 		this.email = email;
@@ -37,11 +38,20 @@ public class ProfileEntity implements java.io.Serializable {
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.country = country;
+		this.province=province;
 		this.city = city;
 		this.lastUpdate = lastUpdate;
 		this.createTime = createTime;
 		this.lastAddressUpdate = lastAddressUpdate;
 		this.status = status;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
 	}
 
 	public String getShallWayID() {

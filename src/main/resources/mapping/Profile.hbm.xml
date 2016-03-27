@@ -26,6 +26,9 @@
         <property name="country" type="string">
             <column name="Country" length="64" />
         </property> 
+        <property name="province" type="string">
+            <column name="Province" length="64" />
+        </property> 
         <property name="city" type="string">
             <column name="City" length="64" />
         </property>              

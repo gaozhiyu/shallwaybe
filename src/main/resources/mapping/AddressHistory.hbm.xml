@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.william.entity.AddressHistoryEntity" table="addresshistory" catalog="shallway">
+        <id name="addressSequenceID" type="string" >
+            <column name="AddressSequenceID" length="64" not-null="true" unique="true" />
+        </id>
+        
+        <property name="shallWayID" type="string">
+            <column name="ShallWayID" length="64" />
+        </property>        
+        <property name="country" type="string">
+            <column name="Country" length="128" />
+        </property> 
+        <property name="city" type="string">
+            <column name="City" length="128" />
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="UpdateTime" />
+        </property> 
+        <property name="placeType" type="string">
+            <column name="PlaceType" length="1" />
+        </property>               
+
+    </class>
+</hibernate-mapping>

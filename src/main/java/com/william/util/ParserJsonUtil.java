@@ -10,7 +10,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +25,6 @@ public class ParserJsonUtil {
         // initialize
         InputStream is = null;
         StringBuffer result = new StringBuffer();
-        JSONObject jObject = null;
         Geo geo = null;
         //String url = "http://www.google.com/search?q=httpClient";
 
@@ -60,7 +58,6 @@ public class ParserJsonUtil {
 
         // try parse the string to a JSON object
         try {
-            jObject = new JSONObject(result);
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode tree = objectMapper.readTree(result.toString());
             geo = objectMapper.readValue(tree.traverse(), Geo.class);

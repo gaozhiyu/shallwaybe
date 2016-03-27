@@ -14,7 +14,7 @@ public class ProfileOutDTO {
 		this.registerStatus = registerStatus;
 	}
 	public String getShallwayId() {
-		return ShallwayId;
+		return ShallwayId; 
 	}
 	public void setShallwayId(String shallwayId) {
 		ShallwayId = shallwayId;

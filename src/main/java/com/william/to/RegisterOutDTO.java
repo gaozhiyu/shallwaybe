@@ -3,8 +3,8 @@ package com.william.to;
 public class RegisterOutDTO {
 
 	private String registerStatus;
-	private String ShallwayId;
-	private String userId;//email Address
+	private String shallwayID;
+	private String userID;//email Address
 	
 	
 	public String getRegisterStatus() {
@@ -13,17 +13,17 @@ public class RegisterOutDTO {
 	public void setRegisterStatus(String registerStatus) {
 		this.registerStatus = registerStatus;
 	}
-	public String getShallwayId() {
-		return ShallwayId;
+	public String getShallwayID() {
+		return shallwayID;
 	}
-	public void setShallwayId(String shallwayId) {
-		ShallwayId = shallwayId;
+	public void setShallwayID(String shallwayId) {
+		shallwayID = shallwayId;
 	}
-	public String getUserId() {
-		return userId;
+	public String getUserID() {
+		return userID;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserID(String userId) {
+		this.userID = userId;
 	}
 	
 	

@@ -5,10 +5,28 @@ public class RegisterInDTO {
 	private String password;
 	private String nickName;
 	private String country;
+	private String province;
 	private String city;	
 	
 	
 
+	public RegisterInDTO(String email, String password, String nickName, String country, String province, String city) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.nickName = nickName;
+		this.country = country;
+		this.province = province;
+		this.city = city;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
 
 	public String getEmail() {
 		return email;
