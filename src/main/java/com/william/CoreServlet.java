@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.william.to.LoginResult;
+import com.william.to.LoginResultOutDTO;
 import com.william.util.JedisUtil;
 
 public class CoreServlet extends HttpServlet {
@@ -55,7 +55,7 @@ public class CoreServlet extends HttpServlet {
 				 str = mapper.writeValueAsString(returnValue);
 					if(request.getRequestURI().contains("/LoginService/login")){
 						logger.info("Store the datat to memory");
-						LoginResult tmp = (LoginResult)returnValue;
+						LoginResultOutDTO tmp = (LoginResultOutDTO)returnValue;
 						if("Y".equalsIgnoreCase(tmp.getStatus())){
 							logger.info("Userid\t"+ tmp.getUserid());
 							//Fixme update the logic

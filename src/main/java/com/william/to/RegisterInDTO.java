@@ -3,7 +3,7 @@ package com.william.to;
 public class RegisterInDTO {
 	private String email;
 	private String password;
-	private String nickName;
+	private String nickname;
 	private String country;
 	private String province;
 	private String city;	
@@ -14,7 +14,7 @@ public class RegisterInDTO {
 		super();
 		this.email = email;
 		this.password = password;
-		this.nickName = nickName;
+		this.nickname = nickName;
 		this.country = country;
 		this.province = province;
 		this.city = city;
@@ -44,12 +44,12 @@ public class RegisterInDTO {
 		this.password = password;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickName(String nickname) {
+		this.nickname = nickname;
 	}
 
 

@@ -37,7 +37,7 @@ public class ProfileDAO {
 	         profileEntity.setShallWayID(shallWayID);
 	         profileEntity.setPassword(password);
 	         profileEntity.setEmail(profileTo.getEmail());
-	         profileEntity.setNickName(profileTo.getNickName());
+	         profileEntity.setNickName(profileTo.getNickname());
 	         profileEntity.setCountry(profileTo.getCountry());
 	         profileEntity.setProvince(profileTo.getProvince());
 	         profileEntity.setCity(profileTo.getCity());
