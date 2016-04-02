@@ -3,6 +3,7 @@ package com.william.service.authenticate;
 import com.william.to.ShakeDTO;
 import com.william.to.ShakeInDTO;
 import com.william.to.ShakeOutDTO;
+import com.william.util.MessageQueue;
 
 public class ShakeService {
 
@@ -14,6 +15,7 @@ public class ShakeService {
 		ShakeOutDTO shakeDTO = new ShakeOutDTO();
 		shakeDTO.setShakeArray(shakeList);
 		shakeDTO.setStatus("Y");
+		MessageQueue.getInstance().postMessage(shakeInDTO);
 		return shakeDTO;
 		
 	}

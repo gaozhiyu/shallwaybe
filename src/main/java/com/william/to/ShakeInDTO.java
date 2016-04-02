@@ -30,4 +30,11 @@ public class ShakeInDTO {
 		this.longitude = longitude;
 	}
 
+	@Override
+	public String toString() {
+		return "ShakeInDTO [username=" + username + ", latitude=" + latitude
+				+ ", longitude=" + longitude + "]";
+	}
+	
+
 }
