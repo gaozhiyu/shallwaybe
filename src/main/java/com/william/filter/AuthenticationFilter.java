@@ -12,7 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.william.to.LoginResultOutDTO;
+import com.william.to.CommonDTO;
 import com.william.util.JedisUtil;
 
 
@@ -40,7 +40,7 @@ public class AuthenticationFilter implements Filter {
          if(!req.getRequestURI().startsWith(req.getContextPath()+"/unauthenticate")){
         	 if(session == null || id == null || "".equals(id)){
  	            this.context.log("Unauthorized access request");
- 	            LoginResultOutDTO  result = new LoginResultOutDTO();
+ 	            CommonDTO  result = new CommonDTO();
  	            result.setStatus("FAILURE");
  	            System.out.println("Unauthorized access request");
  	            response.getWriter().write(new ObjectMapper().writeValueAsString(result));	
@@ -50,8 +50,9 @@ public class AuthenticationFilter implements Filter {
  	           System.out.println("authorized access request");
  	        } else{
  	        	this.context.log("Unauthorized access request");
- 	            LoginResultOutDTO  result = new LoginResultOutDTO();
+ 	            CommonDTO  result = new CommonDTO();
  	            result.setStatus("FAILURE");
+ 	            response.getWriter().write(new ObjectMapper().writeValueAsString(result));	
  	            System.out.println("Unauthorized access request");
  	        }
          } else{

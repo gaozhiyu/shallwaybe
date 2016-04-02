@@ -15,13 +15,16 @@ public class JedisUtil {
 	}
 	
 	public static void set(String key, String value){
-		getinstance().set(key, value);
-		getinstance().expire(key, 15*60);
+		getinstance().hset(key, "APP", value);
+		//getinstance().set(key, value);	
+		//getinstance().expire(key, 15*60);
 	}
 	
 	
 	public static String get(String key){
-		return getinstance().get(key);
+		//return getinstance().get(key);
+		return getinstance().hget(key, "APP");
+		
 //		getinstance().expire(key, 15*60);
 	}
 	

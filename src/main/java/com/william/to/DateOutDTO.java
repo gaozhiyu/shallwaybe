@@ -1,15 +1,19 @@
 package com.william.to;
 
-public class DateOutDTO {
+public class DateOutDTO extends CommonDTO{
 //	private String status;
-	private String shallwayID;
+	private DateDTO[] dateArray;
 
-	public String getShallwayID() {
-		return shallwayID;
+	public DateDTO[] getDateArray() {
+		return dateArray;
 	}
-	public void setShallwayID(String shallwayID) {
-		this.shallwayID = shallwayID;
+
+	public void setDateArray(DateDTO[] dateArray) {
+		this.dateArray = dateArray;
 	}
+
+
+
 	
 	
 

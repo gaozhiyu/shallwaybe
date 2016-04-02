@@ -49,7 +49,7 @@ public class ProfileDAO {
 	         session.save(profileEntity);
 	         
 	         outDto.setShallwayID(shallWayID);
-	         outDto.setUserID(profileTo.getEmail());
+	         outDto.setUserid(profileTo.getEmail());
 	         outDto.setRegisterStatus("Registration Successful");
 	         
 	         tx.commit();

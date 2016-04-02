@@ -1,10 +1,8 @@
 package com.william.to;
 
-public class LoginResultOutDTO {
+public class LoginResultOutDTO extends CommonDTO{
 
 		// TODO Auto-generated method stub
-	String status;
-	String userid;
 	String sessionID;
 
 	public String getSessionID() {
@@ -13,22 +11,6 @@ public class LoginResultOutDTO {
 
 	public void setSessionID(String sessionID) {
 		this.sessionID = sessionID;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
 	}
 		
 	

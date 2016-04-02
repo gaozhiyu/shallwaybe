@@ -8,7 +8,9 @@ public class RegisterInDTO {
 	private String province;
 	private String city;	
 	
-	
+	public RegisterInDTO(){
+		
+	}
 
 	public RegisterInDTO(String email, String password, String nickName, String country, String province, String city) {
 		super();

@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.william.to.LoginResultOutDTO;
 import com.william.to.LogoutResultOutDTO;
-import com.william.to.UserInDTO;
+import com.william.to.LoginResultInDTO;
 import com.william.util.JedisUtil;
 
 public class LoginService {
@@ -21,5 +21,9 @@ public class LoginService {
 		if(flag)
 			result.setStatus("Y");
 		return result;
+	}
+	
+	public void changePassword(){
+		
 	}
 }

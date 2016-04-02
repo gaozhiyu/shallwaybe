@@ -61,7 +61,7 @@ public class CoreServlet extends HttpServlet {
 							//Fixme update the logic
 							HttpSession session = request.getSession();
 							session.setAttribute("userid", tmp.getUserid());
-							
+							session.setMaxInactiveInterval(-1);
 							
 							String sessionId = request.getSession().getId();
 							logger.info("Sessionid\t"+  sessionId);
