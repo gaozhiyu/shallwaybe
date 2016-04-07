@@ -1,37 +1,32 @@
-package com.william.entity;
+package com.william.to;
 
 import java.util.Date;
 
-public class LatestCoordinateEntity implements java.io.Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class LatestCoordinateInDTO {
+	
 	private String shallWayID;
 	private Double longitude;
 	private Double latitude;
-	private Date lastShakeTime;
+//	private Date lastShakeTime;
 	private String country;
 	private String province; 
 	private String city;
-	private Date lastAddressUpdate;  	
+//	private Date lastAddressUpdate;
 	
-	public LatestCoordinateEntity() {
+	public LatestCoordinateInDTO() {
 		super();
 	}
-
-	public LatestCoordinateEntity(String shallWayID, Double longitude, Double latitude, Date lastShakeTime,
-			String country, String province, String city, Date lastAddressUpdate) {
+	
+	public LatestCoordinateInDTO(String shallWayID, Double longitude, Double latitude,
+			String country, String province, String city) {
 		super();
 		this.shallWayID = shallWayID;
 		this.longitude = longitude;
 		this.latitude = latitude;
-		this.lastShakeTime = lastShakeTime;
+//		this.lastShakeTime = lastShakeTime;
 		this.country = country;
-		this.province=province;
+		this.province = province;
 		this.city = city;
-		this.lastAddressUpdate = lastAddressUpdate;
 	}
 
 	public String getShallWayID() {
@@ -58,13 +53,13 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 		this.latitude = latitude;
 	}
 
-	public Date getLastShakeTime() {
-		return lastShakeTime;
-	}
-
-	public void setLastShakeTime(Date lastShakeTime) {
-		this.lastShakeTime = lastShakeTime;
-	}
+//	public Date getLastShakeTime() {
+//		return lastShakeTime;
+//	}
+//
+//	public void setLastShakeTime(Date lastShakeTime) {
+//		this.lastShakeTime = lastShakeTime;
+//	}
 
 	public String getCountry() {
 		return country;
@@ -73,7 +68,7 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
+
 	public String getProvince() {
 		return province;
 	}
@@ -90,12 +85,4 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 		this.city = city;
 	}
 
-	public Date getLastAddressUpdate() {
-		return lastAddressUpdate;
-	}
-
-	public void setLastAddressUpdate(Date lastAddressUpdate) {
-		this.lastAddressUpdate = lastAddressUpdate;
-	}
-			
 }

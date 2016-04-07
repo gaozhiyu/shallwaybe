@@ -24,13 +24,13 @@
             <column name="DateOfBirth" />
         </property>
         <property name="country" type="string">
-            <column name="Country" length="64" />
+            <column name="Country" length="128" />
         </property> 
         <property name="province" type="string">
-            <column name="Province" length="64" />
+            <column name="Province" length="128" />
         </property> 
         <property name="city" type="string">
-            <column name="City" length="64" />
+            <column name="City" length="128" />
         </property>              
         <property name="lastUpdate" type="java.util.Date">
             <column name="LastUpdate" />

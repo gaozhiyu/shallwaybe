@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.william.DAO.ProfileDAO;
+import com.william.entity.ProfileEntity;
 import com.william.to.ProfileInDTO;
+import com.william.to.ProfileReadDTO;
 import com.william.to.RegisterInDTO;
 import com.william.to.RegisterOutDTO;
 
@@ -16,28 +18,35 @@ public class ProfileApp {
 		// TODO Auto-generated method stub
 		
 		boolean registerStatus=false;
+		boolean loginStatus = false;
 		Date currentTime = new Date();
 		
-        RegisterInDTO registerInDTO = new RegisterInDTO("666@gmail.com","MyPassword","HelloKitty","China","Henan","PingDingShan");
+	    ProfileEntity profileEntity = new ProfileEntity();		
+	    
+        RegisterInDTO registerInDTO = new RegisterInDTO("333@gmail.com","MyPassword","HelloKitty","China","Henan","PingDingShan");
 		RegisterOutDTO registerOutDTO = new RegisterOutDTO();
 		
-		ProfileInDTO profileInDTO = new ProfileInDTO("5a049676f51645eb80c3c37011d4185a","", "MyPassword","","F",
-				currentTime,"","","","Hello My World of ShallWay!");
+		ProfileInDTO profileInDTO = new ProfileInDTO("25080035621d4ad4bc752c2902ec0fd0","", "MyPassword","","F",
+				currentTime,"","","","Wonder Wonder Land!");
 		
 		ProfileDAO MP = new ProfileDAO();
+		
 //		registerOutDTO = MP.addProfile(registerInDTO);
-		registerStatus = MP.updateProfile(profileInDTO);
+//		System.out.println(registerOutDTO.getRegisterStatus());	
+////		
+//		registerStatus = MP.updateProfile(profileInDTO);
+//		System.out.println(registerStatus);
 		
-//		System.out.println(registerOutDTO.getRegisterStatus());		
-		System.out.println(registerStatus);
+		loginStatus = MP.AuthenticateCredential("999@gmail.com","MyPassword");
+		System.out.println(loginStatus);		
 		
-//		MP.addProfile("666666@gmail.com", "MyPassword", "HelloWord", "M", dateOfBirth, "China", "Henan", lastUpdate, createTime, lastAddressUpdate, "ShallWay? Yes!");
-//		this part to be modified 19.3.2016
-
-//		System.out.println(dateOfBirth);
-//		System.out.println(lastUpdate);
-//		System.out.println(createTime);	
-//		System.out.println(lastAddressUpdate);	
+//		profileEntity = MP.readProfile("666@gmail.com");
+//		System.out.println(profileEntity.getCountry());	
+//		System.out.println(profileEntity.getProvince());
+//		System.out.println(profileEntity.getCity());
+//		System.out.println(profileEntity.getCreateTime());	
+		
+		
 	}
 
 }

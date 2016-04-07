@@ -8,6 +8,7 @@ public class AddressHistoryEntity implements java.io.Serializable {
 	private String shallWayID;
 	private String addressSequenceID;	
 	private String country;
+	private String province;
 	private String city;
 	private Date updateTime;
 	private String placeType;/*R for register address, B for been address*/
@@ -16,12 +17,13 @@ public class AddressHistoryEntity implements java.io.Serializable {
 		super();
 	}
 
-	public AddressHistoryEntity(String shallWayID, String addressSequenceID, String country, String city,
+	public AddressHistoryEntity(String shallWayID, String addressSequenceID, String country, String province, String city,
 			Date updateTime, String placeType) {
 		super();
 		this.shallWayID = shallWayID;
 		this.addressSequenceID = addressSequenceID;
 		this.country = country;
+		this.province=province;
 		this.city = city;
 		this.updateTime = updateTime;
 		this.placeType = placeType;
@@ -49,6 +51,14 @@ public class AddressHistoryEntity implements java.io.Serializable {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
 	}
 
 	public String getCity() {

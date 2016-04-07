@@ -37,7 +37,7 @@ public class ProfileDAO {
 	         profileEntity.setShallWayID(shallWayID);
 	         profileEntity.setPassword(password);
 	         profileEntity.setEmail(profileTo.getEmail());
-	         profileEntity.setNickName(profileTo.getNickname());
+	         profileEntity.setNickName(profileTo.getNickName());
 	         profileEntity.setCountry(profileTo.getCountry());
 	         profileEntity.setProvince(profileTo.getProvince());
 	         profileEntity.setCity(profileTo.getCity());
@@ -49,7 +49,7 @@ public class ProfileDAO {
 	         session.save(profileEntity);
 	         
 	         outDto.setShallwayID(shallWayID);
-	         outDto.setUserid(profileTo.getEmail());
+	         outDto.setUserID(profileTo.getEmail());
 	         outDto.setRegisterStatus("Registration Successful");
 	         
 	         tx.commit();
@@ -63,6 +63,7 @@ public class ProfileDAO {
 	      return outDto;
 	}
 	
+	/* to update a profile record*/
 	public boolean updateProfile(ProfileInDTO profileTo)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -75,9 +76,13 @@ public class ProfileDAO {
 	    try{
 		      tx = session.beginTransaction();
 
-		      String sql = "select * from profile where ShallWayID = '"+shallWayID+"'";
-		      SQLQuery query = session.createSQLQuery(sql);     
+//		      String sql = "select * from profile where ShallWayID = '"+shallWayID+"'";
+		      String sql = "select * from profile where ShallWayID = ?";
+		      SQLQuery query = session.createSQLQuery(sql);
+		      query.setString(0, shallWayID);
 		      query.addEntity(ProfileEntity.class);
+		      
+		      @SuppressWarnings("unchecked")
 		      List<ProfileEntity> profileList = query.list();	
 		      
 		      /*method 1*/
@@ -152,4 +157,73 @@ public class ProfileDAO {
 		    }		    
 		return updateStatus;
 	}
+
+/* to read a profile record*/
+//	public ProfileReadDTO readProfile(String email){
+	public ProfileEntity readProfile(String email){		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction tx = null;
+	    ProfileEntity profileEntity = new ProfileEntity();
+		
+	    try{
+		      tx = session.beginTransaction();
+
+		      String sql = "select * from profile where email = ?";
+		      SQLQuery query = session.createSQLQuery(sql);  
+		      query.setString(0, email);
+		      query.addEntity(ProfileEntity.class);
+		      
+		      @SuppressWarnings("unchecked")
+		      List<ProfileEntity> profileList = query.list();	
+		      
+		      if (profileList!=null)
+		    	  profileEntity = profileList.get(0);
+
+		     // session.update(profileEntity); 	
+		      tx.commit();   
+		    }catch (HibernateException e) {
+		      if (tx!=null) tx.rollback();
+		      e.printStackTrace(); 
+		    }finally {
+		      session.close(); 
+		    }	
+	    return profileEntity;
+	}
+
+	/* Login Verification*/
+	public boolean AuthenticateCredential(String logInEmail, String logInPassword){
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction tx = null;
+		boolean loginStatus = false;
+	    ProfileEntity profileEntity = new ProfileEntity();
+	    String password = CryptWithMD5Util.cryptWithMD5Util(logInPassword);
+		
+	    try{
+		      tx = session.beginTransaction();
+
+		      String sql = "select * from profile where email = ? and password = ?";
+		      SQLQuery query = session.createSQLQuery(sql);  
+		      query.setString(0, logInEmail);
+		      query.setString(1, password);
+		      query.addEntity(ProfileEntity.class);
+		      
+		      @SuppressWarnings("unchecked")
+		      List<ProfileEntity> profileList = query.list();	
+		      
+		      if (profileList!=null && profileList.size()==1){
+//		    	  profileEntity = profileList.get(0);
+		    	  loginStatus=true;
+		      }
+
+		      tx.commit();   
+		    }catch (HibernateException e) {
+		      if (tx!=null) tx.rollback();
+		      e.printStackTrace(); 
+		    }finally {
+		      session.close(); 
+		    }	
+	    return loginStatus;
+	}
+	
 }
