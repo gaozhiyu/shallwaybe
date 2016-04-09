@@ -4,9 +4,10 @@ create table Profile (
    Email VARCHAR(128) NOT NULL,
    Password VARCHAR(64) NOT NULL,
    NickName VARCHAR(32) NOT NULL,
-   Gender VARCHAR(4) NOT NULL,
+   Gender VARCHAR(4),
    DateOfBirth Date,
    Country VARCHAR(128) NOT NULL,
+   Province VARCHAR(128) NOT NULL,
    City VARCHAR(128) NOT NULL,
    LastUpdate TIMESTAMP,
    CreateTime TIMESTAMP,
@@ -16,13 +17,15 @@ create table Profile (
    UNIQUE (Email)
 );
 
-DROP TABLE IF EXISTS RegisterAddressHistory;
-create table RegisterAddressHistory (
+DROP TABLE IF EXISTS AddressHistory;
+create table AddressHistory (
    ShallWayID VARCHAR(64) NOT NULL,
    AddressSequenceID VARCHAR(64) NOT NULL,
    Country VARCHAR(128) NOT NULL,
+   Province VARCHAR(128) NOT NULL,
    City VARCHAR(128) NOT NULL,
    UpdateTime TIMESTAMP,
+   PlaceType VARCHAR(1) NOT NULL,
    PRIMARY KEY (AddressSequenceID)
 );
 
@@ -31,6 +34,7 @@ create table ShallWay (
    ID VARCHAR(64) NOT NULL,	
    ShallWayID VARCHAR(64) NOT NULL,
    Country VARCHAR(128) default NULL,
+   Province VARCHAR(128) default NULL,
    City VARCHAR(128) default NULL,
    Place VARCHAR(128) default NULL,
    StartTime TIMESTAMP,
@@ -53,6 +57,7 @@ create table LatestCoordinate (
    Latitude DOUBLE NOT NULL,
    LastShakeTime TIMESTAMP,
    Country VARCHAR(128) NOT NULL,
+   Province VARCHAR(128) NOT NULL,
    City VARCHAR(128) NOT NULL,
    LastAddressUpdate TIMESTAMP,
    PRIMARY KEY (ShallWayID)
