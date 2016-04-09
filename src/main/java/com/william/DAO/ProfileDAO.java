@@ -9,8 +9,8 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.william.entity.LatestCoordinateEntity;
 import com.william.entity.ProfileEntity;
+import com.william.to.LoginResultOutDTO;
 import com.william.to.ProfileInDTO;
 import com.william.to.RegisterInDTO;
 import com.william.to.RegisterOutDTO;
@@ -37,7 +37,7 @@ public class ProfileDAO {
 	         profileEntity.setShallWayID(shallWayID);
 	         profileEntity.setPassword(password);
 	         profileEntity.setEmail(profileTo.getEmail());
-	         profileEntity.setNickName(profileTo.getNickName());
+	         profileEntity.setNickName(profileTo.getNickname());
 	         profileEntity.setCountry(profileTo.getCountry());
 	         profileEntity.setProvince(profileTo.getProvince());
 	         profileEntity.setCity(profileTo.getCity());
@@ -49,7 +49,7 @@ public class ProfileDAO {
 	         session.save(profileEntity);
 	         
 	         outDto.setShallwayID(shallWayID);
-	         outDto.setUserID(profileTo.getEmail());
+	         outDto.setUserid(profileTo.getEmail());
 	         outDto.setRegisterStatus("Registration Successful");
 	         
 	         tx.commit();
@@ -191,13 +191,15 @@ public class ProfileDAO {
 	}
 
 	/* Login Verification*/
-	public boolean AuthenticateCredential(String logInEmail, String logInPassword){
+	public LoginResultOutDTO authenticateCredential(String logInEmail, String logInPassword){
+		
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;
-		boolean loginStatus = false;
+		//boolean loginStatus = false;
 	    ProfileEntity profileEntity = new ProfileEntity();
 	    String password = CryptWithMD5Util.cryptWithMD5Util(logInPassword);
+	    LoginResultOutDTO output = new LoginResultOutDTO();
 		
 	    try{
 		      tx = session.beginTransaction();
@@ -212,8 +214,11 @@ public class ProfileDAO {
 		      List<ProfileEntity> profileList = query.list();	
 		      
 		      if (profileList!=null && profileList.size()==1){
-//		    	  profileEntity = profileList.get(0);
-		    	  loginStatus=true;
+		    	  profileEntity = profileList.get(0);
+		    	  output.setStatus("Y");
+		    	  output.setUserIntID(profileEntity.getShallWayID());
+		    	  output.setUserid(profileEntity.getEmail());
+		    	  output.setNickname(profileEntity.getNickName());
 		      }
 
 		      tx.commit();   
@@ -223,7 +228,7 @@ public class ProfileDAO {
 		    }finally {
 		      session.close(); 
 		    }	
-	    return loginStatus;
+	    return output;
 	}
 	
 }

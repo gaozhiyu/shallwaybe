@@ -51,4 +51,15 @@ public class JedisUtil {
 	     // Get the stored data and print it
 	     System.out.println("Stored string in redis:: "+ get("tutorial-name"));
 	}
+
+	public static void set(String key, String field, String value) {
+		// TODO Auto-generated method stub
+		getinstance().hset(key, field, value);
+		
+	}
+
+	public static String get(String key, String field) {
+		// TODO Auto-generated method stub
+		return getinstance().hget(key, field);
+	}
 }

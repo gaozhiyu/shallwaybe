@@ -8,8 +8,12 @@ public class ProfileService {
 	
 	public RegisterOutDTO register(RegisterInDTO inDTO){
 		ProfileDAO mgDAO = new ProfileDAO();
+		inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
 		RegisterOutDTO outDTO = mgDAO.addProfile(inDTO);
+		if(outDTO!= null)
+			outDTO.setStatus("Y");
+		else
+			outDTO.setStatus("N");
 		return outDTO;
 	}
-
 }

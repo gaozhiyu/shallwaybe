@@ -53,6 +53,7 @@ public class CoreServlet extends HttpServlet {
 			String str="";
 			try {
 				 str = mapper.writeValueAsString(returnValue);
+				 //TODO make it more specific
 					if(request.getRequestURI().contains("/LoginService/login")){
 						logger.info("Store the datat to memory");
 						LoginResultOutDTO tmp = (LoginResultOutDTO)returnValue;
@@ -71,10 +72,10 @@ public class CoreServlet extends HttpServlet {
 							tmp.setSessionID(sessionId);
 							str = mapper.writeValueAsString(tmp);
 						}
-						
-						if(request.getRequestURI().contains("/LoginService/logout")){
-							request.getSession().removeAttribute("userid");
-						}
+					}
+					//TODO make it more specific
+					if(request.getRequestURI().contains("/LoginService/logout")){
+						request.getSession().removeAttribute("userid");
 					}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

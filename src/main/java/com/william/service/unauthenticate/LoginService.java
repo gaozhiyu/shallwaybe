@@ -2,9 +2,11 @@ package com.william.service.unauthenticate;
 
 import org.apache.log4j.Logger;
 
+import com.william.DAO.ProfileDAO;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.LogoutResultOutDTO;
 import com.william.to.LoginResultInDTO;
+import com.william.to.RegisterOutDTO;
 import com.william.util.JedisUtil;
 
 public class LoginService {
@@ -16,9 +18,11 @@ public class LoginService {
 		logger.info("Excute LoginService print method ");
 
 		
-		LoginResultOutDTO result = new LoginResultOutDTO();
-		result.setStatus("Y");
-		result.setUserid(cto.getUsername());
+		 //= new LoginResultOutDTO();
+		ProfileDAO mgDAO = new ProfileDAO();
+		//inDTO.setProvince(inDTO.getCity().substring(0, 1));
+		LoginResultOutDTO result = mgDAO.authenticateCredential(cto.getUsername(), cto.getPassword());
+		
 		return result;
 	}
 	
