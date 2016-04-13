@@ -10,7 +10,10 @@
         
         <property name="shallWayID" type="string">
             <column name="ShallWayID" length="64" not-null="true" unique="true" />
-        </property>        
+        </property>  
+        <property name="nickName" type="string">
+            <column name="NickName" length="32" />
+        </property>              
         <property name="country" type="string">
             <column name="Country" length="128" />
         </property>

@@ -1,5 +1,7 @@
 package com.william.DAO;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -64,7 +66,7 @@ public class ProfileDAO {
 	}
 	
 	/* to update a profile record*/
-	public boolean updateProfile(ProfileInDTO profileTo)
+	public boolean updateProfile(ProfileInDTO profileTo) throws ParseException
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;
@@ -72,6 +74,8 @@ public class ProfileDAO {
 		boolean updateStatus = false;
 		Date currentTime = new Date();
 		String shallWayID = profileTo.getShallWayID();
+        SimpleDateFormat dobString =new SimpleDateFormat("dd/MM/yyyy");
+        
 			
 	    try{
 		      tx = session.beginTransaction();
@@ -142,8 +146,9 @@ public class ProfileDAO {
 			 
 			 if(profileTo.getDateOfBirth()!=null)
 			 {
+				Date dateOfBirth =dobString.parse(profileTo.getDateOfBirth());
 				profileEntity.setLastUpdate(currentTime); 
-				profileEntity.setDateOfBirth(profileTo.getDateOfBirth());
+				profileEntity.setDateOfBirth(dateOfBirth);
 			 }
   	 
 		      session.update(profileEntity); 	

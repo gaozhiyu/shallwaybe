@@ -1,5 +1,7 @@
 package com.william.DAO;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -19,30 +21,34 @@ import com.william.to.ShallWayUpdateDTO;
 public class ShallWayDAO {
 	
 	/* Create ShallWay Record*/
-		public void addShallWay (ShallWayInDTO shallWayInDTO){
+		public void addShallWay (ShallWayInDTO shallWayInDTO) throws ParseException{
 			
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
 	      String id = UUID.randomUUID().toString().replaceAll("-", "");
 	      ShallWayEntity shallWayEntity = new ShallWayEntity();
 	      Date postTime = new Date();
-	      
+	      SimpleDateFormat sdfd =new SimpleDateFormat("dd/MM/yyyy");
+
 	      try{
 	         tx = session.beginTransaction();
 	         
 	         shallWayEntity.setId(id);
 	         shallWayEntity.setShallWayID(shallWayInDTO.getShallWayID());
+	         shallWayEntity.setNickName(shallWayInDTO.getNickName());
 	         shallWayEntity.setCountry(shallWayInDTO.getCountry());
 	         shallWayEntity.setProvince(shallWayInDTO.getProvince());
 	         shallWayEntity.setCity(shallWayInDTO.getCity());
 	         shallWayEntity.setPlace(shallWayInDTO.getPlace());
-	         shallWayEntity.setStartTime(shallWayInDTO.getStartTime());
-	         shallWayEntity.setEndTime(shallWayInDTO.getEndTime());
+		     Date startTime =sdfd.parse(shallWayInDTO.getStartTime());
+	         shallWayEntity.setStartTime(startTime);
+	         Date endTime =sdfd.parse(shallWayInDTO.getEndTime());
+	         shallWayEntity.setEndTime(endTime);
 	         shallWayEntity.setPostTime(postTime);
-	         shallWayEntity.setCarPool(shallWayInDTO.getCarPool());
-	         shallWayEntity.setFreeTour(shallWayInDTO.getFreeTour());
-	         shallWayEntity.setHotelShare(shallWayInDTO.getHotelShare());
-	         shallWayEntity.setFreeGuide(shallWayInDTO.getFreeGuide());
+	         shallWayEntity.setCarPool(Boolean.parseBoolean(shallWayInDTO.getCarPool()));
+	         shallWayEntity.setFreeTour(Boolean.parseBoolean(shallWayInDTO.getFreeTour()));
+	         shallWayEntity.setHotelShare(Boolean.parseBoolean(shallWayInDTO.getHotelShare()));
+	         shallWayEntity.setFreeGuide(Boolean.parseBoolean(shallWayInDTO.getFreeGuide()));
 	         shallWayEntity.setTitle(shallWayInDTO.getTitle());
 	         shallWayEntity.setContact(shallWayInDTO.getContact());
 	         shallWayEntity.setDescription(shallWayInDTO.getDescription());
@@ -94,7 +100,7 @@ public class ShallWayDAO {
 		      return shallWayArray;
 		   }
 	   /*update ShallWay Record*/	
-		public boolean updateShallWay (ShallWayUpdateDTO shallWayUpdateDTO){	
+		public boolean updateShallWay (ShallWayUpdateDTO shallWayUpdateDTO) throws ParseException{	
 			
 			  Session session = HibernateUtil.getSessionFactory().openSession();
 		      Transaction tx = null;
@@ -102,6 +108,7 @@ public class ShallWayDAO {
 		      ShallWayEntity shallWayEntity = new ShallWayEntity();
 		      Date postTime = new Date();
 		      String id = shallWayUpdateDTO.getId();
+		      SimpleDateFormat sdfd =new SimpleDateFormat("dd/MM/yyyy");
 
 		      try{
 		         tx = session.beginTransaction();
@@ -138,32 +145,34 @@ public class ShallWayDAO {
 			      }
 			      
 			      if (shallWayUpdateDTO.getStartTime()!=null){
-			    	  shallWayEntity.setStartTime(shallWayUpdateDTO.getStartTime());
+					  Date startTime =sdfd.parse(shallWayUpdateDTO.getStartTime());
+			    	  shallWayEntity.setStartTime(startTime);
 			    	  shallWayEntity.setPostTime(postTime);
 			      }
 
 			      if (shallWayUpdateDTO.getEndTime()!=null){
-			    	  shallWayEntity.setEndTime(shallWayUpdateDTO.getEndTime());
+					  Date endTime =sdfd.parse(shallWayUpdateDTO.getEndTime());
+			    	  shallWayEntity.setEndTime(endTime);
 			    	  shallWayEntity.setPostTime(postTime);
 			      }
 			      
 			      if (shallWayUpdateDTO.getCarPool()!=null){
-			    	  shallWayEntity.setCarPool(shallWayUpdateDTO.getCarPool());
+			    	  shallWayEntity.setCarPool(Boolean.parseBoolean(shallWayUpdateDTO.getCarPool()));
 			    	  shallWayEntity.setPostTime(postTime);
 			      }
 			      
 			      if (shallWayUpdateDTO.getFreeTour()!=null){
-			    	  shallWayEntity.setFreeTour(shallWayUpdateDTO.getFreeTour());
+			    	  shallWayEntity.setFreeTour(Boolean.parseBoolean(shallWayUpdateDTO.getFreeTour()));
 			    	  shallWayEntity.setPostTime(postTime);
 			      }
 			      
 			      if (shallWayUpdateDTO.getHotelShare()!=null){
-			    	  shallWayEntity.setHotelShare(shallWayUpdateDTO.getHotelShare());
+			    	  shallWayEntity.setHotelShare(Boolean.parseBoolean(shallWayUpdateDTO.getHotelShare()));
 			    	  shallWayEntity.setPostTime(postTime);
 			      }
 	
 			      if (shallWayUpdateDTO.getFreeGuide()!=null){
-			    	  shallWayEntity.setFreeGuide(shallWayUpdateDTO.getFreeGuide());
+			    	  shallWayEntity.setFreeGuide(Boolean.parseBoolean(shallWayUpdateDTO.getFreeGuide()));
 			    	  shallWayEntity.setPostTime(postTime);
 			      }
 			      

@@ -11,6 +11,7 @@ public class ShallWayEntity implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String shallWayID;
+	private String nickName;
 	private String country;
 	private String province;
 	private String city;
@@ -33,14 +34,21 @@ public class ShallWayEntity implements java.io.Serializable {
 	}
 	
 	/* to create a record*/
-	public ShallWayEntity(String id,String shallWayID, String country, String province, String city, String place, Date startTime, Date endTime,
-			Date postTime, Boolean carPool, Boolean freeTour, Boolean hotelShare, Boolean freeGuide, String title,
-			String contact, String description) {
+
+	
+	public String getId() {
+		return id;
+	}
+
+	public ShallWayEntity(String id, String shallWayID, String nickName, String country, String province, String city,
+			String place, Date startTime, Date endTime, Date postTime, Boolean carPool, Boolean freeTour,
+			Boolean hotelShare, Boolean freeGuide, String title, String contact, String description) {
 		super();
-		this.id=id;
+		this.id = id;
 		this.shallWayID = shallWayID;
+		this.nickName = nickName;
 		this.country = country;
-		this.province=province;
+		this.province = province;
 		this.city = city;
 		this.place = place;
 		this.startTime = startTime;
@@ -54,10 +62,6 @@ public class ShallWayEntity implements java.io.Serializable {
 		this.contact = contact;
 		this.description = description;
 	}
-	
-	public String getId() {
-		return id;
-	}
 
 	public void setId(String id) {
 		this.id = id;
@@ -69,6 +73,15 @@ public class ShallWayEntity implements java.io.Serializable {
 	public void setShallWayID(String shallWayID) {
 		this.shallWayID = shallWayID;
 	}
+	
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
 	public String getCountry() {
 		return country;
 	}

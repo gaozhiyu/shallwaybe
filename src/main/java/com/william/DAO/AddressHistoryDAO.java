@@ -29,6 +29,7 @@ public class AddressHistoryDAO {
 		         tx = session.beginTransaction();
 
 		         addressHistoryEntity.setShallWayID(addressTo.getShallWayID());
+		         addressHistoryEntity.setNickName(addressTo.getNickName());
 		         addressHistoryEntity.setAddressSequenceID(addressSequenceID);
 		         addressHistoryEntity.setCountry(addressTo.getCountry());
 		         addressHistoryEntity.setProvince(addressTo.getProvince());

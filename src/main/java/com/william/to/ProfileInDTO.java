@@ -9,7 +9,7 @@ public class ProfileInDTO {
 	private String password;
 	private String nickName;
 	private String gender;
-	private Date dateOfBirth;
+	private String dateOfBirth;
 	private String country;
 	private String province;
 	private String city;
@@ -23,7 +23,7 @@ public class ProfileInDTO {
 	}
 
 	public ProfileInDTO(String shallWayID, String email, String password, String nickName, String gender,
-			Date dateOfBirth, String country, String province, String city, String status) {
+			String dateOfBirth, String country, String province, String city, String status) {
 		super();
 		this.shallWayID = shallWayID;
 		this.email = email;
@@ -70,10 +70,10 @@ public class ProfileInDTO {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public Date getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 	public String getCountry() {

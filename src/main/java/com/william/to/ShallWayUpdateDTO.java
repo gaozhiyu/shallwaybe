@@ -6,17 +6,18 @@ public class ShallWayUpdateDTO {
 
 	private String id;
 	private String shallWayID;
+	private String nickName;
 	private String country;
 	private String province;
 	private String city;
 	private String place;
-	private Date startTime; 
-	private Date endTime;   
+	private String startTime; 
+	private String endTime;   
 	
-	private Boolean carPool;
-	private Boolean freeTour;
-	private Boolean hotelShare;
-	private Boolean freeGuide;
+	private String carPool;
+	private String freeTour;
+	private String hotelShare;
+	private String freeGuide;
 	
 	private String title;
 	private String contact;
@@ -26,12 +27,13 @@ public class ShallWayUpdateDTO {
 		super();
 	}
 
-	public ShallWayUpdateDTO(String id, String shallWayID, String country, String province, String city, String place,
-			Date startTime, Date endTime, Boolean carPool, Boolean freeTour, Boolean hotelShare, Boolean freeGuide,
-			String title, String contact, String description) {
+	public ShallWayUpdateDTO(String id, String shallWayID, String nickName, String country, String province,
+			String city, String place, String startTime, String endTime, String carPool, String freeTour,
+			String hotelShare, String freeGuide, String title, String contact, String description) {
 		super();
 		this.id = id;
 		this.shallWayID = shallWayID;
+		this.nickName = nickName;
 		this.country = country;
 		this.province = province;
 		this.city = city;
@@ -61,6 +63,14 @@ public class ShallWayUpdateDTO {
 
 	public void setShallWayID(String shallWayID) {
 		this.shallWayID = shallWayID;
+	}
+	
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getCountry() {
@@ -95,51 +105,51 @@ public class ShallWayUpdateDTO {
 		this.place = place;
 	}
 
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 
-	public Boolean getCarPool() {
+	public String getCarPool() {
 		return carPool;
 	}
 
-	public void setCarPool(Boolean carPool) {
+	public void setCarPool(String carPool) {
 		this.carPool = carPool;
 	}
 
-	public Boolean getFreeTour() {
+	public String getFreeTour() {
 		return freeTour;
 	}
 
-	public void setFreeTour(Boolean freeTour) {
+	public void setFreeTour(String freeTour) {
 		this.freeTour = freeTour;
 	}
 
-	public Boolean getHotelShare() {
+	public String getHotelShare() {
 		return hotelShare;
 	}
 
-	public void setHotelShare(Boolean hotelShare) {
+	public void setHotelShare(String hotelShare) {
 		this.hotelShare = hotelShare;
 	}
 
-	public Boolean getFreeGuide() {
+	public String getFreeGuide() {
 		return freeGuide;
 	}
 
-	public void setFreeGuide(Boolean freeGuide) {
+	public void setFreeGuide(String freeGuide) {
 		this.freeGuide = freeGuide;
 	}
 

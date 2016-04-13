@@ -5,6 +5,7 @@ import java.util.Date;
 public class AddressHistoryInDTO{
 	
 	private String shallWayID;
+	private String nickName;
 	private String country;
 	private String province;
 	private String city;
@@ -14,14 +15,19 @@ public class AddressHistoryInDTO{
 	public AddressHistoryInDTO() {
 	}
 
-	public AddressHistoryInDTO(String shallWayID, String country, String province, String city,
+
+	public AddressHistoryInDTO(String shallWayID, String nickName, String country, String province, String city,
 			String placeType) {
+		super();
 		this.shallWayID = shallWayID;
+		this.nickName = nickName;
 		this.country = country;
-		this.province=province;
+		this.province = province;
 		this.city = city;
 		this.placeType = placeType;
 	}
+
+
 
 	public String getShallWayID() {
 		return shallWayID;
@@ -30,6 +36,15 @@ public class AddressHistoryInDTO{
 	public void setShallWayID(String shallWayID) {
 		this.shallWayID = shallWayID;
 	}
+	
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
 
 	public String getCountry() {
 		return country;

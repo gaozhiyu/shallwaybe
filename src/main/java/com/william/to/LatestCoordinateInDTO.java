@@ -1,12 +1,12 @@
 package com.william.to;
 
-import java.util.Date;
 
 public class LatestCoordinateInDTO {
 	
 	private String shallWayID;
-	private Double longitude;
-	private Double latitude;
+	private String nickName;
+	private String longitude;
+	private String latitude;
 //	private Date lastShakeTime;
 	private String country;
 	private String province; 
@@ -17,17 +17,19 @@ public class LatestCoordinateInDTO {
 		super();
 	}
 	
-	public LatestCoordinateInDTO(String shallWayID, Double longitude, Double latitude,
-			String country, String province, String city) {
-		super();
-		this.shallWayID = shallWayID;
-		this.longitude = longitude;
-		this.latitude = latitude;
-//		this.lastShakeTime = lastShakeTime;
-		this.country = country;
-		this.province = province;
-		this.city = city;
+	public LatestCoordinateInDTO(String shallWayID, String nickName, String longitude, String latitude, String country,
+		String province, String city) {
+	super();
+	this.shallWayID = shallWayID;
+	this.nickName = nickName;
+	this.longitude = longitude;
+	this.latitude = latitude;
+	this.country = country;
+	this.province = province;
+	this.city = city;
 	}
+
+
 
 	public String getShallWayID() {
 		return shallWayID;
@@ -37,19 +39,27 @@ public class LatestCoordinateInDTO {
 		this.shallWayID = shallWayID;
 	}
 
-	public Double getLongitude() {
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Double longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 
-	public Double getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Double latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 

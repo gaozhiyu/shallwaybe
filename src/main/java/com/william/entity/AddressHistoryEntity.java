@@ -6,6 +6,7 @@ public class AddressHistoryEntity implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String shallWayID;
+	private String nickName;
 	private String addressSequenceID;	
 	private String country;
 	private String province;
@@ -17,16 +18,25 @@ public class AddressHistoryEntity implements java.io.Serializable {
 		super();
 	}
 
-	public AddressHistoryEntity(String shallWayID, String addressSequenceID, String country, String province, String city,
-			Date updateTime, String placeType) {
+	public AddressHistoryEntity(String shallWayID, String nickName, String addressSequenceID, String country,
+			String province, String city, Date updateTime, String placeType) {
 		super();
 		this.shallWayID = shallWayID;
+		this.nickName = nickName;
 		this.addressSequenceID = addressSequenceID;
 		this.country = country;
-		this.province=province;
+		this.province = province;
 		this.city = city;
 		this.updateTime = updateTime;
 		this.placeType = placeType;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getShallWayID() {

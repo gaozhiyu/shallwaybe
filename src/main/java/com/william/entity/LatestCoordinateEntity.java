@@ -9,6 +9,7 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String shallWayID;
+	private String nickName;
 	private Double longitude;
 	private Double latitude;
 	private Date lastShakeTime;
@@ -21,18 +22,23 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 		super();
 	}
 
-	public LatestCoordinateEntity(String shallWayID, Double longitude, Double latitude, Date lastShakeTime,
-			String country, String province, String city, Date lastAddressUpdate) {
+
+
+	public LatestCoordinateEntity(String shallWayID, String nickName, Double longitude, Double latitude,
+			Date lastShakeTime, String country, String province, String city, Date lastAddressUpdate) {
 		super();
 		this.shallWayID = shallWayID;
+		this.nickName = nickName;
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.lastShakeTime = lastShakeTime;
 		this.country = country;
-		this.province=province;
+		this.province = province;
 		this.city = city;
 		this.lastAddressUpdate = lastAddressUpdate;
 	}
+
+
 
 	public String getShallWayID() {
 		return shallWayID;
@@ -40,6 +46,15 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 
 	public void setShallWayID(String shallWayID) {
 		this.shallWayID = shallWayID;
+	}
+
+		
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public Double getLongitude() {

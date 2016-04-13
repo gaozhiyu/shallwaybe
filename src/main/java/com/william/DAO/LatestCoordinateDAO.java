@@ -23,13 +23,15 @@ public class LatestCoordinateDAO {
 	      LatestCoordinateEntity latestcoordinate = new LatestCoordinateEntity();
 	      Date updateTime = new Date();
 	      
+	      
 	      try{
 	    	  
 	         tx = session.beginTransaction();
 	         
 	         latestcoordinate.setShallWayID(latestCoordinateInDTO.getShallWayID());
-	         latestcoordinate.setLongitude(latestCoordinateInDTO.getLongitude());
-	         latestcoordinate.setLatitude(latestCoordinateInDTO.getLatitude());
+	         latestcoordinate.setNickName(latestCoordinateInDTO.getNickName());
+	         latestcoordinate.setLongitude(Double.parseDouble(latestCoordinateInDTO.getLongitude()));
+	         latestcoordinate.setLatitude(Double.parseDouble(latestCoordinateInDTO.getLatitude()));
 //	         latestcoordinate.setLastShakeTime(latestCoordinateInDTO.getLastShakeTime());
 	         latestcoordinate.setLastShakeTime(updateTime);
 	         latestcoordinate.setCountry(latestCoordinateInDTO.getCountry());
@@ -88,12 +90,12 @@ public class LatestCoordinateDAO {
 		      }
 		      
 		      if (latestCoordinateInDTO.getLongitude()!=null){
-		    	  latestCoordinateEntity.setLongitude(latestCoordinateInDTO.getLongitude());
+		    	  latestCoordinateEntity.setLongitude(Double.parseDouble(latestCoordinateInDTO.getLongitude()));
 		    	  latestCoordinateEntity.setLastShakeTime(updateTime);
 		      }
 		      
 		      if (latestCoordinateInDTO.getLatitude()!=null){
-		    	  latestCoordinateEntity.setLatitude(latestCoordinateInDTO.getLatitude());
+		    	  latestCoordinateEntity.setLatitude(Double.parseDouble(latestCoordinateInDTO.getLatitude()));
 		    	  latestCoordinateEntity.setLastShakeTime(updateTime);
 		      }
 		      
