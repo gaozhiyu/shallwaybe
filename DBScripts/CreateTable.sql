@@ -20,6 +20,7 @@ create table Profile (
 DROP TABLE IF EXISTS AddressHistory;
 create table AddressHistory (
    ShallWayID VARCHAR(64) NOT NULL,
+   NickName VARCHAR(32) NOT NULL,
    AddressSequenceID VARCHAR(64) NOT NULL,
    Country VARCHAR(128) NOT NULL,
    Province VARCHAR(128) NOT NULL,
@@ -33,12 +34,13 @@ DROP TABLE IF EXISTS ShallWay;
 create table ShallWay (
    ID VARCHAR(64) NOT NULL,	
    ShallWayID VARCHAR(64) NOT NULL,
+   NickName VARCHAR(32) NOT NULL,
    Country VARCHAR(128) default NULL,
    Province VARCHAR(128) default NULL,
    City VARCHAR(128) default NULL,
    Place VARCHAR(128) default NULL,
-   StartTime TIMESTAMP,
-   EndTime TIMESTAMP,
+   StartTime Date,
+   EndTime Date,
    PostTime TIMESTAMP,
    CarPool BOOLEAN default NULL,
    FreeTour BOOLEAN default NULL,
@@ -53,6 +55,7 @@ create table ShallWay (
 DROP TABLE IF EXISTS LatestCoordinate;
 create table LatestCoordinate (
    ShallWayID VARCHAR(64) NOT NULL,
+   NickName VARCHAR(32) NOT NULL,
    Longitude DOUBLE NOT NULL,
    Latitude DOUBLE NOT NULL,
    LastShakeTime TIMESTAMP,
