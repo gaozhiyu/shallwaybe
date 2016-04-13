@@ -16,24 +16,24 @@ public class ShallWayApp {
 	public static void main(String[] args) throws ParseException {
 		// TODO Auto-generated method stub
 		
-        String startTimeString ="2016-04-20 08:30:00";
-        SimpleDateFormat sdfd1 =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date startTime =sdfd1.parse(startTimeString);
+        String startTimeString ="20/4/2016";
+//        SimpleDateFormat sdfd1 =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date startTime =sdfd1.parse(startTimeString);
         
-        String endTimeString ="2016-05-02 23:59:59";
-        SimpleDateFormat sdfd2 =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date endTime =sdfd2.parse(endTimeString);
+        String endTimeString ="1/5/2016";
+//        SimpleDateFormat sdfd2 =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date endTime =sdfd2.parse(endTimeString);
         		
 		ShallWayDAO MSW= new ShallWayDAO();
 		ShallWayEntity[] shallWayArray =null;
 		
-		ShallWayInDTO shallWayIn = new ShallWayInDTO ("1003", "Singapore","Marine Parade", "Bedok", "Finland Garden", startTime, endTime, false, true, false, true, "ONE DAY Tour", "QQ: 554163030", "Happy Happy Day");
-		ShallWayUpdateDTO shallWayUpdate = new ShallWayUpdateDTO ("fc360ac6a5e141b8b6faf19d1e539b91","1003", "Singapore","Jurong West", "NTU", "North Spine", startTime, endTime, true, true, true, true, "ONE DAY TREK", "QQ: 554163030", "Happy Happy Walk!");
+		ShallWayInDTO shallWayIn = new ShallWayInDTO ("1000","Huzong", "Singapore","Marine Parade", "Bedok", "Finland Garden", startTimeString, endTimeString, "true", "true", "false", "false", "ONE DAY Tour", "QQ: 554163030", "Happy Happy Day");
+		ShallWayUpdateDTO shallWayUpdate = new ShallWayUpdateDTO ("3e9b1901cb9c40debf328759e22d1a6f","1003","Huzong", "Singapore","Jurong West", "NTU", "North Spine", startTimeString, endTimeString, "false", "false", "true", "true", "ONE DAY TREK", "QQ: 554163030", "Happy Happy Walk!");
 		
-//		MSW.addShallWay(shallWayIn);			
+		MSW.addShallWay(shallWayIn);			
 //		MSW.updateShallWay(shallWayUpdate);		
-//		MSW.deleteShallWay("0bcbb1de0f0d4d3ca13cc033a55b758d", "1003");
-		
+//		MSW.deleteShallWay("d20ed3b6437f4baaaa0e9e0419328ad7", "1003");
+	
 		shallWayArray = MSW.readShallWay("1000");
 		
 		for (int i=0; i < shallWayArray.length; i++){

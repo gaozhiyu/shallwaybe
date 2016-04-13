@@ -18,15 +18,15 @@ public class LatestCoordinateApp {
 //        SimpleDateFormat sdfd1 =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        Date lastShakeTime =sdfd1.parse(lastShakeTimeString);
         
-        LatestCoordinateInDTO latestCoordinateInDTO = new LatestCoordinateInDTO("46", 2.5, 2.6 ,"Singapore","He Nan Province", "Luo Yang");
+        LatestCoordinateInDTO latestCoordinateInDTO = new LatestCoordinateInDTO("46","Huzong", "2.5", "2.6" ,"Singapore","He Nan Province", "Luo Yang");
         
         LatestCoordinateEntity latestCoordinateEntity= new LatestCoordinateEntity();
         LatestCoordinateDAO MLC = new LatestCoordinateDAO();
         
-//        MLC.addLatestCoordinate(latestCoordinateInDTO);
+        MLC.addLatestCoordinate(latestCoordinateInDTO);
         MLC.updateLatestCoordinate(latestCoordinateInDTO);
         
-        latestCoordinateEntity = MLC.readLatestCoordinate("4");
+        latestCoordinateEntity = MLC.readLatestCoordinate("46");
         
 		System.out.println();
 		System.out.println("ShallWayID: "+latestCoordinateEntity.getShallWayID());

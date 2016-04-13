@@ -18,12 +18,12 @@ public class AddressHistoryApp {
 //		Date updateTime = new Date();
 		
         String[] cityList = null;
-        AddressHistoryInDTO addressHistory = new AddressHistoryInDTO("0001","China","Henan Province","Luo Yang","R");
+        AddressHistoryInDTO addressHistory = new AddressHistoryInDTO("1112","Huzong","China","Henan Province","Luo Yang","R");
         
         AddressHistoryDAO AHS = new AddressHistoryDAO();
         
-//        AHS.addAddressHistory(addressHistory);
-        cityList=AHS.readAddressHistory("0001","b");   
+        AHS.addAddressHistory(addressHistory);
+        cityList=AHS.readAddressHistory("1111","R");   
         
         for (int i=0; i<cityList.length;i++)
         	System.out.println("City "+i+" : "+cityList[i]);
