@@ -76,8 +76,6 @@ public class ProfileDAO {
 		String userIntID = profileTo.getUserIntID();
         SimpleDateFormat dobString =new SimpleDateFormat("dd/MM/yyyy");
         
-        SimpleDateFormat dobString =new SimpleDateFormat("dd/MM/yyyy");
-        
 			
 	    try{
 		      tx = session.beginTransaction();

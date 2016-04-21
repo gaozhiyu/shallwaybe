@@ -8,9 +8,6 @@
             <column name="UserIntID" length="64" not-null="true" unique="true" />
         </id>
               
-        <property name="nickName" type="string">
-            <column name="NickName" length="32" />
-        </property>        
         <property name="longitude" type="java.lang.Double">
             <column name="Longitude" />
         </property>        

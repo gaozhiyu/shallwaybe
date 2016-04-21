@@ -30,7 +30,6 @@ public class AddressHistoryDAO {
 		         tx = session.beginTransaction();
 
 		         addressHistoryEntity.setUserIntID(addressTo.getUserIntID());
-		         addressHistoryEntity.setNickName(addressTo.getNickName());
 		         addressHistoryEntity.setAddressSequenceID(addressSequenceID);
 		         addressHistoryEntity.setCountry(addressTo.getCountry());
 		         addressHistoryEntity.setProvince(addressTo.getProvince());
