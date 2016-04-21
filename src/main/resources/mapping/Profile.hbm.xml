@@ -4,8 +4,8 @@
 
 <hibernate-mapping>
     <class name="com.william.entity.ProfileEntity" table="profile" catalog="shallway">
-        <id name="shallWayID" type="string" >
-            <column name="ShallWayID" length="64" not-null="true" unique="true" />
+        <id name="userIntID" type="string" >
+            <column name="UserIntID" length="64" not-null="true" unique="true" />
         </id>
         
         <property name="email" type="string">
@@ -14,8 +14,8 @@
         <property name="password" type="string">
             <column name="Password" length="64" />
         </property>
-        <property name="nickName" type="string">
-            <column name="NickName" length="32" />
+        <property name="nickname" type="string">
+            <column name="Nickname" length="32" />
         </property>
          <property name="gender" type="string">
             <column name="Gender" length="4" />
@@ -41,8 +41,8 @@
          <property name="lastAddressUpdate" type="java.util.Date">
             <column name="LastAddressUpdate" />
         </property> 
-        <property name="status" type="string">
-            <column name="Status" length="1024" />
+        <property name="signature" type="string">
+            <column name="Signature" length="1024" />
         </property> 
                 
     </class>

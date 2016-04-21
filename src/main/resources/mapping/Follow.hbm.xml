@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.william.entity.FollowEntity" table="follow" catalog="shallway">
+        <id name="id" type="string" >
+            <column name="ID" length="64" not-null="true" unique="true" />
+        </id>
+        
+        <property name="shallWayID" type="string">
+            <column name="ShallWayID" length="64" />
+        </property>
+        <property name="authorIntID" type="string">
+            <column name="AuthorIntID" length="64" />
+        </property>             
+        <property name="authorNickname" type="string">
+            <column name="AuthorNickname" length="32" />
+        </property>
+        <property name="followerIntID" type="string">
+            <column name="FollowerIntID" length="64" />
+        </property>             
+        <property name="followerNickname" type="string">
+            <column name="FollowerNickname" length="32" />
+        </property>           
+        <property name="followTime" type="java.util.Date">
+            <column name="FollowTime" />
+        </property>               
+
+    </class>
+</hibernate-mapping>

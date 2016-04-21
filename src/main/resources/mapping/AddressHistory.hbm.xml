@@ -8,12 +8,9 @@
             <column name="AddressSequenceID" length="64" not-null="true" unique="true" />
         </id>
         
-        <property name="shallWayID" type="string">
-            <column name="ShallWayID" length="64" />
-        </property>     
-        <property name="nickName" type="string">
-            <column name="NickName" length="32" />
-        </property>   
+        <property name="userIntID" type="string">
+            <column name="UserIntID" length="64" />
+        </property>      
         <property name="country" type="string">
             <column name="Country" length="128" />
         </property> 

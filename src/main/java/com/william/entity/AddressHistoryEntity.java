@@ -5,8 +5,7 @@ import java.util.Date;
 public class AddressHistoryEntity implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private String shallWayID;
-	private String nickName;
+	private String userIntID;
 	private String addressSequenceID;	
 	private String country;
 	private String province;
@@ -18,11 +17,10 @@ public class AddressHistoryEntity implements java.io.Serializable {
 		super();
 	}
 
-	public AddressHistoryEntity(String shallWayID, String nickName, String addressSequenceID, String country,
+	public AddressHistoryEntity(String userIntID, String addressSequenceID, String country,
 			String province, String city, Date updateTime, String placeType) {
 		super();
-		this.shallWayID = shallWayID;
-		this.nickName = nickName;
+		this.userIntID = userIntID;
 		this.addressSequenceID = addressSequenceID;
 		this.country = country;
 		this.province = province;
@@ -31,20 +29,12 @@ public class AddressHistoryEntity implements java.io.Serializable {
 		this.placeType = placeType;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getUserIntID() {
+		return userIntID;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
-	public String getShallWayID() {
-		return shallWayID;
-	}
-
-	public void setShallWayID(String shallWayID) {
-		this.shallWayID = shallWayID;
+	public void setUserIntID(String userIntID) {
+		this.userIntID = userIntID;
 	}
 
 	public String getAddressSequenceID() {

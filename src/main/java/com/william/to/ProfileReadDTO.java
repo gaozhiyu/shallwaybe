@@ -6,7 +6,7 @@ public class ProfileReadDTO {
 	private String shallWayID;
 	private String email;
 	private String password;
-	private String nickName;
+	private String nickname;
 	private String gender;
 	private Date dateOfBirth;
 	private String country;
@@ -45,12 +45,12 @@ public class ProfileReadDTO {
 		this.password = password;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getGender() {

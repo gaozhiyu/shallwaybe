@@ -10,10 +10,10 @@ public class ProfileEntity implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private String shallWayID;
+	private String userIntID;
 	private String email;
 	private String password;
-	private String nickName;
+	private String nickname;
 	private String gender;
 	private Date dateOfBirth;
 	private String country;
@@ -22,19 +22,19 @@ public class ProfileEntity implements java.io.Serializable {
 	private Date lastUpdate; 
 	private Date createTime;   
 	private Date lastAddressUpdate;  	
-	private String status; //ge xing qian ming
+	private String signature; //ge xing qian ming
 	
 	public ProfileEntity(){
 		super();
 	}
 
-	public ProfileEntity(String shallWayID, String email, String password, String nickName, String gender, Date dateOfBirth,
-			String country, String province,String city, Date lastUpdate, Date createTime, Date lastAddressUpdate, String status) {
+	public ProfileEntity(String userIntID, String email, String password, String nickname, String gender, Date dateOfBirth,
+			String country, String province,String city, Date lastUpdate, Date createTime, Date lastAddressUpdate, String signature) {
 		super();
-		this.shallWayID = shallWayID;
+		this.userIntID = userIntID;
 		this.email = email;
 		this.password = password;
-		this.nickName = nickName;
+		this.nickname = nickname;
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.country = country;
@@ -43,7 +43,7 @@ public class ProfileEntity implements java.io.Serializable {
 		this.lastUpdate = lastUpdate;
 		this.createTime = createTime;
 		this.lastAddressUpdate = lastAddressUpdate;
-		this.status = status;
+		this.signature = signature;
 	}
 
 	public String getProvince() {
@@ -54,12 +54,12 @@ public class ProfileEntity implements java.io.Serializable {
 		this.province = province;
 	}
 
-	public String getShallWayID() {
-		return shallWayID;
+	public String getUserIntID() {
+		return userIntID;
 	}
 
-	public void setShallWayID(String shallWayID) {
-		this.shallWayID = shallWayID;
+	public void setUserIntID(String userIntID) {
+		this.userIntID = userIntID;
 	}
 
 	public String getEmail() {
@@ -78,12 +78,12 @@ public class ProfileEntity implements java.io.Serializable {
 		this.password = password;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getGender() {
@@ -142,12 +142,12 @@ public class ProfileEntity implements java.io.Serializable {
 		this.lastAddressUpdate = lastAddressUpdate;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getSignature() {
+		return signature;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setSignature(String signature) {
+		this.signature = signature;
 	}
 	
 }

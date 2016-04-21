@@ -3,8 +3,7 @@ package com.william.to;
 
 public class LatestCoordinateInDTO {
 	
-	private String shallWayID;
-	private String nickName;
+	private String userIntID;
 	private String longitude;
 	private String latitude;
 //	private Date lastShakeTime;
@@ -17,11 +16,10 @@ public class LatestCoordinateInDTO {
 		super();
 	}
 	
-	public LatestCoordinateInDTO(String shallWayID, String nickName, String longitude, String latitude, String country,
+	public LatestCoordinateInDTO(String userIntID, String longitude, String latitude, String country,
 		String province, String city) {
 	super();
-	this.shallWayID = shallWayID;
-	this.nickName = nickName;
+	this.userIntID = userIntID;
 	this.longitude = longitude;
 	this.latitude = latitude;
 	this.country = country;
@@ -29,22 +27,12 @@ public class LatestCoordinateInDTO {
 	this.city = city;
 	}
 
-
-
-	public String getShallWayID() {
-		return shallWayID;
+	public String getUserIntID() {
+		return userIntID;
 	}
 
-	public void setShallWayID(String shallWayID) {
-		this.shallWayID = shallWayID;
-	}
-
-	public String getNickName() {
-		return nickName;
-	}
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setUserIntID(String userIntID) {
+		this.userIntID = userIntID;
 	}
 
 	public String getLongitude() {

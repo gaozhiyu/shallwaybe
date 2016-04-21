@@ -26,7 +26,7 @@ public class ProfileDAO {
 		
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
-	      String shallWayID = UUID.randomUUID().toString().replaceAll("-", "");
+	      String userIntID = UUID.randomUUID().toString().replaceAll("-", "");
 	      String password = CryptWithMD5Util.cryptWithMD5Util(profileTo.getPassword());
 	      ProfileEntity profileEntity = new ProfileEntity();
 	      RegisterOutDTO outDto = new RegisterOutDTO();
@@ -34,12 +34,12 @@ public class ProfileDAO {
  	      
 	      try{
 	         tx = session.beginTransaction();
-	        // profile = new ProfileEntity(shallWayID, email, password, nickName, gender, dateOfBirth,
+	        // profile = new ProfileEntity(userIntID, email, password, nickName, gender, dateOfBirth,
 	     			//country, city, lastUpdate, createTime, lastAddressUpdate, status);
-	         profileEntity.setShallWayID(shallWayID);
+	         profileEntity.setUserIntID(userIntID);
 	         profileEntity.setPassword(password);
 	         profileEntity.setEmail(profileTo.getEmail());
-	         profileEntity.setNickName(profileTo.getNickname());
+	         profileEntity.setNickname(profileTo.getNickname());
 	         profileEntity.setCountry(profileTo.getCountry());
 	         profileEntity.setProvince(profileTo.getProvince());
 	         profileEntity.setCity(profileTo.getCity());
@@ -50,8 +50,8 @@ public class ProfileDAO {
                
 	         session.save(profileEntity);
 	         
-	         outDto.setShallwayID(shallWayID);
-	         outDto.setUserid(profileTo.getEmail());
+	         outDto.setUserIntID(userIntID);
+	         outDto.setUserid(profileTo.getEmail()); 
 	         outDto.setRegisterStatus("Registration Successful");
 	         
 	         tx.commit();
@@ -73,17 +73,19 @@ public class ProfileDAO {
 	    ProfileEntity profileEntity = new ProfileEntity();
 		boolean updateStatus = false;
 		Date currentTime = new Date();
-		String shallWayID = profileTo.getShallWayID();
+		String userIntID = profileTo.getUserIntID();
+        SimpleDateFormat dobString =new SimpleDateFormat("dd/MM/yyyy");
+        
         SimpleDateFormat dobString =new SimpleDateFormat("dd/MM/yyyy");
         
 			
 	    try{
 		      tx = session.beginTransaction();
 
-//		      String sql = "select * from profile where ShallWayID = '"+shallWayID+"'";
-		      String sql = "select * from profile where ShallWayID = ?";
+//		      String sql = "select * from profile where UserIntID = '"+userIntID+"'";
+		      String sql = "select * from profile where UserIntID = ?";
 		      SQLQuery query = session.createSQLQuery(sql);
-		      query.setString(0, shallWayID);
+		      query.setString(0, userIntID);
 		      query.addEntity(ProfileEntity.class);
 		      
 		      @SuppressWarnings("unchecked")
@@ -126,16 +128,16 @@ public class ProfileDAO {
 				profileEntity.setPassword(CryptWithMD5Util.cryptWithMD5Util(profileTo.getPassword()));
 			 }	
 
-			 if(profileTo.getNickName()!=null && !"".equals(profileTo.getNickName().trim()))
+			 if(profileTo.getNickname()!=null && !"".equals(profileTo.getNickname().trim()))
 			 {
 				profileEntity.setLastUpdate(currentTime);
-				profileEntity.setNickName(profileTo.getNickName());
+				profileEntity.setNickname(profileTo.getNickname());
 			 }	
 			 
-			 if(profileTo.getStatus()!=null && !"".equals(profileTo.getStatus().trim()))
+			 if(profileTo.getSignature()!=null && !"".equals(profileTo.getSignature().trim()))
 			 {
 				profileEntity.setLastUpdate(currentTime);
-				profileEntity.setStatus(profileTo.getStatus());
+				profileEntity.setSignature(profileTo.getSignature());
 			 }	
 			 
 			 if(profileTo.getGender()!=null && !"".equals(profileTo.getGender().trim()))
@@ -144,7 +146,7 @@ public class ProfileDAO {
 				profileEntity.setGender(profileTo.getGender());
 			 }	
 			 
-			 if(profileTo.getDateOfBirth()!=null)
+			 if(profileTo.getDateOfBirth()!=null && !"".equals(profileTo.getDateOfBirth().trim()))
 			 {
 				Date dateOfBirth =dobString.parse(profileTo.getDateOfBirth());
 				profileEntity.setLastUpdate(currentTime); 
@@ -221,9 +223,9 @@ public class ProfileDAO {
 		      if (profileList!=null && profileList.size()==1){
 		    	  profileEntity = profileList.get(0);
 		    	  output.setStatus("Y");
-		    	  output.setUserIntID(profileEntity.getShallWayID());
+		    	  output.setUserIntID(profileEntity.getUserIntID());
 		    	  output.setUserid(profileEntity.getEmail());
-		    	  output.setNickname(profileEntity.getNickName());
+		    	  output.setNickname(profileEntity.getNickname());
 		      }
 
 		      tx.commit();   

@@ -1,13 +1,10 @@
-package com.william.entity;
+package com.william.to;
 
 import java.util.Date;
 
-public class LatestCoordinateEntity implements java.io.Serializable {
+public class LatestCoordinateOutDTO {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private String nickname;
 	private String userIntID;
 	private Double longitude;
 	private Double latitude;
@@ -15,17 +12,16 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 	private String country;
 	private String province; 
 	private String city;
-	private Date lastAddressUpdate;  	
-	
-	public LatestCoordinateEntity() {
+	private Date lastAddressUpdate;
+		
+	public LatestCoordinateOutDTO() {
 		super();
 	}
 
-
-
-	public LatestCoordinateEntity(String userIntID,Double longitude, Double latitude,
+	public LatestCoordinateOutDTO(String nickname, String userIntID, Double longitude, Double latitude,
 			Date lastShakeTime, String country, String province, String city, Date lastAddressUpdate) {
 		super();
+		this.nickname = nickname;
 		this.userIntID = userIntID;
 		this.longitude = longitude;
 		this.latitude = latitude;
@@ -35,7 +31,15 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 		this.city = city;
 		this.lastAddressUpdate = lastAddressUpdate;
 	}
-		
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 	public String getUserIntID() {
 		return userIntID;
 	}
@@ -75,7 +79,7 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
+
 	public String getProvince() {
 		return province;
 	}
@@ -99,5 +103,5 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 	public void setLastAddressUpdate(Date lastAddressUpdate) {
 		this.lastAddressUpdate = lastAddressUpdate;
 	}
-			
+	
 }

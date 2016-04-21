@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class ProfileInDTO {
 
-	private String shallWayID;
+	private String userIntID;
 	private String email;
 	private String password;
-	private String nickName;
+	private String nickname;
 	private String gender;
 	private String dateOfBirth;
 	private String country;
@@ -16,19 +16,19 @@ public class ProfileInDTO {
 //	private Date lastUpdate; 
 //	private Date createTime;   
 //	private Date lastAddressUpdate;  	
-	private String status;
+	private String signature;
 	
 	public ProfileInDTO() {
 		super();
 	}
 
-	public ProfileInDTO(String shallWayID, String email, String password, String nickName, String gender,
-			String dateOfBirth, String country, String province, String city, String status) {
+	public ProfileInDTO(String userIntID, String email, String password, String nickname, String gender,
+			String dateOfBirth, String country, String province, String city, String signature) {
 		super();
-		this.shallWayID = shallWayID;
+		this.userIntID = userIntID;
 		this.email = email;
 		this.password = password;
-		this.nickName = nickName;
+		this.nickname = nickname;
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.country = country;
@@ -37,15 +37,18 @@ public class ProfileInDTO {
 //		this.lastUpdate = lastUpdate;
 //		this.createTime = createTime;
 //		this.lastAddressUpdate = lastAddressUpdate;
-		this.status = status;
+		this.signature = signature;
 	}
 	
-	public String getShallWayID() {
-		return shallWayID;
+
+	public String getUserIntID() {
+		return userIntID;
 	}
-	public void setShallWayID(String shallWayID) {
-		this.shallWayID = shallWayID;
+
+	public void setUserIntID(String userIntID) {
+		this.userIntID = userIntID;
 	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -58,12 +61,15 @@ public class ProfileInDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getNickName() {
-		return nickName;
+
+	public String getNickname() {
+		return nickname;
 	}
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
+
 	public String getGender() {
 		return gender;
 	}
@@ -112,11 +118,14 @@ public class ProfileInDTO {
 //	public void setLastAddressUpdate(Date lastAddressUpdate) {
 //		this.lastAddressUpdate = lastAddressUpdate;
 //	}
-	public String getStatus() {
-		return status;
+
+	public String getSignature() {
+		return signature;
 	}
-	public void setStatus(String status) {
-		this.status = status;
-	} 	
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
 	
 }

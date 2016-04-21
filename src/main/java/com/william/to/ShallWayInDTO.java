@@ -1,11 +1,9 @@
 package com.william.to;
 
-import java.util.Date;
-
 public class ShallWayInDTO {
 
-	private String shallWayID;
-	private String nickName;
+	private String userIntID;
+//	private String nickName;
 	private String country;
 	private String province;
 	private String city;
@@ -30,12 +28,12 @@ public class ShallWayInDTO {
 		
 
 
-	public ShallWayInDTO(String shallWayID, String nickName, String country, String province, String city, String place,
+	public ShallWayInDTO(String userIntID, String country, String province, String city, String place,
 			String startTime, String endTime, String carPool, String freeTour, String hotelShare, String freeGuide,
 			String title, String contact, String description) {
 		super();
-		this.shallWayID = shallWayID;
-		this.nickName = nickName;
+		this.userIntID = userIntID;
+//		this.nickName = nickName;
 		this.country = country;
 		this.province = province;
 		this.city = city;
@@ -51,22 +49,21 @@ public class ShallWayInDTO {
 		this.description = description;
 	}
 
-	public String getShallWayID() {
-		return shallWayID;
-	}
-	public void setShallWayID(String shallWayID) {
-		this.shallWayID = shallWayID;
-	}
-	
-	public String getNickName() {
-		return nickName;
+	public String getUserIntID() {
+		return userIntID;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setUserIntID(String userIntID) {
+		this.userIntID = userIntID;
 	}
 
-
+//	public String getNickName() {
+//		return nickName;
+//	}
+//
+//	public void setNickName(String nickName) {
+//		this.nickName = nickName;
+//	}
 
 	public String getCountry() {
 		return country;

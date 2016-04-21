@@ -7,10 +7,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.transform.Transformers;
 
 import com.william.util.HibernateUtil;
 import com.william.entity.LatestCoordinateEntity;
 import com.william.to.LatestCoordinateInDTO;
+import com.william.to.LatestCoordinateOutDTO;
 
 
 public class LatestCoordinateDAO {
@@ -28,8 +30,8 @@ public class LatestCoordinateDAO {
 	    	  
 	         tx = session.beginTransaction();
 	         
-	         latestcoordinate.setShallWayID(latestCoordinateInDTO.getShallWayID());
-	         latestcoordinate.setNickName(latestCoordinateInDTO.getNickName());
+	         latestcoordinate.setUserIntID(latestCoordinateInDTO.getUserIntID());
+//	         latestcoordinate.setNickName(latestCoordinateInDTO.getNickName());
 	         latestcoordinate.setLongitude(Double.parseDouble(latestCoordinateInDTO.getLongitude()));
 	         latestcoordinate.setLatitude(Double.parseDouble(latestCoordinateInDTO.getLatitude()));
 //	         latestcoordinate.setLastShakeTime(latestCoordinateInDTO.getLastShakeTime());
@@ -56,15 +58,15 @@ public class LatestCoordinateDAO {
 	    Transaction tx = null;
 	    Date updateTime = new Date();
 	    boolean flag = false;
-	    String shallWayID = latestCoordinateInDTO.getShallWayID();
+	    String userIntID = latestCoordinateInDTO.getUserIntID();
 	    LatestCoordinateEntity latestCoordinateEntity= new LatestCoordinateEntity(); /*for method 1 only*/
 	    
 	    try{
 		      tx = session.beginTransaction();
 		      
-		      String sql = "select * from latestcoordinate where ShallWayID = ?";
+		      String sql = "select * from latestcoordinate where UserIntID = ?";
 		      SQLQuery query = session.createSQLQuery(sql);     
-		      query.setString(0, shallWayID);
+		      query.setString(0, userIntID);
 		      query.addEntity(LatestCoordinateEntity.class);
 		      
 		      @SuppressWarnings("unchecked")
@@ -89,20 +91,16 @@ public class LatestCoordinateDAO {
 		    	  latestCoordinateEntity.setLastAddressUpdate(updateTime);
 		      }
 		      
-		      if (latestCoordinateInDTO.getLongitude()!=null){
+		      if (latestCoordinateInDTO.getLongitude()!=null && !"".equals(latestCoordinateInDTO.getLongitude().trim())){
 		    	  latestCoordinateEntity.setLongitude(Double.parseDouble(latestCoordinateInDTO.getLongitude()));
 		    	  latestCoordinateEntity.setLastShakeTime(updateTime);
 		      }
 		      
-		      if (latestCoordinateInDTO.getLatitude()!=null){
+		      if (latestCoordinateInDTO.getLatitude()!=null && !"".equals(latestCoordinateInDTO.getLatitude().trim())){
 		    	  latestCoordinateEntity.setLatitude(Double.parseDouble(latestCoordinateInDTO.getLatitude()));
 		    	  latestCoordinateEntity.setLastShakeTime(updateTime);
 		      }
-		      
-//		      if (latestCoordinateInDTO.getLastShakeTime()!=null){
-//		    	  latestCoordinateEntity.setLastShakeTime(latestCoordinateInDTO.getLastShakeTime());
-//		      }
-		     	      	 
+		      	     	      	 
 			  session.update(latestCoordinateEntity); 	
 		      tx.commit();
 			  flag =true;
@@ -115,82 +113,26 @@ public class LatestCoordinateDAO {
 	    return flag;
 	}
 
-//	/*Update Coordinate Record: update longitude & latitude only*/
-//	public void updateLatestCoordinate (String shallWayID,Double longitude, Double latitude, Date lastShakeTime){
-//		  
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//	    Transaction tx = null;		
-//	    try{
-//		      tx = session.beginTransaction();
-//	      
-//		         LatestCoordinateEntity latestcoordinate = (LatestCoordinateEntity)session.get(LatestCoordinateEntity.class, shallWayID); 
-//		      	 latestcoordinate.setLongitude(longitude);
-//		      	 latestcoordinate.setLatitude(latitude);
-//		      	 latestcoordinate.setLastShakeTime(lastShakeTime);    	 
-//				 session.update(latestcoordinate); 		      
-//		      tx.commit();
-//		    }catch (HibernateException e) {
-//		      if (tx!=null) tx.rollback();
-//		      e.printStackTrace(); 
-//		    }finally {
-//		      session.close(); 
-//		    }		    
-//	}
-//	/*Update Coordinate Record: update country & city only*/
-//	public void updateLatestCoordinate (String shallWayID, String country, String province, String city, Date lastAddressUpdate){
-//		  
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//	    Transaction tx = null;		
-//	    try{
-//		      tx = session.beginTransaction();
-//		      
-//		         LatestCoordinateEntity latestcoordinate = (LatestCoordinateEntity)session.get(LatestCoordinateEntity.class, shallWayID); 
-//		      	 latestcoordinate.setCountry(country);	
-//		      	 latestcoordinate.setProvince(province);
-//		      	 latestcoordinate.setCity(city);	
-//		      	 latestcoordinate.setLastAddressUpdate(lastAddressUpdate);		      	 
-//		      	 
-//				 session.update(latestcoordinate); 		      
-//		      tx.commit();
-//		    }catch (HibernateException e) {
-//		      if (tx!=null) tx.rollback();
-//		      e.printStackTrace(); 
-//		    }finally {
-//		      session.close(); 
-//		    }		    
-//	}
-//	
+	public LatestCoordinateOutDTO readLatestCoordinate(String userIntID){
 	
-	/* Read Latest Coordinate Record */
-//	public LatestCoordinateEntity[] readLatestCoordinate(String shallWayID){
-	public LatestCoordinateEntity readLatestCoordinate(String shallWayID){	
-		
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
-//	      LatestCoordinateEntity[] latestCoordinateArray =null;
-	      LatestCoordinateEntity latestCoordinateEntity= new LatestCoordinateEntity();
+	      LatestCoordinateOutDTO latestCoordinate = new LatestCoordinateOutDTO();
 	      
 	      try{
 	         tx = session.beginTransaction();
 	         
-		      String sql = "select * from latestcoordinate where ShallWayID = ?";
+		      String sql = "select b.Nickname, a.* from latestcoordinate a join profile b on a.userintid = b.userintid where a.UserIntID = ?";
 		      SQLQuery query = session.createSQLQuery(sql);
-		      query.setString(0, shallWayID);
-		      query.addEntity(LatestCoordinateEntity.class);
+		      query.setString(0, userIntID);
+		      query.setResultTransformer(Transformers.aliasToBean(LatestCoordinateOutDTO.class));
 		      
 		      @SuppressWarnings("unchecked")
-		      List<LatestCoordinateEntity> latestCoordinateList = query.list();	      
+		      List<LatestCoordinateOutDTO> latestCoordinateList = query.list();	      
 		      
 		      if (latestCoordinateList!=null)
-		    	  latestCoordinateEntity = latestCoordinateList.get(0);     
+		    	  latestCoordinate = latestCoordinateList.get(0);     
 		      
-//		      latestCoordinateArray = new LatestCoordinateEntity[latestCoordinateList.size()];		      
-//		      if (latestCoordinateList!=null){
-//		    	  for (int i=0;i<latestCoordinateList.size();i++)
-//		    		  latestCoordinateArray[i] = latestCoordinateList.get(i);
-//	  
-//		      }
-
 	         tx.commit();
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();
@@ -198,8 +140,7 @@ public class LatestCoordinateDAO {
 	      }finally {
 	         session.close(); 
 	      }
-	      return latestCoordinateEntity;
-//	      return latestCoordinateArray;
+	      return latestCoordinate;
 	      
 	   }
 }

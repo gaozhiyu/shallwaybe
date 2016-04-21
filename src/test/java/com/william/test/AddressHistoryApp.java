@@ -6,6 +6,7 @@ import java.util.Date;
 
 import com.william.DAO.AddressHistoryDAO;
 import com.william.to.AddressHistoryInDTO;
+import com.william.to.AddressHistoryOutDTO;
 
 public class AddressHistoryApp {
 
@@ -17,16 +18,22 @@ public class AddressHistoryApp {
         
 //		Date updateTime = new Date();
 		
-        String[] cityList = null;
-        AddressHistoryInDTO addressHistory = new AddressHistoryInDTO("1112","Huzong","China","Henan Province","Luo Yang","R");
+//        String[] cityList = null;
+        AddressHistoryOutDTO[] AddressHistoryArray = null;
+        AddressHistoryInDTO addressHistory = new AddressHistoryInDTO("981e630a59964937a006d320d2d097df","Singapore","Guang Dong Province","Guang Zhou","R");
         
         AddressHistoryDAO AHS = new AddressHistoryDAO();
         
-        AHS.addAddressHistory(addressHistory);
-        cityList=AHS.readAddressHistory("1111","R");   
+//        AHS.addAddressHistory(addressHistory);
+        AddressHistoryArray=AHS.readAddressHistory("981e630a59964937a006d320d2d097df","R");   
         
-        for (int i=0; i<cityList.length;i++)
-        	System.out.println("City "+i+" : "+cityList[i]);
+        for (int i=0; i<AddressHistoryArray.length;i++){
+        	if (i==0)
+        		System.out.println("Nickname: "+AddressHistoryArray[i].getNickname());
+        	
+        	System.out.println("\tCity "+i+" : "+AddressHistoryArray[i].getCity());
+        	
+        }
         
 	}
 

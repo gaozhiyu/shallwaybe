@@ -3,7 +3,7 @@ package com.william.to;
 public class RegisterOutDTO extends CommonDTO{
 
 	private String registerStatus;
-	private String shallwayID;
+	private String userIntID;
 	//private String userID;//email Address
 	private String nickname;
 	//private String status;
@@ -21,13 +21,11 @@ public class RegisterOutDTO extends CommonDTO{
 	public void setRegisterStatus(String registerStatus) {
 		this.registerStatus = registerStatus;
 	}
-	public String getShallwayID() {
-		return shallwayID;
+	public String getUserIntID() {
+		return userIntID;
 	}
-	public void setShallwayID(String shallwayId) {
-		shallwayID = shallwayId;
+	public void setUserIntID(String userIntID) {
+		this.userIntID = userIntID;
 	}
-	
-	
-	
+
 }

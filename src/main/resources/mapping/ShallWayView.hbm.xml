@@ -3,11 +3,14 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.william.entity.ShallWayEntity" table="shallway" catalog="shallway">
+    <class name="com.william.to.ShallWayOutDTO" table="shallwayview" catalog="shallway">
         <id name="dateID" type="string" >
             <column name="DateID" length="64" not-null="true" unique="true" />
         </id>
         
+        <property name="nickname" type="string">
+            <column name="Nickname" length="32" />
+        </property>
         <property name="userIntID" type="string">
             <column name="UserIntID" length="64"/>
         </property>               

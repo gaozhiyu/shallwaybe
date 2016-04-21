@@ -4,10 +4,10 @@
 
 <hibernate-mapping>
     <class name="com.william.entity.LatestCoordinateEntity" table="latestcoordinate" catalog="shallway">
-        <id name="shallWayID" type="string" >
-            <column name="ShallWayID" length="64" not-null="true" unique="true" />
+        <id name="userIntID" type="string" >
+            <column name="UserIntID" length="64" not-null="true" unique="true" />
         </id>
-        
+              
         <property name="nickName" type="string">
             <column name="NickName" length="32" />
         </property>        

@@ -16,5 +16,8 @@
         <mapping resource="mapping/ShallWay.hbm.xml"></mapping>
         <mapping resource="mapping/AddressHistory.hbm.xml"></mapping>       
         <mapping resource="mapping/Stock.hbm.xml"></mapping>
+		<mapping resource="mapping/Reply.hbm.xml"></mapping>   
+		<mapping resource="mapping/Follow.hbm.xml"></mapping>     
+		<mapping resource="mapping/ShallWayView.hbm.xml"></mapping>
     </session-factory>
 </hibernate-configuration>

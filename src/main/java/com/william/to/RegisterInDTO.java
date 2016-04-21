@@ -12,11 +12,11 @@ public class RegisterInDTO {
 		
 	}
 
-	public RegisterInDTO(String email, String password, String nickName, String country, String province, String city) {
+	public RegisterInDTO(String email, String password, String nickname, String country, String province, String city) {
 		super();
 		this.email = email;
 		this.password = password;
-		this.nickname = nickName;
+		this.nickname = nickname;
 		this.country = country;
 		this.province = province;
 		this.city = city;
@@ -50,7 +50,7 @@ public class RegisterInDTO {
 		return nickname;
 	}
 
-	public void setNickName(String nickname) {
+	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
 

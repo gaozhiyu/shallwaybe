@@ -8,6 +8,7 @@ import java.util.Date;
 import com.william.DAO.LatestCoordinateDAO;
 import com.william.entity.LatestCoordinateEntity;
 import com.william.to.LatestCoordinateInDTO;
+import com.william.to.LatestCoordinateOutDTO;
 
 public class LatestCoordinateApp {
 
@@ -18,25 +19,26 @@ public class LatestCoordinateApp {
 //        SimpleDateFormat sdfd1 =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        Date lastShakeTime =sdfd1.parse(lastShakeTimeString);
         
-        LatestCoordinateInDTO latestCoordinateInDTO = new LatestCoordinateInDTO("46","Huzong", "2.5", "2.6" ,"Singapore","He Nan Province", "Luo Yang");
+        LatestCoordinateInDTO latestCoordinateInDTO = new LatestCoordinateInDTO("981e630a59964937a006d320d2d097df","1.1", "1.2" ,"Singapore","He Nan Province", "Kai Feng");
         
-        LatestCoordinateEntity latestCoordinateEntity= new LatestCoordinateEntity();
+        LatestCoordinateOutDTO latestCoordinateOutDTO= new LatestCoordinateOutDTO();
         LatestCoordinateDAO MLC = new LatestCoordinateDAO();
         
-        MLC.addLatestCoordinate(latestCoordinateInDTO);
+//        MLC.addLatestCoordinate(latestCoordinateInDTO);
         MLC.updateLatestCoordinate(latestCoordinateInDTO);
         
-        latestCoordinateEntity = MLC.readLatestCoordinate("46");
+        latestCoordinateOutDTO = MLC.readLatestCoordinate("981e630a59964937a006d320d2d097df");
         
 		System.out.println();
-		System.out.println("ShallWayID: "+latestCoordinateEntity.getShallWayID());
-		System.out.println("\tLongitude: "+latestCoordinateEntity.getLongitude());
-		System.out.println("\tLatitude: "+latestCoordinateEntity.getLatitude());
-		System.out.println("\tLast Shake Time: "+latestCoordinateEntity.getLastShakeTime());
-		System.out.println("\tCountry: "+latestCoordinateEntity.getCountry());
-		System.out.println("\tProvince: "+latestCoordinateEntity.getProvince());
-		System.out.println("\tCity: "+latestCoordinateEntity.getCity());
-		System.out.println("\tLast Address Update: "+latestCoordinateEntity.getLastAddressUpdate());
+		System.out.println("Nickname: "+latestCoordinateOutDTO.getNickname());
+		System.out.println("UserIntID: "+latestCoordinateOutDTO.getUserIntID());
+		System.out.println("\tLongitude: "+latestCoordinateOutDTO.getLongitude());
+		System.out.println("\tLatitude: "+latestCoordinateOutDTO.getLatitude());
+		System.out.println("\tLast Shake Time: "+latestCoordinateOutDTO.getLastShakeTime());
+		System.out.println("\tCountry: "+latestCoordinateOutDTO.getCountry());
+		System.out.println("\tProvince: "+latestCoordinateOutDTO.getProvince());
+		System.out.println("\tCity: "+latestCoordinateOutDTO.getCity());
+		System.out.println("\tLast Address Update: "+latestCoordinateOutDTO.getLastAddressUpdate());
 	
 	}
 	

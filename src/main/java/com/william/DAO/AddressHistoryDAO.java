@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.transform.Transformers;
 
 import com.william.entity.AddressHistoryEntity;
 import com.william.entity.ProfileEntity;
@@ -28,7 +29,7 @@ public class AddressHistoryDAO {
 	      try{
 		         tx = session.beginTransaction();
 
-		         addressHistoryEntity.setShallWayID(addressTo.getShallWayID());
+		         addressHistoryEntity.setUserIntID(addressTo.getUserIntID());
 		         addressHistoryEntity.setNickName(addressTo.getNickName());
 		         addressHistoryEntity.setAddressSequenceID(addressSequenceID);
 		         addressHistoryEntity.setCountry(addressTo.getCountry());
@@ -48,30 +49,30 @@ public class AddressHistoryDAO {
 		      }
 //		      return outDto;	         
 	}
+	
+	public AddressHistoryOutDTO[] readAddressHistory(String userIntID, String placeType){	
 
-//	public AddressHistoryOutDTO readAddressHistory(String shallWayID, String placeType){	
-	public String[] readAddressHistory(String shallWayID, String placeType){		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;
 	    String[] cityListArray= null;
-	    AddressHistoryEntity addressHistory = new AddressHistoryEntity();
-//	    AddressHistoryOutDTO addressHistoryOutDTO = new AddressHistoryOutDTO();
+
+	    AddressHistoryOutDTO[] AddressHistoryArray = null;
 	    
 	    try{
 		      tx = session.beginTransaction();
 
-		      String sql = "select * from addresshistory where ShallWayID = ? and PlaceType = ? order by updatetime DESC";
+		      String sql = "select a.*, b.Nickname from addresshistory a join profile b on a.userintid = b.userintid where a.userIntID = ? and a.PlaceType = ? order by updatetime desc;";
 		      SQLQuery query = session.createSQLQuery(sql);  
-		      query.setString(0, shallWayID);
+		      query.setString(0, userIntID);
 		      query.setString(1, placeType);
-		      query.addEntity(AddressHistoryEntity.class);
-		      List<AddressHistoryEntity> adressHistoryList = query.list();	
-	    	  cityListArray = new String[adressHistoryList.size()];	
+		      query.setResultTransformer(Transformers.aliasToBean(AddressHistoryOutDTO.class));
+		      List<AddressHistoryOutDTO> adressHistoryList = query.list();	
+		      AddressHistoryArray = new AddressHistoryOutDTO[adressHistoryList.size()];
 	    	  
 		      if (adressHistoryList!=null){
 		    	  for (int i=0;i<adressHistoryList.size();i++){
-		    		addressHistory = adressHistoryList.get(i);
-		    	  	cityListArray[i]=addressHistory.getCity();  
+		    		  AddressHistoryArray[i] = adressHistoryList.get(i);
+
 		    	  }
 		      }
 	
@@ -82,7 +83,7 @@ public class AddressHistoryDAO {
 		    }finally {
 		      session.close(); 
 		    }	
-	    return cityListArray;
+	    return AddressHistoryArray;
 	}
 	
 }

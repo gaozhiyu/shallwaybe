@@ -2,22 +2,18 @@ package com.william.entity;
 
 import java.util.Date;
 
-public class ShallWayEntity implements java.io.Serializable {
+public class ShallWaySearchEntity {
 
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private String nickname;
 	private String dateID;
 	private String userIntID;
 	private String country;
 	private String province;
 	private String city;
 	private String place;
-	private Date startTime; // check correct format to use 28.2.2016
-	private Date endTime;   // check correct format to use 28.2.2016
-	private Date postTime;   // check correct format to use 28.2.2016
+	private Date startTime; 
+	private Date endTime;   
+	private Date postTime;   
 	
 	private Boolean carPool;
 	private Boolean freeTour;
@@ -28,14 +24,15 @@ public class ShallWayEntity implements java.io.Serializable {
 	private String contact;
 	private String description;
 		
-	public ShallWayEntity() {
+	public ShallWaySearchEntity() {
 		super();
 	}
-	
-	public ShallWayEntity(String dateID, String userIntID, String country, String province,
+
+	public ShallWaySearchEntity(String nickname, String dateID, String userIntID, String country, String province,
 			String city, String place, Date startTime, Date endTime, Date postTime, Boolean carPool, Boolean freeTour,
 			Boolean hotelShare, Boolean freeGuide, String title, String contact, String description) {
 		super();
+		this.nickname = nickname;
 		this.dateID = dateID;
 		this.userIntID = userIntID;
 		this.country = country;
@@ -53,7 +50,15 @@ public class ShallWayEntity implements java.io.Serializable {
 		this.contact = contact;
 		this.description = description;
 	}
-	
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 	public String getDateID() {
 		return dateID;
 	}
@@ -73,10 +78,11 @@ public class ShallWayEntity implements java.io.Serializable {
 	public String getCountry() {
 		return country;
 	}
+
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
+
 	public String getProvince() {
 		return province;
 	}
@@ -88,72 +94,95 @@ public class ShallWayEntity implements java.io.Serializable {
 	public String getCity() {
 		return city;
 	}
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
 	public String getPlace() {
 		return place;
 	}
+
 	public void setPlace(String place) {
 		this.place = place;
 	}
+
 	public Date getStartTime() {
 		return startTime;
 	}
+
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
+
 	public Date getEndTime() {
 		return endTime;
 	}
+
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
+
 	public Date getPostTime() {
 		return postTime;
 	}
+
 	public void setPostTime(Date postTime) {
 		this.postTime = postTime;
 	}
+
 	public Boolean getCarPool() {
 		return carPool;
 	}
+
 	public void setCarPool(Boolean carPool) {
 		this.carPool = carPool;
 	}
+
 	public Boolean getFreeTour() {
 		return freeTour;
 	}
+
 	public void setFreeTour(Boolean freeTour) {
 		this.freeTour = freeTour;
 	}
+
 	public Boolean getHotelShare() {
 		return hotelShare;
 	}
+
 	public void setHotelShare(Boolean hotelShare) {
 		this.hotelShare = hotelShare;
 	}
+
 	public Boolean getFreeGuide() {
 		return freeGuide;
 	}
+
 	public void setFreeGuide(Boolean freeGuide) {
 		this.freeGuide = freeGuide;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getContact() {
 		return contact;
 	}
+
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
