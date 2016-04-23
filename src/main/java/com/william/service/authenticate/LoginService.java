@@ -3,9 +3,9 @@ package com.william.service.authenticate;
 import org.apache.log4j.Logger;
 
 import com.william.to.LoginResultOutDTO;
-import com.william.to.LogoutResultOutDTO;
 import com.william.to.LoginResultInDTO;
 import com.william.util.JedisUtil;
+import com.william.vo.LogoutResultOutDTO;
 
 public class LoginService {
 	

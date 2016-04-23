@@ -3,11 +3,8 @@ package com.william.service.unauthenticate;
 import org.apache.log4j.Logger;
 
 import com.william.DAO.ProfileDAO;
-import com.william.to.LoginResultOutDTO;
-import com.william.to.LogoutResultOutDTO;
 import com.william.to.LoginResultInDTO;
-import com.william.to.RegisterOutDTO;
-import com.william.util.JedisUtil;
+import com.william.to.LoginResultOutDTO;
 
 public class LoginService {
 	

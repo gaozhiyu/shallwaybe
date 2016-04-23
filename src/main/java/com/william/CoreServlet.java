@@ -37,6 +37,7 @@ public class CoreServlet extends HttpServlet {
 			HttpServletResponse response) {
 		PrintWriter out;
 		try {
+	            
 			out = response.getWriter();
 			ServletInputStream is = request.getInputStream();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -54,14 +55,15 @@ public class CoreServlet extends HttpServlet {
 			try {
 				 str = mapper.writeValueAsString(returnValue);
 				 //TODO make it more specific
-					if(request.getRequestURI().contains("/LoginService/login")){
+					if(request.getRequestURI().equals(request.getContextPath()+"/unauthenticate/LoginService/login")){
 						logger.info("Store the datat to memory");
 						LoginResultOutDTO tmp = (LoginResultOutDTO)returnValue;
 						if("Y".equalsIgnoreCase(tmp.getStatus())){
 							logger.info("Userid\t"+ tmp.getUserid());
 							//Fixme update the logic
-							HttpSession session = request.getSession();
+							HttpSession session = request.getSession(true);
 							session.setAttribute("userid", tmp.getUserid());
+	//						String tmpid = (String) session.getAttribute("userid");
 							session.setMaxInactiveInterval(-1);
 							
 							String sessionId = request.getSession().getId();
@@ -85,6 +87,7 @@ public class CoreServlet extends HttpServlet {
 			
 			out.write(str);
 			out.flush();
+			//response.setHeader(arg0, arg1)
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

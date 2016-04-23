@@ -1,10 +1,12 @@
 package com.william.to;
 
-public class LoginResultOutDTO extends CommonDTO{
+import com.william.vo.CommonVO;
+
+public class LoginResultOutDTO extends CommonVO{
 
 		// TODO Auto-generated method stub
 	String sessionID;
-	String userIntID;
+	String username;
 	String nickname;
 
 	public String getNickname() {
@@ -15,12 +17,14 @@ public class LoginResultOutDTO extends CommonDTO{
 		this.nickname = nickname;
 	}
 
-	public String getUserIntID() {
-		return userIntID;
+
+
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserIntID(String userIntID) {
-		this.userIntID = userIntID;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getSessionID() {

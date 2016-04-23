@@ -1,6 +1,8 @@
 package com.william.to;
 
-public class ShakeOutDTO extends CommonDTO{
+import com.william.vo.CommonVO;
+
+public class ShakeOutDTO extends CommonVO{
 
 	private ShakeDTO[] shakeArray;
 

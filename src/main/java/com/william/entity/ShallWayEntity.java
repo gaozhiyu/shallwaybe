@@ -13,6 +13,9 @@ public class ShallWayEntity implements java.io.Serializable {
 	private String userIntID;
 	private String country;
 	private String province;
+	public String getProvince() {
+		return province;
+	}
 	private String city;
 	private String place;
 	private Date startTime; // check correct format to use 28.2.2016
@@ -77,9 +80,6 @@ public class ShallWayEntity implements java.io.Serializable {
 		this.country = country;
 	}
 	
-	public String getProvince() {
-		return province;
-	}
 
 	public void setProvince(String province) {
 		this.province = province;

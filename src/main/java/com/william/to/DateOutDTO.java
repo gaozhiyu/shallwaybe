@@ -1,6 +1,8 @@
 package com.william.to;
 
-public class DateOutDTO extends CommonDTO{
+import com.william.vo.CommonVO;
+
+public class DateOutDTO extends CommonVO{
 //	private String status;
 	private DateDTO[] dateArray;
 

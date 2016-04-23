@@ -1,6 +1,9 @@
 package com.william.to;
 
-public class RegisterOutDTO extends CommonDTO{
+import com.william.vo.CommonVO;
+
+
+public class RegisterOutDTO extends CommonVO{
 
 	private String registerStatus;
 	private String userIntID;
