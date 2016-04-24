@@ -3,6 +3,8 @@ package com.william.vo;
 public class CommonVO {
 	String status;
 	String userid;
+	
+	
 	public String getStatus() {
 		return status;
 	}

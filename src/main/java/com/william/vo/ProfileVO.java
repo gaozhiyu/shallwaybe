@@ -6,7 +6,6 @@ public class ProfileVO extends CommonVO {
 
 
 	
-	private String shallWayID;
 	private String email;
 	private String nickname;
 	private String gender;
@@ -18,13 +17,6 @@ public class ProfileVO extends CommonVO {
 	
 	
 
-	public String getShallWayID() {
-		return shallWayID;
-	}
-
-	public void setShallWayID(String shallWayID) {
-		this.shallWayID = shallWayID;
-	}
 
 	public String getEmail() {
 		return email;
