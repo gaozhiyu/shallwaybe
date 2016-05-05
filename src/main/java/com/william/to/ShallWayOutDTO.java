@@ -2,7 +2,9 @@ package com.william.to;
 
 import java.util.Date;
 
-public class ShallWayOutDTO {
+import com.william.vo.CommonVO;
+
+public class ShallWayOutDTO extends CommonVO {
 
 	private String nickname;
 	private String dateID;
