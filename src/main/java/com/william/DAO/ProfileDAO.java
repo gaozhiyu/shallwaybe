@@ -221,8 +221,8 @@ public class ProfileDAO {
 		      if (profileList!=null && profileList.size()==1){
 		    	  profileEntity = profileList.get(0);
 		    	  output.setStatus("Y");
-		    	  output.setUserid(profileEntity.getUserIntID());
-		    	  output.setUsername(profileEntity.getEmail());
+		    	  output.setUserIntID(profileEntity.getUserIntID());
+		    	  output.setUserid(profileEntity.getEmail());
 		    	  output.setNickname(profileEntity.getNickname());
 		      }
 

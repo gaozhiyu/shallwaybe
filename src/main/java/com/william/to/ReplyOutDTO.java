@@ -1,25 +1,28 @@
-package com.william.entity;
+package com.william.to;
 
 import java.util.Date;
 
-public class ReplyEntity implements java.io.Serializable {
+public class ReplyOutDTO implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String dateID;
     private String replierIntID;
+    private String replierNickname;
 	private Date replyTime;
 	private String replyContents;
 	
-	public ReplyEntity() {
+	public ReplyOutDTO() {
 		super();
 	}
 
-	public ReplyEntity(String id, String dateID, String replierIntID, Date replyTime, String replyContents) {
+	public ReplyOutDTO(String id, String dateID, String replierIntID, String replierNickname, Date replyTime,
+			String replyContents) {
 		super();
 		this.id = id;
 		this.dateID = dateID;
 		this.replierIntID = replierIntID;
+		this.replierNickname = replierNickname;
 		this.replyTime = replyTime;
 		this.replyContents = replyContents;
 	}
@@ -46,6 +49,14 @@ public class ReplyEntity implements java.io.Serializable {
 
 	public void setReplierIntID(String replierIntID) {
 		this.replierIntID = replierIntID;
+	}
+
+	public String getReplierNickname() {
+		return replierNickname;
+	}
+
+	public void setReplierNickname(String replierNickname) {
+		this.replierNickname = replierNickname;
 	}
 
 	public Date getReplyTime() {

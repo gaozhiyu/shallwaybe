@@ -1,35 +1,23 @@
-package com.william.entity;
+package com.william.to;
 
 import java.util.Date;
 
-public class ReplyEntity implements java.io.Serializable {
+public class ReplyInDTO implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private String id;
 	private String dateID;
     private String replierIntID;
-	private Date replyTime;
 	private String replyContents;
 	
-	public ReplyEntity() {
+	public ReplyInDTO() {
 		super();
 	}
 
-	public ReplyEntity(String id, String dateID, String replierIntID, Date replyTime, String replyContents) {
+	public ReplyInDTO(String dateID, String replierIntID, String replyContents) {
 		super();
-		this.id = id;
 		this.dateID = dateID;
 		this.replierIntID = replierIntID;
-		this.replyTime = replyTime;
 		this.replyContents = replyContents;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getDateID() {
@@ -46,14 +34,6 @@ public class ReplyEntity implements java.io.Serializable {
 
 	public void setReplierIntID(String replierIntID) {
 		this.replierIntID = replierIntID;
-	}
-
-	public Date getReplyTime() {
-		return replyTime;
-	}
-
-	public void setReplyTime(Date replyTime) {
-		this.replyTime = replyTime;
 	}
 
 	public String getReplyContents() {

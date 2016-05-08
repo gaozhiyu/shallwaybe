@@ -55,7 +55,7 @@ public class AddressHistoryDAO {
 	    Transaction tx = null;
 	    String[] cityListArray= null;
 
-	    AddressHistoryOutDTO[] AddressHistoryArray = null;
+	    AddressHistoryOutDTO[] addressHistoryArray = null;
 	    
 	    try{
 		      tx = session.beginTransaction();
@@ -66,11 +66,11 @@ public class AddressHistoryDAO {
 		      query.setString(1, placeType);
 		      query.setResultTransformer(Transformers.aliasToBean(AddressHistoryOutDTO.class));
 		      List<AddressHistoryOutDTO> adressHistoryList = query.list();	
-		      AddressHistoryArray = new AddressHistoryOutDTO[adressHistoryList.size()];
+		      addressHistoryArray = new AddressHistoryOutDTO[adressHistoryList.size()];
 	    	  
 		      if (adressHistoryList!=null){
 		    	  for (int i=0;i<adressHistoryList.size();i++){
-		    		  AddressHistoryArray[i] = adressHistoryList.get(i);
+		    		  addressHistoryArray[i] = adressHistoryList.get(i);
 
 		    	  }
 		      }
@@ -82,7 +82,7 @@ public class AddressHistoryDAO {
 		    }finally {
 		      session.close(); 
 		    }	
-	    return AddressHistoryArray;
+	    return addressHistoryArray;
 	}
 	
 }

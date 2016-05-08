@@ -8,21 +8,12 @@
             <column name="ID" length="64" not-null="true" unique="true" />
         </id>
         
-        <property name="shallWayID" type="string">
-            <column name="ShallWayID" length="64" />
-        </property>
-        <property name="authorIntID" type="string">
-            <column name="AuthorIntID" length="64" />
-        </property>             
-        <property name="authorNickname" type="string">
-            <column name="AuthorNickname" length="32" />
+        <property name="dateID" type="string">
+            <column name="DateID" length="64" />
         </property>
         <property name="replierIntID" type="string">
             <column name="ReplierIntID" length="64" />
-        </property>             
-        <property name="replierNickname" type="string">
-            <column name="ReplierNickname" length="32" />
-        </property>           
+        </property>                      
         <property name="replyTime" type="java.util.Date">
             <column name="ReplyTime" />
         </property> 

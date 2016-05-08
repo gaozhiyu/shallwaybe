@@ -1,24 +1,27 @@
-package com.william.entity;
+package com.william.to;
 
 import java.util.Date;
 
-public class FollowEntity implements java.io.Serializable {
+public class FollowOutDTO implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String dateID;
     private String followerIntID;
+    private String followerNickname;
 	private Date followTime;
 	
-	public FollowEntity() {
+	public FollowOutDTO() {
 		super();
 	}
 
-	public FollowEntity(String id, String dateID, String followerIntID, Date followTime) {
+
+	public FollowOutDTO(String id, String dateID, String followerIntID, String followerNickname, Date followTime) {
 		super();
 		this.id = id;
 		this.dateID = dateID;
 		this.followerIntID = followerIntID;
+		this.followerNickname = followerNickname;
 		this.followTime = followTime;
 	}
 
@@ -52,6 +55,16 @@ public class FollowEntity implements java.io.Serializable {
 
 	public void setFollowTime(Date followTime) {
 		this.followTime = followTime;
+	}
+
+
+	public String getFollowerNickname() {
+		return followerNickname;
+	}
+
+
+	public void setFollowerNickname(String followerNickname) {
+		this.followerNickname = followerNickname;
 	}
 	
 	

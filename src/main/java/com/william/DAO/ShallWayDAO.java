@@ -13,8 +13,10 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 //import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 //import org.hibernate.cfg.Configuration;
 import org.hibernate.transform.Transformers;
@@ -77,7 +79,6 @@ public class ShallWayDAO {
 		
 		
 		/* Read one ShallWay Record to be displayed with details in APP*/
-		/* Nickname to be added for each output 21.4.2016*/
 	public ShallWayOutDTO retrieveDateByDateID(String dateID){
 		   
 			  Session session = HibernateUtil.getSessionFactory().openSession();
@@ -98,16 +99,9 @@ public class ShallWayDAO {
 			      @SuppressWarnings("unchecked")
 			      List<ShallWayOutDTO> shallWayList = query.list();	
 			      
-//			      shallWayArray = new ShallWayEntity[shallWayList.size()];
 			      if (shallWayList!=null)
 			    	  shallWay= shallWayList.get(0);
 			      
-//			      if (shallWayList!=null){
-//			    	  for (int i=0;i<shallWayList.size();i++)
-//			    	  shallWayArray[i] = shallWayList.get(i);
-//   	  
-////			      }
-
 		         tx.commit();
 		      }catch (HibernateException e) {
 		         if (tx!=null) tx.rollback();
@@ -119,23 +113,23 @@ public class ShallWayDAO {
 		   }
 	
 		/* Read ShallWay Record for user himself/herself*/
-	public ShallWayEntity[] readShallWay(String userIntID){
+	public ShallWayEntity[] readShallWay(String userIntID, int pageNumber){
 		   
 			  Session session = HibernateUtil.getSessionFactory().openSession();
 		      Transaction tx = null;
 		      ShallWayEntity[] shallWayArray =null;
+		      int pageSize =10;
 		      
 		      try{
 		         tx = session.beginTransaction();
 		         
-//			      String sql = "select * from ShallWayView where UserIntID = ? order by posttime DESC";
 			      String sql = "select * from ShallWay where UserIntID = ? order by posttime DESC";
 			      SQLQuery query = session.createSQLQuery(sql);
 			      query.setString(0, userIntID);
 			      query.addEntity(ShallWayEntity.class);
-//			      query.addScalar("Description", new StringType());
-//			      query.setResultTransformer(Transformers.aliasToBean(ShallWayOutDTO.class));
-			      
+			      query.setFirstResult((pageNumber-1) * pageSize);
+			      query.setMaxResults(pageSize);
+	      
 			      
 			      @SuppressWarnings("unchecked")
 			      List<ShallWayEntity> shallWayList = query.list();	
@@ -158,51 +152,79 @@ public class ShallWayDAO {
 		      return shallWayArray;
 		   }
 	
-	
-	/* Search ShallWay Record based on criteria*/
-	/* ShallWayEntity ShallWayOutDTO*/
-	public ShallWayOutDTO[] readShallWay(ShallWaySearchDTO shallWaySearchDTO) throws ParseException{
+	/* Search ShallWay Record based on criteria with Pagination */
+	public ShallWayOutDTO[] readShallWay(ShallWaySearchDTO shallWaySearchDTO, String userIntID, int pageNumber) throws ParseException{
 	   
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
 	      ShallWayOutDTO[] shallWayArray =null;
 	      SimpleDateFormat sdfd =new SimpleDateFormat("dd/MM/yyyy");
+	      int pageSize =10;
 	      
 	      try{
 	         tx = session.beginTransaction();
-	         
-//		      String sql = "select * from ShallWayView where UserIntID = ? order by posttime DESC";
-//		      SQLQuery query = session.createSQLQuery(sql);
-////		      query.setString(0, userIntID);
-//		      query.addEntity(ShallWayOutDTO.class);
-//		      query.addScalar("Description", new StringType());
-//		      query.setResultTransformer(Transformers.aliasToBean(ShallWayOutDTO.class));
-//		      
-//		      
-//		      @SuppressWarnings("unchecked")
-//		      List<ShallWayOutDTO> shallWayList = query.list();	
-//		      
-//		      shallWayArray = new ShallWayOutDTO[shallWayList.size()];
-//		            
-//		      if (shallWayList!=null){
-//		    	  for (int i=0;i<shallWayList.size();i++)
-//		    	  shallWayArray[i] = shallWayList.get(i);
-//	  
-//		      }
-	         
+	        	         
 	         Criteria crit = session.createCriteria(ShallWayOutDTO.class);
-	         @SuppressWarnings("unchecked")
-	         List<ShallWayOutDTO> shallWayList = crit.add(Restrictions.eq("country",shallWaySearchDTO.getCountry()))
-	        		 								 .add(Restrictions.eq("province",shallWaySearchDTO.getProvince()))		
-	        		 								 .add(Restrictions.eq("city",shallWaySearchDTO.getCity()))
-	        		 								 .add(Restrictions.eq("place",shallWaySearchDTO.getPlace())) //to modify
-	        		 							     .add( Restrictions.and(
-	        		 							    		Restrictions.le("startTime", sdfd.parse(shallWaySearchDTO.getEndTime())),
-	        		 							    		Restrictions.ge("endTime",sdfd.parse(shallWaySearchDTO.getStartTime()))
-	        		 							       ))
-	        		 								 .list();        
+	         crit.setFirstResult((pageNumber - 1) * pageSize);
+	         crit.setMaxResults(pageSize);
 	         
-		      shallWayArray = new ShallWayOutDTO[shallWayList.size()];
+//	         @SuppressWarnings("unchecked")
+//	         List<ShallWayOutDTO> shallWayList = crit.add(Restrictions.eq("country",shallWaySearchDTO.getCountry()))
+//	        		 								 .add(Restrictions.eq("province",shallWaySearchDTO.getProvince()))		
+//	        		 								 .add(Restrictions.eq("city",shallWaySearchDTO.getCity()))
+//	        		 								 .add(Restrictions.or(
+//	        		 										 Restrictions.like("place",shallWaySearchDTO.getPlace().trim(),MatchMode.ANYWHERE), 
+//	        		 										 Restrictions.isNull("place")))
+//	        		 								 .add( Restrictions.and(
+//	        		 							    		Restrictions.le("startTime", sdfd.parse(shallWaySearchDTO.getEndTime())),
+//	        		 							    		Restrictions.ge("endTime", sdfd.parse(shallWaySearchDTO.getStartTime()))
+//	        		 							       ))
+//	        		 							     .add(Restrictions.disjunction()
+//	        		 							           .add(Restrictions.eq("carPool", Boolean.parseBoolean(shallWaySearchDTO.getCarPool())))
+//	        		 							           .add(Restrictions.eq("freeTour", Boolean.parseBoolean(shallWaySearchDTO.getFreeTour())))
+//	        		 							           .add(Restrictions.eq("hotelShare", Boolean.parseBoolean(shallWaySearchDTO.getHotelShare())))
+//	        		 							           .add(Restrictions.eq("freeGuide", Boolean.parseBoolean(shallWaySearchDTO.getFreeGuide())))
+//	        		 							       )
+//	        		 								 .list();  
+	         
+	         crit.add(Restrictions.ne("userIntID",userIntID));
+	         
+	         crit.add(Restrictions.eq("country",shallWaySearchDTO.getCountry()))
+				 .add(Restrictions.eq("province",shallWaySearchDTO.getProvince()))		
+				 .add(Restrictions.eq("city",shallWaySearchDTO.getCity()));
+	         
+	         crit.add(Restrictions.or(
+					  Restrictions.like("place",shallWaySearchDTO.getPlace().trim(),MatchMode.ANYWHERE), 
+					  Restrictions.isNull("place")));
+	         
+	         crit.add(Restrictions.and(
+					  Restrictions.le("startTime", sdfd.parse(shallWaySearchDTO.getEndTime())),
+					  Restrictions.ge("endTime", sdfd.parse(shallWaySearchDTO.getStartTime()))
+					  ));
+	         
+	        Disjunction dj = Restrictions.disjunction();
+        
+	        if (shallWaySearchDTO.getCarPool().equals("true")){
+	        	dj.add(Restrictions.eq("carPool", Boolean.parseBoolean(shallWaySearchDTO.getCarPool())));
+	        }
+	        
+	        if (shallWaySearchDTO.getFreeTour().equals("true")){
+	        	dj.add(Restrictions.eq("freeTour", Boolean.parseBoolean(shallWaySearchDTO.getFreeTour())));
+	        }
+	        
+	        if (shallWaySearchDTO.getHotelShare().equals("true")){
+	        	dj.add(Restrictions.eq("hotelShare", Boolean.parseBoolean(shallWaySearchDTO.getHotelShare())));
+	        }
+	        
+	        if (shallWaySearchDTO.getFreeGuide().equals("true")){
+	        	dj.add(Restrictions.eq("freeGuide", Boolean.parseBoolean(shallWaySearchDTO.getFreeGuide())));
+	        }
+	        
+			crit.add(dj);
+			crit.addOrder(Order.desc("postTime"));
+			List<ShallWayOutDTO> shallWayList = crit.list();  	         
+	         
+		    shallWayArray = new ShallWayOutDTO[shallWayList.size()];
 	            
 		      if (shallWayList!=null){
 		    	  for (int i=0;i<shallWayList.size();i++)
@@ -219,7 +241,7 @@ public class ShallWayDAO {
 	      }
 	      return shallWayArray;
 	   }
-	   
+	
 	   /*update ShallWay Record*/	
 		public boolean updateShallWay (ShallWayUpdateDTO shallWayUpdateDTO) throws ParseException{	
 			
@@ -229,14 +251,16 @@ public class ShallWayDAO {
 		      ShallWayEntity shallWayEntity = new ShallWayEntity();
 		      Date postTime = new Date();
 		      String dateID = shallWayUpdateDTO.getDateID();
+		      String userIntID = shallWayUpdateDTO.getUserIntID();
 		      SimpleDateFormat sdfd =new SimpleDateFormat("dd/MM/yyyy");
 
 		      try{
 		         tx = session.beginTransaction();
 		         
-			      String sql = "select * from shallway where dateID = ?";
+			      String sql = "select * from shallway where dateID = ? and userIntID = ?";
 			      SQLQuery query = session.createSQLQuery(sql);
 			      query.setString(0, dateID);
+			      query.setString(1, userIntID);
 			      query.addEntity(ShallWayEntity.class);
 			      
 			      @SuppressWarnings("unchecked")
