@@ -3,6 +3,7 @@ package com.william.to;
 public class ShallWaySearchDTO {
 	
 	private String userIntID;
+	private String page;
 	private String country;
 	private String province;
 	private String city;
@@ -103,5 +104,14 @@ public class ShallWaySearchDTO {
 	public void setFreeGuide(String freeGuide) {
 		this.freeGuide = freeGuide;
 	}
+
+	public String getPage() {
+		return page;
+	}
+
+	public void setPage(String page) {
+		this.page = page;
+	}
+	
 	
 }
