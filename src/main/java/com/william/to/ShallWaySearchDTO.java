@@ -1,7 +1,8 @@
 package com.william.to;
 
 public class ShallWaySearchDTO {
-
+	
+	private String userIntID;
 	private String country;
 	private String province;
 	private String city;
@@ -18,9 +19,10 @@ public class ShallWaySearchDTO {
 		super();
 	}
 
-	public ShallWaySearchDTO(String country, String province, String city, String place, String startTime,
+	public ShallWaySearchDTO(String userIntID, String country, String province, String city, String place, String startTime,
 			String endTime, String carPool, String freeTour, String hotelShare, String freeGuide) {
 		super();
+		this.userIntID =userIntID;
 		this.country = country;
 		this.province = province;
 		this.city = city;
@@ -31,6 +33,14 @@ public class ShallWaySearchDTO {
 		this.freeTour = freeTour;
 		this.hotelShare = hotelShare;
 		this.freeGuide = freeGuide;
+	}
+
+	public String getUserIntID() {
+		return userIntID;
+	}
+
+	public void setUserIntID(String userIntID) {
+		this.userIntID = userIntID;
 	}
 
 	public String getCountry() {

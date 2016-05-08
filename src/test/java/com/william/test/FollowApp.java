@@ -13,7 +13,7 @@ public class FollowApp {
 		
 		FollowInDTO followInDTO = new FollowInDTO("5b3ad3653abf47729f5147405e16bead","981e630a59964937a006d320d2d097df");
 		
-//		followDAO.addFollow(followInDTO);
+		followDAO.addFollow(followInDTO);
 		followArray = followDAO.readFollow("5b3ad3653abf47729f5147405e16bead");
 		
 		for(int i=0; i<followArray.length;i++){

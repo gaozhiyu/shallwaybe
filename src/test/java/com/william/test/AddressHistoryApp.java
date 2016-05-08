@@ -24,7 +24,7 @@ public class AddressHistoryApp {
         
         AddressHistoryDAO AHS = new AddressHistoryDAO();
         
-//        AHS.addAddressHistory(addressHistory);
+        AHS.addAddressHistory(addressHistory);
         AddressHistoryArray=AHS.readAddressHistory("981e630a59964937a006d320d2d097df","R");   
         
         for (int i=0; i<AddressHistoryArray.length;i++){

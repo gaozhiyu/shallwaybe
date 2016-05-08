@@ -153,7 +153,7 @@ public class ShallWayDAO {
 		   }
 	
 	/* Search ShallWay Record based on criteria with Pagination */
-	public ShallWayOutDTO[] readShallWay(ShallWaySearchDTO shallWaySearchDTO, String userIntID, int pageNumber) throws ParseException{
+	public ShallWayOutDTO[] readShallWay(ShallWaySearchDTO shallWaySearchDTO, int pageNumber) throws ParseException{
 	   
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
@@ -187,7 +187,7 @@ public class ShallWayDAO {
 //	        		 							       )
 //	        		 								 .list();  
 	         
-	         crit.add(Restrictions.ne("userIntID",userIntID));
+	         crit.add(Restrictions.ne("userIntID",shallWaySearchDTO.getUserIntID()));
 	         
 	         crit.add(Restrictions.eq("country",shallWaySearchDTO.getCountry()))
 				 .add(Restrictions.eq("province",shallWaySearchDTO.getProvince()))		
@@ -204,19 +204,19 @@ public class ShallWayDAO {
 	         
 	        Disjunction dj = Restrictions.disjunction();
         
-	        if (shallWaySearchDTO.getCarPool().equals("true")){
+	        if ("true".equalsIgnoreCase(shallWaySearchDTO.getCarPool())){
 	        	dj.add(Restrictions.eq("carPool", Boolean.parseBoolean(shallWaySearchDTO.getCarPool())));
 	        }
 	        
-	        if (shallWaySearchDTO.getFreeTour().equals("true")){
+	        if ("true".equalsIgnoreCase(shallWaySearchDTO.getFreeTour())){
 	        	dj.add(Restrictions.eq("freeTour", Boolean.parseBoolean(shallWaySearchDTO.getFreeTour())));
 	        }
 	        
-	        if (shallWaySearchDTO.getHotelShare().equals("true")){
+	        if ("true".equalsIgnoreCase(shallWaySearchDTO.getHotelShare())){
 	        	dj.add(Restrictions.eq("hotelShare", Boolean.parseBoolean(shallWaySearchDTO.getHotelShare())));
 	        }
 	        
-	        if (shallWaySearchDTO.getFreeGuide().equals("true")){
+	        if ("true".equalsIgnoreCase(shallWaySearchDTO.getFreeGuide())){
 	        	dj.add(Restrictions.eq("freeGuide", Boolean.parseBoolean(shallWaySearchDTO.getFreeGuide())));
 	        }
 	        

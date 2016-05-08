@@ -24,7 +24,7 @@ public class DateService {
 		
 		DateOutDTO outDto = new DateOutDTO();
 		ShallWayDAO msw= new ShallWayDAO();
-		ShallWayEntity[] shallwayArray = msw.readShallWay(dateInDTO.getUserid());
+		ShallWayEntity[] shallwayArray = msw.readShallWay(dateInDTO.getUserid(),Integer.parseInt(dateInDTO.getPage()));
 		DateDTO[] dateArray = null;
 		if(shallwayArray!= null && shallwayArray.length>0){
 			dateArray = new DateDTO[shallwayArray.length];
@@ -56,7 +56,7 @@ public class DateService {
 		ShallWayDAO msw= new ShallWayDAO();
 		DateDTO[] dateArray = null;
 		try {
-			ShallWayOutDTO[] shallwayArray = msw.readShallWay(inDTO);
+			ShallWayOutDTO[] shallwayArray = msw.readShallWay(inDTO,1);
 			if(shallwayArray!= null && shallwayArray.length>0){
 				dateArray = new DateDTO[shallwayArray.length];
 				for(int i = 0;i < shallwayArray.length; i++ ){

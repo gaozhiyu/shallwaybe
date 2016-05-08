@@ -34,15 +34,15 @@ public class ShallWayApp {
 
 		ShallWayInDTO shallWayIn = new ShallWayInDTO ("981e630a59964937a006d320d2d097df","Singapore","CithHall", "CBD", "Merlion", startTimeString, endTimeString, "true", "true", "true", "true", "ONE DAY Tour", "QQ: 554163030", "Happy Happy Day");
 		ShallWayUpdateDTO shallWayUpdate = new ShallWayUpdateDTO ("9c5fcf6772494885a8a9ed00c3961383","981e630a59964937a006d320d2d097df","Singapore","Clementi", "NUS", "S 16", startTimeString, endTimeString, "false", "false", "false", "false", "ONE DAY TREK", "QQ: 554163030", "Happy Happy Walk!");
-		ShallWaySearchDTO shallWaySearch = new ShallWaySearchDTO("Singapore","CithHall","CBD","Merlion", startTimeString, endTimeString, "true", "false", "false", "false");
+		ShallWaySearchDTO shallWaySearch = new ShallWaySearchDTO("981e630a59964937a006d320d2d097df","Singapore","CithHall","CBD","Merlion", startTimeString, endTimeString, "true", "false", "false", "false");
 		
-//		MSW.addShallWay(shallWayIn);			
+		MSW.addShallWay(shallWayIn);			
 //		MSW.updateShallWay(shallWayUpdate);		
 //		MSW.deleteShallWay("865093ac5c35444f8ab4cecdbb8fe62f", "1000");
 	
 //		shallWayArray = MSW.readShallWay("981e630a59964937a006d320d2d097df", 1);
 //		shallWayArray = MSW.readShallWay(shallWaySearch,"", 1);
-		shallWayArray = MSW.readShallWay(shallWaySearch,"981e630a59964937a006d320d2d097df",1);
+		shallWayArray = MSW.readShallWay(shallWaySearch,1);
 		
 //		shallWayArray = MSW.retrieveDateByDateID("109a2fce63d7497bbbdd48efd5a88c5b");
 //		System.out.println("Nickname: "+shallWayArray.getNickname());
