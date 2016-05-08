@@ -11,6 +11,8 @@ import com.william.to.DateOutDTO;
 import com.william.to.ShallWayInDTO;
 import com.william.to.ShallWayOutDTO;
 import com.william.to.ShallWaySearchDTO;
+import com.william.to.ShallWayUpdateDTO;
+import com.william.vo.CommonVO;
 import com.william.vo.CreateDateOutVO;
 
 public class DateService {
@@ -83,7 +85,7 @@ public class DateService {
 	
 	public CreateDateOutVO createDate(ShallWayInDTO inDTO){
 		CreateDateOutVO output = new CreateDateOutVO();
-		inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
+		//inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
 		ShallWayDAO msw= new ShallWayDAO();
 		try {
 			msw.addShallWay(inDTO);
@@ -109,6 +111,24 @@ public class DateService {
 		}
 		
 		return dateVO;
+	}
+	
+	public CommonVO updateDate (ShallWayUpdateDTO shallWayUpdateDTO){
+		ShallWayDAO msw= new ShallWayDAO();	
+		CommonVO output =new CommonVO();
+		try {
+			boolean flag=msw.updateShallWay(shallWayUpdateDTO);
+			if(flag)
+				output.setStatus("Y");
+			else 
+				output.setStatus("N");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			output.setStatus("N");
+		}
+		return output;
+	
 	}
 
 }
