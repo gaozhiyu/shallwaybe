@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServlet;
@@ -15,9 +18,17 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
+import com.corundumstudio.socketio.AckRequest;
+import com.corundumstudio.socketio.HandshakeData;
+import com.corundumstudio.socketio.SocketIOClient;
+import com.corundumstudio.socketio.SocketIOServer;
+import com.corundumstudio.socketio.listener.ConnectListener;
+import com.corundumstudio.socketio.listener.DataListener;
+import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.william.filter.LogFile;
 import com.william.to.LoginResultOutDTO;
 import com.william.util.JedisUtil;
 
@@ -143,5 +154,63 @@ public class CoreServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		return returnvalue;
+	}
+	
+	public void init(){
+		
+		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
+        config.setHostname("localhost");
+        config.setPort(9092);
+
+
+
+        final SocketIOServer server = new SocketIOServer(config);
+        //server.addNamespace("/chat");
+        server.addJsonObjectListener(LogFile.class, new DataListener<LogFile>() {
+            public void onData(SocketIOClient client, LogFile data, AckRequest ackSender) {
+            	String uuid = JedisUtil.get(data.getToID(),"chat");
+            	UUID to = UUID.fromString(uuid); 
+            	SocketIOClient toClient = client.getNamespace().getClient(to);
+            	if(toClient!=null)
+            		toClient.sendJsonObject(data);
+            }
+        });
+        
+        server.addDisconnectListener(new DisconnectListener() {
+            public void onDisconnect(SocketIOClient client) {
+                //...
+
+            	String key =client.get("id");
+            	JedisUtil.del(key);
+            	
+//            	if(clientMap.containsKey(key))
+//            		clientMap.remove(key);
+            }
+        });
+        
+        server.addConnectListener(new ConnectListener() {
+            public void onConnect(SocketIOClient client) {
+//TODO this id must be authenicate
+                  for(int i=0;i<1;i++){
+                      LogFile log = new LogFile();
+                      log.setLine("data from server line ["+i+"]");
+                      server.getBroadcastOperations().sendJsonObject(log);
+                  }
+                  System.out.println("");
+                  HandshakeData data = client.getHandshakeData();
+                  Map<String, List<String>> map =data.getUrlParams();
+                  List<String> strList = map.get("foo");
+                  if(strList!=null && strList.size()>0){
+//                	  if(clientMap.containsKey(strList.get(0)))
+//                		  clientMap.remove(strList.get(0));
+
+                	  	  client.set("id", strList.get(0));
+                		  JedisUtil.set(strList.get(0), "chat",client.getSessionId().toString());
+                  }
+                  
+            }
+        });
+
+        server.start();
 	}
 }
