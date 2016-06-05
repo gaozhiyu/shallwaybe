@@ -5,7 +5,7 @@ public class AddressDTO {
 
 	
 	String city;
-	String state;
+	String province;
 	String country;
 	String county;
 
@@ -15,11 +15,11 @@ public class AddressDTO {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public String getState() {
-		return state;
+	public String getProvince() {
+		return province;
 	}
-	public void setState(String state) {
-		this.state = state;
+	public void setProvince(String province) {
+		this.province = province;
 	}
 	public String getCountry() {
 		return country;
@@ -35,7 +35,7 @@ public class AddressDTO {
 	}
 	@Override
 	public String toString() {
-		return "AddressDTO [city=" + city + ", state=" + state + ", country="
+		return "AddressDTO [city=" + city + ", state=" + province + ", country="
 				+ country + ", county=" + county + "]";
 	}
 	

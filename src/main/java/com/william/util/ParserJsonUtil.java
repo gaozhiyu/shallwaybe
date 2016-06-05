@@ -30,24 +30,24 @@ public class ParserJsonUtil {
 	//private static HttpClient client = HttpClientBuilder.create().build();
 	private final static String USER_AGENT = "Mozilla/5.0";
 	
-	public void getAddress() {
+	public AddressDTO getAddress(String lat1,String long1) {
     	AddressDTO address = new AddressDTO();
 
         try {
 
-            GeoDTO jsonObj = getJSONfromURL("http://maps.google.com/maps/api/geocode/json?latlng=34.123231,112.091446&language=zh-EN&sensor=true");
+            GeoDTO jsonObj = getJSONfromURL("http://maps.google.com/maps/api/geocode/json?latlng="+lat1+","+long1+"&language=zh-EN&sensor=true");
             String Status = jsonObj.status;//getString("status");
             if (Status.equalsIgnoreCase("OK")) {
                 Result[] results = jsonObj.results;//getJSONArray("results");
                 Result zero = results[1];//.getJSONObject(0);
                 Address_component[] address_components = zero.address_components;//getJSONArray("address_components");
-
+                address = new AddressDTO();
                 for (int i = 0; i < address_components.length; i++) {
                     Address_component zero2 = address_components[i];
                     String long_name = zero2.long_name;//getString("long_name");
                     String[] mtypes = zero2.types;
                     String Type = mtypes[0];
-
+                    
                     if (TextUtils.isEmpty(long_name) == false || !long_name.equals(null) || long_name.length() > 0 || long_name != "") {
                         if (Type.equalsIgnoreCase("locality")) {
                             // Address2 = Address2 + long_name + ", ";
@@ -55,7 +55,7 @@ public class ParserJsonUtil {
                         } else if (Type.equalsIgnoreCase("administrative_area_level_2")) {
                             address.setCounty(long_name);
                         } else if (Type.equalsIgnoreCase("administrative_area_level_1")) {
-                        	address.setState(long_name);
+                        	address.setProvince(long_name);
                         } else if (Type.equalsIgnoreCase("country")) {
                         	address.setCountry(long_name);
                         }
@@ -71,7 +71,7 @@ public class ParserJsonUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        return address;
     }
 	  
     public static GeoDTO getJSONfromURL(String url) {

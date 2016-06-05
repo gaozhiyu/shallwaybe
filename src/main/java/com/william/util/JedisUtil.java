@@ -15,7 +15,7 @@ public class JedisUtil {
 	}
 	
 	public static void set(String key, String value){
-		getinstance().hset(key, "APP", value);
+		set(key, "APP", value);
 		//getinstance().set(key, value);	
 		//getinstance().expire(key, 15*60);
 	}
@@ -23,7 +23,7 @@ public class JedisUtil {
 	
 	public static String get(String key){
 		//return getinstance().get(key);
-		return getinstance().hget(key, "APP");
+		return getinstance().hget(key, "APP").toString();
 		
 //		getinstance().expire(key, 15*60);
 	}
@@ -55,6 +55,7 @@ public class JedisUtil {
 	public static void set(String key, String field, String value) {
 		// TODO Auto-generated method stub
 		getinstance().hset(key, field, value);
+		getinstance().persist(key);
 		
 	}
 

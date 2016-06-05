@@ -2,16 +2,29 @@ package com.william.to;
 
 public class ShakeInDTO {
 
-	private String username;
+	private String userid;
 	private String latitude;
 	private String longitude;
 
-	public String getUsername() {
-		return username;
+
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public ShakeInDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ShakeInDTO(String userid, String latitude, String longitude) {
+		super();
+		this.userid = userid;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
 	public String getLatitude() {
@@ -32,7 +45,7 @@ public class ShakeInDTO {
 
 	@Override
 	public String toString() {
-		return "ShakeInDTO [username=" + username + ", latitude=" + latitude
+		return "ShakeInDTO [username=" + userid + ", latitude=" + latitude
 				+ ", longitude=" + longitude + "]";
 	}
 	
