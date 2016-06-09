@@ -7,6 +7,7 @@ public class LogFile {
     private String toID;
     
     private String fromID;
+    private String fromNickname;
 
 	public String getLine() {
         return line;
@@ -15,6 +16,14 @@ public class LogFile {
     public void setLine(String line) {
         this.line = line;
     }
+
+	public String getFromNickname() {
+		return fromNickname;
+	}
+
+	public void setFromNickname(String fromNickname) {
+		this.fromNickname = fromNickname;
+	}
 
 	public String getToID() {
 		return toID;
