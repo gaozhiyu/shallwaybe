@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.william.entity.WorldCitiesEntity" table="world_cities_table" catalog="shallway">
+        <id name="city" type="string" >
+            <column name="city" length="33" not-null="true"/>
+        </id>
+        
+        <property name="city_ASCII" type="string">
+            <column name="city_ascii" length="39" />
+        </property>    
+        <property name="latitude" type="java.lang.Double">
+            <column name="lat" />
+        </property>                   
+        <property name="longitude" type="java.lang.Double">
+            <column name="lng" />
+        </property>        
+        <property name="pop" type="java.lang.Double">
+            <column name="pop" />
+        </property>
+        <property name="country" type="string">
+            <column name="country" length="32" />
+        </property> 
+        <property name="iso2" type="string">
+            <column name="iso2" length="3" />
+        </property> 
+        <property name="iso3" type="string">
+            <column name="iso3" length="3" />
+        </property>         
+        <property name="province" type="string">
+            <column name="province" length="43" />
+        </property>             
+
+    </class>
+</hibernate-mapping>

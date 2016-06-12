@@ -16,6 +16,7 @@ public class ProfileEntity implements java.io.Serializable {
 	private String nickname;
 	private String gender;
 	private Date dateOfBirth;
+	private Boolean profilePhoto;
 	private String country;
 	private String province;
 	private String city;
@@ -34,9 +35,9 @@ public class ProfileEntity implements java.io.Serializable {
 	}
 
 	public ProfileEntity(String userIntID, String email, String password, String nickname, String gender,
-			Date dateOfBirth, String country, String province, String city, String gCountry, String gProvince,
-			String gCity, Double longitude, Double latitude, Date lastUpdate, Date createTime, Date lastAddressUpdate,
-			String signature) {
+			Date dateOfBirth, Boolean profilePhoto, String country, String province, String city, String googleCountry,
+			String googleProvince, String googleCity, Double longitude, Double latitude, Date lastUpdate,
+			Date createTime, Date lastAddressUpdate, String signature) {
 		super();
 		this.userIntID = userIntID;
 		this.email = email;
@@ -44,12 +45,13 @@ public class ProfileEntity implements java.io.Serializable {
 		this.nickname = nickname;
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
+		this.profilePhoto = profilePhoto;
 		this.country = country;
 		this.province = province;
 		this.city = city;
-		this.googleCountry = gCountry;
-		this.googleProvince = gProvince;
-		this.googleCity = gCity;
+		this.googleCountry = googleCountry;
+		this.googleProvince = googleProvince;
+		this.googleCity = googleCity;
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.lastUpdate = lastUpdate;
@@ -112,6 +114,14 @@ public class ProfileEntity implements java.io.Serializable {
 
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public Boolean getProfilePhoto() {
+		return profilePhoto;
+	}
+
+	public void setProfilePhoto(Boolean profilePhoto) {
+		this.profilePhoto = profilePhoto;
 	}
 
 	public String getCountry() {

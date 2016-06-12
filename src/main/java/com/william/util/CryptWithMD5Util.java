@@ -10,7 +10,7 @@ public class CryptWithMD5Util {
 
 	   public static String cryptWithMD5Util(String pass){
 	    try {
-	        md = MessageDigest.getInstance("MD5");
+	        md = MessageDigest.getInstance("SHA-512");
 	        byte[] passBytes = pass.getBytes();
 	        md.reset();
 	        byte[] digested = md.digest(passBytes);

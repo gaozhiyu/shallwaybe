@@ -12,7 +12,7 @@
             <column name="Email" length="128" not-null="true" unique="true" />
         </property>        
         <property name="password" type="string">
-            <column name="Password" length="64" />
+            <column name="Password" length="128" />
         </property>
         <property name="nickname" type="string">
             <column name="Nickname" length="32" />
@@ -22,6 +22,9 @@
         </property>
         <property name="dateOfBirth" type="java.util.Date">
             <column name="DateOfBirth" />
+        </property>
+        <property name="profilePhoto" type="boolean">
+            <column name="ProfilePhoto" />
         </property>
         <property name="country" type="string">
             <column name="Country" length="128" />

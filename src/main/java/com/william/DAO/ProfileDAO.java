@@ -55,11 +55,13 @@ public class ProfileDAO {
                
 	         session.save(profileEntity);
 	         
+	         tx.commit();
+	         
 	         outDto.setUserIntID(userIntID);
 	         outDto.setUserid(profileTo.getEmail()); 
 	         outDto.setRegisterStatus("Registration Successful");
 	         
-	         tx.commit();
+	         
 	         
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();
@@ -190,6 +192,14 @@ public class ProfileDAO {
 				profileEntity.setLastUpdate(currentTime); 
 				profileEntity.setDateOfBirth(dateOfBirth);
 			 }
+
+			 /* update profile photo status, true means have profile photo, false means no*/
+			 if(profileTo.getProfilePhoto()!=null && !"".equals(profileTo.getProfilePhoto().trim()))
+			 {
+				Boolean profilePhoto =Boolean.parseBoolean(profileTo.getProfilePhoto());
+				profileEntity.setLastUpdate(currentTime); 
+				profileEntity.setProfilePhoto(profilePhoto);
+			 }			 
   	 
 		      session.update(profileEntity); 	
 		      tx.commit();
