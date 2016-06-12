@@ -19,15 +19,16 @@ public class LatestCoordinateApp {
 //        SimpleDateFormat sdfd1 =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        Date lastShakeTime =sdfd1.parse(lastShakeTimeString);
         
-        LatestCoordinateInDTO latestCoordinateInDTO = new LatestCoordinateInDTO("981e630a59964937a006d320d2d097df","1.1", "1.2" ,"Singapore","He Nan Province", "Kai Feng");
+        LatestCoordinateInDTO latestCoordinateInDTO = new LatestCoordinateInDTO("bbf8c163753e404b8d5e5a6e51c831e3","2.1", "2.2" ,"中国","河南省", "平顶山");
         
         LatestCoordinateOutDTO latestCoordinateOutDTO= new LatestCoordinateOutDTO();
         LatestCoordinateDAO MLC = new LatestCoordinateDAO();
         
 //        MLC.addLatestCoordinate(latestCoordinateInDTO);
-        MLC.updateLatestCoordinate(latestCoordinateInDTO);
+//        MLC.updateLatestCoordinate(latestCoordinateInDTO);
+        MLC.saveOrUpdateLatestCoordinate(latestCoordinateInDTO);
         
-        latestCoordinateOutDTO = MLC.readLatestCoordinate("981e630a59964937a006d320d2d097df");
+        latestCoordinateOutDTO = MLC.readLatestCoordinate("bbf8c163753e404b8d5e5a6e51c831e3");
         
 		System.out.println();
 		System.out.println("Nickname: "+latestCoordinateOutDTO.getNickname());

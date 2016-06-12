@@ -31,7 +31,22 @@
         </property> 
         <property name="city" type="string">
             <column name="City" length="128" />
+        </property>
+        <property name="googleCountry" type="string">
+            <column name="GoogleCountry" length="128" />
+        </property> 
+        <property name="googleProvince" type="string">
+            <column name="GoogleProvince" length="128" />
+        </property> 
+        <property name="googleCity" type="string">
+            <column name="GoogleCity" length="128" />
         </property>              
+        <property name="longitude" type="java.lang.Double">
+            <column name="Longitude" />
+        </property>        
+        <property name="latitude" type="java.lang.Double">
+            <column name="Latitude" />
+        </property>                      
         <property name="lastUpdate" type="java.util.Date">
             <column name="LastUpdate" />
         </property> 

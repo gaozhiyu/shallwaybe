@@ -68,7 +68,7 @@ public class AddressHistoryDAO {
 		      List<AddressHistoryOutDTO> adressHistoryList = query.list();	
 		      addressHistoryArray = new AddressHistoryOutDTO[adressHistoryList.size()];
 	    	  
-		      if (adressHistoryList!=null){
+		      if (adressHistoryList!=null && adressHistoryList.size()>0 ){
 		    	  for (int i=0;i<adressHistoryList.size();i++){
 		    		  addressHistoryArray[i] = adressHistoryList.get(i);
 

@@ -2,9 +2,8 @@ package com.william.to;
 
 import java.util.Date;
 
-public class ReplyInDTO implements java.io.Serializable {
+public class ReplyInDTO {
 	
-	private static final long serialVersionUID = 1L;
 	private String dateID;
     private String replierIntID;
 	private String replyContents;

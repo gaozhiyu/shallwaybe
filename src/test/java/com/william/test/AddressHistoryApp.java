@@ -20,7 +20,7 @@ public class AddressHistoryApp {
 		
 //        String[] cityList = null;
         AddressHistoryOutDTO[] AddressHistoryArray = null;
-        AddressHistoryInDTO addressHistory = new AddressHistoryInDTO("981e630a59964937a006d320d2d097df","Singapore","Guang Dong Province","Guang Zhou","R");
+        AddressHistoryInDTO addressHistory = new AddressHistoryInDTO("981e630a59964937a006d320d2d097df","新加坡","Guang Dong Province","Guang Zhou","R");
         
         AddressHistoryDAO AHS = new AddressHistoryDAO();
         

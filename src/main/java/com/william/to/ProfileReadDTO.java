@@ -12,6 +12,11 @@ public class ProfileReadDTO {
 	private String country;
 	private String province;
 	private String city;
+	private String googleCountry;
+	private String googleProvince;
+	private String googleCity;
+	private Double longitude;
+	private Double latitude;	
 	private Date lastUpdate; 
 	private Date createTime;   
 	private Date lastAddressUpdate;  	
@@ -91,6 +96,46 @@ public class ProfileReadDTO {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+	
+	public String getGoogleCountry() {
+		return googleCountry;
+	}
+
+	public void setGoogleCountry(String googleCountry) {
+		this.googleCountry = googleCountry;
+	}
+
+	public String getGoogleProvince() {
+		return googleProvince;
+	}
+
+	public void setGoogleProvince(String googleProvince) {
+		this.googleProvince = googleProvince;
+	}
+
+	public String getGoogleCity() {
+		return googleCity;
+	}
+
+	public void setGoogleCity(String googleCity) {
+		this.googleCity = googleCity;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
 	}
 
 	public Date getLastUpdate() {

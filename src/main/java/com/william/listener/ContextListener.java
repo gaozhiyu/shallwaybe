@@ -56,12 +56,15 @@ public class ContextListener implements ServletContextListener {
 						
 						//cordDTO.setCountry(address.getCountry());
 						LatestCoordinateDAO mlcDAO = new LatestCoordinateDAO();
+/*
 						if(!msg.getUserid().equals(mlcDAO.readLatestCoordinate(msg.getUserid()).getUserIntID())){
 							mlcDAO.addLatestCoordinate(cordDTO);
 						} else{
 							mlcDAO.updateLatestCoordinate(cordDTO);
 						}
-						
+	*/					
+						mlcDAO.saveOrUpdateLatestCoordinate(cordDTO);
+	
 						AddressHistoryDAO ahDAO = new AddressHistoryDAO();
 						AddressHistoryInDTO addressTo = new AddressHistoryInDTO();
 						addressTo.setUserIntID(msg.getLatitude());

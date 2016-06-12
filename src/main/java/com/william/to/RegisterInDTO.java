@@ -6,13 +6,20 @@ public class RegisterInDTO {
 	private String nickname;
 	private String country;
 	private String province;
-	private String city;	
+	private String city;
+	private String googleCountry;
+	private String googleProvince;
+	private String googleCity;
+	private String longitude;
+	private String latitude;
 	
 	public RegisterInDTO(){
 		
 	}
+	
 
-	public RegisterInDTO(String email, String password, String nickname, String country, String province, String city) {
+	public RegisterInDTO(String email, String password, String nickname, String country, String province, String city,
+			String googleCountry, String googleProvince, String googleCity, String longitude, String latitude) {
 		super();
 		this.email = email;
 		this.password = password;
@@ -20,6 +27,11 @@ public class RegisterInDTO {
 		this.country = country;
 		this.province = province;
 		this.city = city;
+		this.googleCountry = googleCountry;
+		this.googleProvince = googleProvince;
+		this.googleCity = googleCity;
+		this.longitude = longitude;
+		this.latitude = latitude;
 	}
 
 	public String getProvince() {
@@ -70,4 +82,53 @@ public class RegisterInDTO {
 	public void setCity(String city) {
 		this.city = city;
 	}
+	
+	
+	public String getGoogleCountry() {
+		return googleCountry;
+	}
+
+
+	public void setGoogleCountry(String googleCountry) {
+		this.googleCountry = googleCountry;
+	}
+
+
+	public String getGoogleProvince() {
+		return googleProvince;
+	}
+
+
+	public void setGoogleProvince(String googleProvince) {
+		this.googleProvince = googleProvince;
+	}
+
+
+	public String getGoogleCity() {
+		return googleCity;
+	}
+
+
+	public void setGoogleCity(String googleCity) {
+		this.googleCity = googleCity;
+	}
+
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+
 }

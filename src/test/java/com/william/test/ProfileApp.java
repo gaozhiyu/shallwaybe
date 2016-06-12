@@ -25,28 +25,30 @@ public class ProfileApp {
 		
 	    ProfileEntity profileEntity = new ProfileEntity();		
 	    
-        RegisterInDTO registerInDTO = new RegisterInDTO("6@gmail.com","MyPassword","User2","China","Henan","PingDingShan");
+        RegisterInDTO registerInDTO = new RegisterInDTO("123_123@gmail.com","MyPassword","Paper Tiger","中国","河南","郑州","新加坡","马林百列","东海岸","1.1","1.2");
 		RegisterOutDTO registerOutDTO = new RegisterOutDTO();
 		
-		ProfileInDTO profileInDTO = new ProfileInDTO("675cb7a0802f43358d5e1e6f7c19952b","", "MyPassword","User3","M",
-				"13/5/2016","","","","Wonder Wonder Land!");
+		ProfileInDTO profileInDTO = new ProfileInDTO("bbf8c163753e404b8d5e5a6e51c831e3","123_123@gmail.com", "MyPassword","胡总","男","04/09/1987","北","上","广","深","庆","都","3.1","3.2","约吗？Yes！我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어!");
 		
 		ProfileDAO MP = new ProfileDAO();
 		
 //		registerOutDTO = MP.addProfile(registerInDTO);
 //		System.out.println(registerOutDTO.getRegisterStatus());	
 		
-//		registerStatus = MP.updateProfile(profileInDTO);
-//		System.out.println(registerStatus);
+		registerStatus = MP.updateProfile(profileInDTO);
+		System.out.println(registerStatus);
 //		
 //		loginResultOutDTO = MP.authenticateCredential("1@gmail.com","MyPassword");
 //		System.out.println(loginResultOutDTO.getStatus());		
 		
-		profileEntity = MP.readProfile("6@gmail.com");
+		profileEntity = MP.readProfile("123_123@gmail.com");
+		System.out.println(profileEntity.getNickname());	
+		System.out.println(profileEntity.getGender());	
 		System.out.println(profileEntity.getCountry());	
 		System.out.println(profileEntity.getProvince());
 		System.out.println(profileEntity.getCity());
-		System.out.println(profileEntity.getCreateTime());	
+		System.out.println(profileEntity.getCreateTime());
+		System.out.println(profileEntity.getSignature());	
 		
 		
 	}

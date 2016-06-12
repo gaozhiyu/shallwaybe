@@ -99,7 +99,7 @@ public class ShallWayDAO {
 			      @SuppressWarnings("unchecked")
 			      List<ShallWayOutDTO> shallWayList = query.list();	
 			      
-			      if (shallWayList!=null)
+			      if (shallWayList!=null && shallWayList.size()>0)
 			    	  shallWay= shallWayList.get(0);
 			      
 		         tx.commit();
@@ -136,7 +136,7 @@ public class ShallWayDAO {
 			      
 			      shallWayArray = new ShallWayEntity[shallWayList.size()];
 			            
-			      if (shallWayList!=null){
+			      if (shallWayList!=null && shallWayList.size()>0){
 			    	  for (int i=0;i<shallWayList.size();i++)
 			    	  shallWayArray[i] = shallWayList.get(i);
    	  
@@ -153,7 +153,7 @@ public class ShallWayDAO {
 		   }
 	
 	/* Search ShallWay Record based on criteria with Pagination */
-	public ShallWayOutDTO[] readShallWay(ShallWaySearchDTO shallWaySearchDTO, int pageNumber) throws ParseException{
+	public ShallWayOutDTO[] readShallWay(ShallWaySearchDTO shallWaySearchDTO) throws ParseException{
 	   
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
@@ -165,7 +165,7 @@ public class ShallWayDAO {
 	         tx = session.beginTransaction();
 	        	         
 	         Criteria crit = session.createCriteria(ShallWayOutDTO.class);
-	         crit.setFirstResult((pageNumber - 1) * pageSize);
+	         crit.setFirstResult((Integer.parseInt(shallWaySearchDTO.getPageNumber()) - 1) * pageSize);
 	         crit.setMaxResults(pageSize);
 	         
 //	         @SuppressWarnings("unchecked")
@@ -193,9 +193,11 @@ public class ShallWayDAO {
 				 .add(Restrictions.eq("province",shallWaySearchDTO.getProvince()))		
 				 .add(Restrictions.eq("city",shallWaySearchDTO.getCity()));
 	         
-	         crit.add(Restrictions.or(
+	         if(shallWaySearchDTO.getPlace()!=null){
+	        	 crit.add(Restrictions.or(
 					  Restrictions.like("place",shallWaySearchDTO.getPlace().trim(),MatchMode.ANYWHERE), 
 					  Restrictions.isNull("place")));
+	         }
 	         
 	         crit.add(Restrictions.and(
 					  Restrictions.le("startTime", sdfd.parse(shallWaySearchDTO.getEndTime())),
@@ -222,11 +224,12 @@ public class ShallWayDAO {
 	        
 			crit.add(dj);
 			crit.addOrder(Order.desc("postTime"));
+			
 			List<ShallWayOutDTO> shallWayList = crit.list();  	         
 	         
 		    shallWayArray = new ShallWayOutDTO[shallWayList.size()];
 	            
-		      if (shallWayList!=null){
+		      if (shallWayList!=null && shallWayList.size()>0){
 		    	  for (int i=0;i<shallWayList.size();i++)
 		    		  shallWayArray[i] = shallWayList.get(i);
 
@@ -266,7 +269,7 @@ public class ShallWayDAO {
 			      @SuppressWarnings("unchecked")
 			      List<ShallWayEntity> shallWayList = query.list();	
 			            
-			      if (shallWayList!=null)
+			      if (shallWayList!=null && shallWayList.size()>0)
 			    	  shallWayEntity = shallWayList.get(0);
 			      
 			      if (shallWayUpdateDTO.getCountry()!=null && !"".equals(shallWayUpdateDTO.getCountry().trim())){
@@ -367,7 +370,7 @@ public class ShallWayDAO {
 				      @SuppressWarnings("unchecked")
 				      List<ShallWayEntity> shallWayList = query.list();	
 				      
-				      if (shallWayList!=null)
+				      if (shallWayList!=null && shallWayList.size()>0 )
 				    	  shallWayEntity = shallWayList.get(0);
 			            
 			         session.delete(shallWayEntity);

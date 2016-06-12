@@ -56,7 +56,8 @@ public class DateService {
 		ShallWayDAO msw= new ShallWayDAO();
 		DateDTO[] dateArray = null;
 		try {
-			ShallWayOutDTO[] shallwayArray = msw.readShallWay(inDTO,1);
+//ToWilliam: 	ShallWayOutDTO[] shallwayArray = msw.readShallWay(inDTO,1) change to ShallWayOutDTO[] shallwayArray = msw.readShallWay(inDTO); page number should be included in FE.
+			ShallWayOutDTO[] shallwayArray = msw.readShallWay(inDTO);
 			if(shallwayArray!= null && shallwayArray.length>0){
 				dateArray = new DateDTO[shallwayArray.length];
 				for(int i = 0;i < shallwayArray.length; i++ ){

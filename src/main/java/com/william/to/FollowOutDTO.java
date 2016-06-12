@@ -2,9 +2,8 @@ package com.william.to;
 
 import java.util.Date;
 
-public class FollowOutDTO implements java.io.Serializable {
+public class FollowOutDTO{
 	
-	private static final long serialVersionUID = 1L;
 	private String id;
 	private String dateID;
     private String followerIntID;

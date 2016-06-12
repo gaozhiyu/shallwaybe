@@ -11,9 +11,9 @@ public class ReplyApp {
 		ReplyDAO replyDAO = new ReplyDAO();
 		ReplyOutDTO[] replyArray= null;
 
-		ReplyInDTO replyInDTO = new ReplyInDTO("5b3ad3653abf47729f5147405e16bead","30ce9dc77809415e897c1af0f5660b6e","Hello Hello!");
+		ReplyInDTO replyInDTO = new ReplyInDTO("5b3ad3653abf47729f5147405e16bead","30ce9dc77809415e897c1af0f5660b6e","约吗!");
 		
-		replyDAO.addReply(replyInDTO);
+//		replyDAO.addReply(replyInDTO);
 		
 		replyArray = replyDAO.readReply("5b3ad3653abf47729f5147405e16bead");
 		

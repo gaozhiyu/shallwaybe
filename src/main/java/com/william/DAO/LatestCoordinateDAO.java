@@ -18,41 +18,41 @@ import com.william.to.LatestCoordinateOutDTO;
 public class LatestCoordinateDAO {
 	
 	/*Create Coordinate Record*/
-	public void addLatestCoordinate(LatestCoordinateInDTO latestCoordinateInDTO){	
-		
-		  Session session = HibernateUtil.getSessionFactory().openSession();
-	      Transaction tx = null;
-	      LatestCoordinateEntity latestcoordinate = new LatestCoordinateEntity();
-	      Date updateTime = new Date();
-	      
-	      
-	      try{
-	    	  
-	         tx = session.beginTransaction();
-	         
-	         latestcoordinate.setUserIntID(latestCoordinateInDTO.getUserIntID());
-//	         latestcoordinate.setNickName(latestCoordinateInDTO.getNickName());
-	         latestcoordinate.setLongitude(Double.parseDouble(latestCoordinateInDTO.getLongitude()));
-	         latestcoordinate.setLatitude(Double.parseDouble(latestCoordinateInDTO.getLatitude()));
-//	         latestcoordinate.setLastShakeTime(latestCoordinateInDTO.getLastShakeTime());
-	         latestcoordinate.setLastShakeTime(updateTime);
-	         latestcoordinate.setCountry(latestCoordinateInDTO.getCountry());
-	         latestcoordinate.setProvince(latestCoordinateInDTO.getProvince());
-	         latestcoordinate.setCity(latestCoordinateInDTO.getCity());
-	         latestcoordinate.setLastAddressUpdate(updateTime);
-	         
-	         session.save(latestcoordinate);
-	         tx.commit();
-	      }catch (HibernateException e) {
-	         if (tx!=null) tx.rollback();
-	         e.printStackTrace(); 
-	      }finally {
-	         session.close(); 
-	      }		
-	}
+//	public void addLatestCoordinate(LatestCoordinateInDTO latestCoordinateInDTO){	
+//		
+//		  Session session = HibernateUtil.getSessionFactory().openSession();
+//	      Transaction tx = null;
+//	      LatestCoordinateEntity latestcoordinate = new LatestCoordinateEntity();
+//	      Date updateTime = new Date();
+//	      
+//	      
+//	      try{
+//	    	  
+//	         tx = session.beginTransaction();
+//	         
+//	         latestcoordinate.setUserIntID(latestCoordinateInDTO.getUserIntID());
+////	         latestcoordinate.setNickName(latestCoordinateInDTO.getNickName());
+//	         latestcoordinate.setLongitude(Double.parseDouble(latestCoordinateInDTO.getLongitude()));
+//	         latestcoordinate.setLatitude(Double.parseDouble(latestCoordinateInDTO.getLatitude()));
+////	         latestcoordinate.setLastShakeTime(latestCoordinateInDTO.getLastShakeTime());
+//	         latestcoordinate.setLastShakeTime(updateTime);
+//	         latestcoordinate.setCountry(latestCoordinateInDTO.getCountry());
+//	         latestcoordinate.setProvince(latestCoordinateInDTO.getProvince());
+//	         latestcoordinate.setCity(latestCoordinateInDTO.getCity());
+//	         latestcoordinate.setLastAddressUpdate(updateTime);
+//	         
+//	         session.save(latestcoordinate);
+//	         tx.commit();
+//	      }catch (HibernateException e) {
+//	         if (tx!=null) tx.rollback();
+//	         e.printStackTrace(); 
+//	      }finally {
+//	         session.close(); 
+//	      }		
+//	}
 	
-	/*Update Coordinate Record*/
-	public boolean updateLatestCoordinate(LatestCoordinateInDTO latestCoordinateInDTO){
+	/*To Add or Update Coordinate Record*/
+	public boolean saveOrUpdateLatestCoordinate(LatestCoordinateInDTO latestCoordinateInDTO){
 		  
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;
@@ -72,9 +72,11 @@ public class LatestCoordinateDAO {
 		      @SuppressWarnings("unchecked")
 		      List<LatestCoordinateEntity> latestcoordinatelist = query.list();	
 		      
-
-		      if (latestcoordinatelist!=null)
+		      if (latestcoordinatelist!=null && latestcoordinatelist.size()> 0){
 		    	  latestCoordinateEntity = latestcoordinatelist.get(0);
+		      } else {
+		    	  latestCoordinateEntity.setUserIntID(latestCoordinateInDTO.getUserIntID());
+		      }
 
 		      if (latestCoordinateInDTO.getCountry()!=null && !"".equals(latestCoordinateInDTO.getCountry().trim())){
 		    	  latestCoordinateEntity.setCountry(latestCoordinateInDTO.getCountry());
@@ -100,8 +102,8 @@ public class LatestCoordinateDAO {
 		    	  latestCoordinateEntity.setLatitude(Double.parseDouble(latestCoordinateInDTO.getLatitude()));
 		    	  latestCoordinateEntity.setLastShakeTime(updateTime);
 		      }
-		      	     	      	 
-			  session.update(latestCoordinateEntity); 	
+		      
+			  session.saveOrUpdate(latestCoordinateEntity); 	
 		      tx.commit();
 			  flag =true;
 		    }catch (HibernateException e) {
@@ -130,7 +132,7 @@ public class LatestCoordinateDAO {
 		      @SuppressWarnings("unchecked")
 		      List<LatestCoordinateOutDTO> latestCoordinateList = query.list();	      
 		      
-		      if (latestCoordinateList!=null)
+		      if (latestCoordinateList!=null && latestCoordinateList.size()>0 )
 		    	  latestCoordinate = latestCoordinateList.get(0);     
 		      
 	         tx.commit();

@@ -19,6 +19,11 @@ public class ProfileEntity implements java.io.Serializable {
 	private String country;
 	private String province;
 	private String city;
+	private String googleCountry;
+	private String googleProvince;
+	private String googleCity;
+	private Double longitude;
+	private Double latitude;
 	private Date lastUpdate; 
 	private Date createTime;   
 	private Date lastAddressUpdate;  	
@@ -28,8 +33,10 @@ public class ProfileEntity implements java.io.Serializable {
 		super();
 	}
 
-	public ProfileEntity(String userIntID, String email, String password, String nickname, String gender, Date dateOfBirth,
-			String country, String province,String city, Date lastUpdate, Date createTime, Date lastAddressUpdate, String signature) {
+	public ProfileEntity(String userIntID, String email, String password, String nickname, String gender,
+			Date dateOfBirth, String country, String province, String city, String gCountry, String gProvince,
+			String gCity, Double longitude, Double latitude, Date lastUpdate, Date createTime, Date lastAddressUpdate,
+			String signature) {
 		super();
 		this.userIntID = userIntID;
 		this.email = email;
@@ -38,8 +45,13 @@ public class ProfileEntity implements java.io.Serializable {
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.country = country;
-		this.province=province;
+		this.province = province;
 		this.city = city;
+		this.googleCountry = gCountry;
+		this.googleProvince = gProvince;
+		this.googleCity = gCity;
+		this.longitude = longitude;
+		this.latitude = latitude;
 		this.lastUpdate = lastUpdate;
 		this.createTime = createTime;
 		this.lastAddressUpdate = lastAddressUpdate;
@@ -116,6 +128,46 @@ public class ProfileEntity implements java.io.Serializable {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public String getGoogleCountry() {
+		return googleCountry;
+	}
+
+	public void setGoogleCountry(String gCountry) {
+		this.googleCountry = gCountry;
+	}
+
+	public String getGoogleProvince() {
+		return googleProvince;
+	}
+
+	public void setGoogleProvince(String gProvince) {
+		this.googleProvince = gProvince;
+	}
+
+	public String getGoogleCity() {
+		return googleCity;
+	}
+
+	public void setGoogleCity(String gCity) {
+		this.googleCity = gCity;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
 	}
 
 	public Date getLastUpdate() {

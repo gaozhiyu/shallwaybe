@@ -56,7 +56,7 @@ public class ReplyDAO {
 		      tx = session.beginTransaction();
 
 //		      String sql = "select a.ID as id,a.DateID,a.ReplierIntID,a.ReplyTime,a.ReplyContents, b.Nickname as replierNickname from reply a join profile b on a.replierintid = b.userintid where a.dateID = ? order by replytime desc;";
-		      String sql = "select a.*, b.Nickname as replierNickname from reply a join profile b on a.replierintid = b.userintid where a.dateID = ? order by replytime desc;";
+		      String sql = "select a.*, b.Nickname as replierNickname from reply a join profile b on a.replierintid = b.userintid where a.dateID = ? order by replytime asc;";
 		      SQLQuery query = session.createSQLQuery(sql);  
 		      query.setString(0, dateID);
 		      query.addScalar("id", new StringType());
@@ -69,7 +69,7 @@ public class ReplyDAO {
 		      List<ReplyOutDTO> replyList = query.list();	
 		      replyArray = new ReplyOutDTO[replyList.size()];
 	    	  
-		      if (replyList!=null){
+		      if (replyList!=null && replyList.size()>0){
 		    	  for (int i=0;i<replyList.size();i++){
 		    		  replyArray[i] = replyList.get(i);
 		    	  }
@@ -104,7 +104,7 @@ public class ReplyDAO {
 		      @SuppressWarnings("unchecked")
 		      List<ReplyEntity> replyList = query.list();	
 		      
-		      if (replyList!=null)
+		      if (replyList!=null && replyList.size()>0 )
 		    	  replyEntity = replyList.get(0);
 	            
 	         session.delete(replyEntity);

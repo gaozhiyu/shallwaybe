@@ -59,7 +59,7 @@ public class FollowDAO {
 		      List<FollowOutDTO> followList = query.list();	
 		      followArray = new FollowOutDTO[followList.size()];
 	    	  
-		      if (followList!=null){
+		      if (followList!=null && followList.size()>0 ){
 		    	  for (int i=0;i<followList.size();i++){
 		    		  followArray[i] = followList.get(i);
 		    	  }
@@ -94,7 +94,7 @@ public class FollowDAO {
 		      @SuppressWarnings("unchecked")
 		      List<FollowEntity> followList = query.list();	
 		      
-		      if (followList!=null)
+		      if (followList!=null && followList.size()>0 )
 		    	  followEntity = followList.get(0);
 	            
 	         session.delete(followEntity);

@@ -43,6 +43,11 @@ public class ProfileDAO {
 	         profileEntity.setCountry(profileTo.getCountry());
 	         profileEntity.setProvince(profileTo.getProvince());
 	         profileEntity.setCity(profileTo.getCity());
+	         profileEntity.setGoogleCountry(profileTo.getGoogleCountry());
+	         profileEntity.setGoogleProvince(profileTo.getGoogleProvince());
+	         profileEntity.setGoogleCity(profileTo.getGoogleCity());
+	         profileEntity.setLongitude(Double.parseDouble(profileTo.getLongitude()));
+	         profileEntity.setLatitude(Double.parseDouble(profileTo.getLatitude()));
 	         profileEntity.setCreateTime(registerTime);
 	         profileEntity.setLastUpdate(registerTime);
 	         profileEntity.setLastAddressUpdate(registerTime);
@@ -90,7 +95,7 @@ public class ProfileDAO {
 		      List<ProfileEntity> profileList = query.list();	
 		      
 		      /*method 1*/
-		      if (profileList!=null)
+		      if (profileList!=null && profileList.size()>0)
 		    	  profileEntity = profileList.get(0);
 	
 //		      /*method 2*/
@@ -118,8 +123,43 @@ public class ProfileDAO {
 				profileEntity.setLastUpdate(currentTime);
 				profileEntity.setLastAddressUpdate(currentTime);
 				profileEntity.setCity(profileTo.getCity());
-			 }			 
+			 }			
+			 
+			 if(profileTo.getGoogleCountry()!=null && !"".equals(profileTo.getGoogleCountry().trim()))
+			 {
+				profileEntity.setLastUpdate(currentTime);
+				profileEntity.setLastAddressUpdate(currentTime);
+				profileEntity.setGoogleCountry(profileTo.getGoogleCountry());
+			 }	
+			 
+			 if(profileTo.getGoogleProvince()!=null && !"".equals(profileTo.getGoogleProvince().trim()))
+			 {
+				profileEntity.setLastUpdate(currentTime);
+				profileEntity.setLastAddressUpdate(currentTime);
+				profileEntity.setGoogleProvince(profileTo.getGoogleProvince());
+			 }	 
+			 
+			 if(profileTo.getGoogleCity()!=null && !"".equals(profileTo.getGoogleCity().trim()))
+			 {
+				profileEntity.setLastUpdate(currentTime);
+				profileEntity.setLastAddressUpdate(currentTime);
+				profileEntity.setGoogleCity(profileTo.getGoogleCity());
+			 }		
+			 
+			 if(profileTo.getLongitude()!=null && !"".equals(profileTo.getLongitude().trim()))
+			 {
+				profileEntity.setLastUpdate(currentTime);
+				profileEntity.setLastAddressUpdate(currentTime);
+				profileEntity.setLongitude(Double.parseDouble(profileTo.getLongitude()));
+			 }				 
 
+			 if(profileTo.getLatitude()!=null && !"".equals(profileTo.getLatitude().trim()))
+			 {
+				profileEntity.setLastUpdate(currentTime);
+				profileEntity.setLastAddressUpdate(currentTime);
+				profileEntity.setLatitude(Double.parseDouble(profileTo.getLatitude()));
+			 }	
+			 
 			 if(profileTo.getPassword()!=null && !"".equals(profileTo.getPassword().trim()))
 			 {
 				profileEntity.setLastUpdate(currentTime);
@@ -163,6 +203,7 @@ public class ProfileDAO {
 		return updateStatus;
 	}
 
+	
 /* to read a profile record*/
 //	public ProfileReadDTO readProfile(String email){
 	public ProfileEntity readProfile(String email){		
@@ -181,7 +222,7 @@ public class ProfileDAO {
 		      @SuppressWarnings("unchecked")
 		      List<ProfileEntity> profileList = query.list();	
 		      
-		      if (profileList!=null)
+		      if (profileList!=null && profileList.size()==1)
 		    	  profileEntity = profileList.get(0);
 
 		     // session.update(profileEntity); 	

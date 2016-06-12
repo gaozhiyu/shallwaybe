@@ -3,7 +3,7 @@ package com.william.to;
 public class ShallWaySearchDTO {
 	
 	private String userIntID;
-	private String page;
+	private String pageNumber;
 	private String country;
 	private String province;
 	private String city;
@@ -20,10 +20,12 @@ public class ShallWaySearchDTO {
 		super();
 	}
 
-	public ShallWaySearchDTO(String userIntID, String country, String province, String city, String place, String startTime,
-			String endTime, String carPool, String freeTour, String hotelShare, String freeGuide) {
+	public ShallWaySearchDTO(String userIntID, String pageNumber, String country, String province, String city,
+			String place, String startTime, String endTime, String carPool, String freeTour, String hotelShare,
+			String freeGuide) {
 		super();
-		this.userIntID =userIntID;
+		this.userIntID = userIntID;
+		this.pageNumber = pageNumber;
 		this.country = country;
 		this.province = province;
 		this.city = city;
@@ -35,6 +37,7 @@ public class ShallWaySearchDTO {
 		this.hotelShare = hotelShare;
 		this.freeGuide = freeGuide;
 	}
+
 
 	public String getUserIntID() {
 		return userIntID;
@@ -105,13 +108,12 @@ public class ShallWaySearchDTO {
 		this.freeGuide = freeGuide;
 	}
 
-	public String getPage() {
-		return page;
+	public String getPageNumber() {
+		return pageNumber;
 	}
 
-	public void setPage(String page) {
-		this.page = page;
+	public void setPageNumber(String pageNumber) {
+		this.pageNumber = pageNumber;
 	}
-	
 	
 }
