@@ -55,7 +55,7 @@ public class JedisUtil {
 	public static void set(String key, String field, String value) {
 		// TODO Auto-generated method stub
 		getinstance().hset(key, field, value);
-		getinstance().persist(key);
+		getinstance().expire(key,30*85400);
 		
 	}
 

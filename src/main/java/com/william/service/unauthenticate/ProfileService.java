@@ -1,6 +1,8 @@
 package com.william.service.unauthenticate;
 
 import com.william.DAO.ProfileDAO;
+import com.william.DAO.WorldCitiesDAO;
+import com.william.to.GISDTO;
 import com.william.to.RegisterInDTO;
 import com.william.to.RegisterOutDTO;
 
@@ -15,5 +17,18 @@ public class ProfileService {
 		else
 			outDTO.setStatus("N");
 		return outDTO;
+	}
+	
+	public GISDTO getCountryList(){
+		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
+		String[] countryArray =  wcDAO.getCountryList();
+		GISDTO gisDTO = new GISDTO();
+		if(countryArray!=null && countryArray.length>0){
+			gisDTO.setStatus("Y");
+			gisDTO.setCountryArray(countryArray);
+		}else{
+			gisDTO.setStatus("N");
+		}
+		return gisDTO;
 	}
 }

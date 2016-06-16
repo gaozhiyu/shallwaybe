@@ -25,17 +25,17 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.william.filter.LogFile;
 import com.william.to.LoginResultOutDTO;
+import com.william.util.ChatMessageQueue;
 import com.william.util.JedisUtil;
 
 public class CoreServlet extends HttpServlet {
-	
-	private final Logger logger =  Logger.getLogger(this.getClass());
-	
+
+	private final Logger logger = Logger.getLogger(this.getClass());
+
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		doProcess(request, response);
 	}
@@ -48,57 +48,61 @@ public class CoreServlet extends HttpServlet {
 			HttpServletResponse response) {
 		PrintWriter out;
 		try {
-	            
+
 			out = response.getWriter();
 			ServletInputStream is = request.getInputStream();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			IOUtils.copy(is, baos);
 			String utilJson = new String(baos.toByteArray(), "UTF-8");
-			
+
 			logger.info(utilJson + "Baby I know you are here"
 					+ request.getRequestURI());
 
-			Object returnValue = invokeService(request.getRequestURI(), utilJson);
+			Object returnValue = invokeService(request.getRequestURI(),
+					utilJson);
 
-			
-			ObjectMapper mapper= new ObjectMapper();
-			String str="";
+			ObjectMapper mapper = new ObjectMapper();
+			String str = "";
 			try {
-				 str = mapper.writeValueAsString(returnValue);
-				 //TODO make it more specific
-					if(request.getRequestURI().equals(request.getContextPath()+"/unauthenticate/LoginService/login")){
-						logger.info("Store the datat to memory");
-						LoginResultOutDTO tmp = (LoginResultOutDTO)returnValue;
-						if("Y".equalsIgnoreCase(tmp.getStatus())){
-							logger.info("Userid\t"+ tmp.getUserid());
-							//Fixme update the logic
-							HttpSession session = request.getSession(true);
-							session.setAttribute("userid", tmp.getUserid());
-	//						String tmpid = (String) session.getAttribute("userid");
-							session.setMaxInactiveInterval(-1);
-							
-							String sessionId = request.getSession().getId();
-							logger.info("Sessionid\t"+  sessionId);
-							JedisUtil.set(tmp.getUserid(), sessionId);
-							//JedisUtil.set(sessionId, tmp.getUserid());//fixme remove this line
-							//Logic to logout previous login;
-							tmp.setSessionID(sessionId);
-							str = mapper.writeValueAsString(tmp);
-						}
+				str = mapper.writeValueAsString(returnValue);
+				// TODO make it more specific
+				if (request.getRequestURI().equals(
+						request.getContextPath()
+								+ "/unauthenticate/LoginService/login")) {
+					logger.info("Store the datat to memory");
+					LoginResultOutDTO tmp = (LoginResultOutDTO) returnValue;
+					if ("Y".equalsIgnoreCase(tmp.getStatus())) {
+						logger.info("Userid\t" + tmp.getUserid());
+						// Fixme update the logic
+						HttpSession session = request.getSession(true);
+						session.setAttribute("userid", tmp.getUserid());
+						// String tmpid = (String)
+						// session.getAttribute("userid");
+						session.setMaxInactiveInterval(-1);
+
+						String sessionId = request.getSession().getId();
+						logger.info("Sessionid\t" + sessionId);
+						JedisUtil.set(tmp.getUserid(), sessionId);
+						// JedisUtil.set(sessionId, tmp.getUserid());//fixme
+						// remove this line
+						// Logic to logout previous login;
+						tmp.setSessionID(sessionId);
+						str = mapper.writeValueAsString(tmp);
 					}
-					//TODO make it more specific
-					if(request.getRequestURI().contains("/LoginService/logout")){
-						request.getSession().removeAttribute("userid");
-					}
+				}
+				// TODO make it more specific
+				if (request.getRequestURI().contains("/LoginService/logout")) {
+					request.getSession().removeAttribute("userid");
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				logger.error(e.getMessage());
 			}
-			System.out.println("Parse from java to Json\t"+ str);
-			
+			System.out.println("Parse from java to Json\t" + str);
+
 			out.write(str);
 			out.flush();
-			//response.setHeader(arg0, arg1)
+			// response.setHeader(arg0, arg1)
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,11 +112,11 @@ public class CoreServlet extends HttpServlet {
 	public Object invokeService(String uri, String utilJson) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String[] uriArray = uri.split("/");
-		Object returnvalue="";
-		StringBuffer servicString = new StringBuffer("com.william.service.");//FIXME
+		Object returnvalue = "";
+		StringBuffer servicString = new StringBuffer("com.william.service.");// FIXME
 		// recursive go through the folder
 		if (uriArray.length > 3) {
-			servicString.append(uriArray[2]+".");
+			servicString.append(uriArray[2] + ".");
 			servicString.append(uriArray[uriArray.length - 2]);
 		}
 		try {
@@ -128,89 +132,94 @@ public class CoreServlet extends HttpServlet {
 				}
 			}
 			Class<?>[] types = method.getParameterTypes();
-            Object[] params = new Object[types.length];
-            JsonNode tree = objectMapper.readTree(utilJson);
-            if (!tree.isArray()) {
-            				System.out.println("Parameters must in array!");
-                            throw new IllegalAccessError("Parameters must in array!");
-            }
-            Iterator<JsonNode> it = tree.iterator();
-            int i = 0;
-            while (it.hasNext()) {
-                            JsonNode node = it.next();
-                            Class<?> type = types[i];
-                            params[i] = objectMapper.readValue(node.traverse(), type);
-                            if (i < types.length) {
-                                            i++;
-                            } else {
-                                            break;
-                            }
-            }
+			if(types.length>0){
+			Object[] params = new Object[types.length];
+			JsonNode tree = objectMapper.readTree(utilJson);
+			if (!tree.isArray()) {
+				System.out.println("Parameters must in array!");
+				throw new IllegalAccessError("Parameters must in array!");
+			}
+			Iterator<JsonNode> it = tree.iterator();
+			int i = 0;
+			while (it.hasNext()) {
+				JsonNode node = it.next();
+				Class<?> type = types[i];
+				params[i] = objectMapper.readValue(node.traverse(), type);
+				if (i < types.length) {
+					i++;
+				} else {
+					break;
+				}
+			}
 			// Method c=cls.getMethod("print", new Class[]{String.class});
-			returnvalue= method.invoke(serviceProvider.newInstance(), params);
-			
+				returnvalue = method.invoke(serviceProvider.newInstance(), params);
+			}else {
+				returnvalue = method.invoke(serviceProvider.newInstance());
+			}
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return returnvalue;
 	}
-	
-	public void init(){
-		
+
+	public void init() {
+
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-        config.setHostname("localhost");
-        config.setPort(9092);
+		config.setHostname("172.23.47.44");
+		config.setPort(9092);
 
+		final SocketIOServer server = new SocketIOServer(config);
+		// server.addNamespace("/chat");
+		server.addJsonObjectListener(LogFile.class,
+				new DataListener<LogFile>() {
+					public void onData(SocketIOClient client, LogFile data,
+							AckRequest ackSender) {
+						String uuid = JedisUtil.get(data.getToID(), "chat");
+						if (uuid == null || "".equals(uuid)) {
+							ChatMessageQueue.getInstance().postMessage(data);
+						} else {
+							UUID to = UUID.fromString(uuid);
+							SocketIOClient toClient = client.getNamespace()
+									.getClient(to);
+							if (toClient != null)
+								toClient.sendJsonObject(data);
+						}
+					}
+				});
 
+		server.addDisconnectListener(new DisconnectListener() {
+			public void onDisconnect(SocketIOClient client) {
+				// ...
 
-        final SocketIOServer server = new SocketIOServer(config);
-        //server.addNamespace("/chat");
-        server.addJsonObjectListener(LogFile.class, new DataListener<LogFile>() {
-            public void onData(SocketIOClient client, LogFile data, AckRequest ackSender) {
-            	String uuid = JedisUtil.get(data.getToID(),"chat");
-            	UUID to = UUID.fromString(uuid); 
-            	SocketIOClient toClient = client.getNamespace().getClient(to);
-            	if(toClient!=null)
-            		toClient.sendJsonObject(data);
-            }
-        });
-        
-        server.addDisconnectListener(new DisconnectListener() {
-            public void onDisconnect(SocketIOClient client) {
-                //...
+				String key = client.get("id");
+				JedisUtil.del(key);
 
-            	String key =client.get("id");
-            	JedisUtil.del(key);
-            	
-//            	if(clientMap.containsKey(key))
-//            		clientMap.remove(key);
-            }
-        });
-        
-        server.addConnectListener(new ConnectListener() {
-            public void onConnect(SocketIOClient client) {
-//TODO this id must be authenicate
-                  for(int i=0;i<1;i++){
-                      LogFile log = new LogFile();
-                      log.setLine("data from server line ["+i+"]");
-                      server.getBroadcastOperations().sendJsonObject(log);
-                  }
-                  System.out.println("");
-                  HandshakeData data = client.getHandshakeData();
-                  Map<String, List<String>> map =data.getUrlParams();
-                  List<String> strList = map.get("foo");
-                  if(strList!=null && strList.size()>0){
-//                	  if(clientMap.containsKey(strList.get(0)))
-//                		  clientMap.remove(strList.get(0));
+				// if(clientMap.containsKey(key))
+				// clientMap.remove(key);
+			}
+		});
 
-                	  	  client.set("id", strList.get(0));
-                		  JedisUtil.set(strList.get(0), "chat",client.getSessionId().toString());
-                  }
-                  
-            }
-        });
+		server.addConnectListener(new ConnectListener() {
+			public void onConnect(SocketIOClient client) {
+				// TODO this id must be authenicate
+				if (1 == 1) {
+					HandshakeData data = client.getHandshakeData();
+					Map<String, List<String>> map = data.getUrlParams();
+					List<String> strList = map.get("foo");
+					if (strList != null && strList.size() > 0) {
+						// if(clientMap.containsKey(strList.get(0)))
+						// clientMap.remove(strList.get(0));
 
-        server.start();
+						client.set("id", strList.get(0));
+						JedisUtil.set(strList.get(0), "chat", client
+								.getSessionId().toString());
+					}
+				}
+			}
+		});
+
+		server.start();
 	}
 }
