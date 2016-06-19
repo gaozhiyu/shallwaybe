@@ -2,9 +2,12 @@ package com.william.service.authenticate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import com.william.DAO.ProfileDAO;
+import com.william.DAO.WorldCitiesDAO;
 import com.william.entity.ProfileEntity;
+import com.william.to.GISDTO;
 import com.william.to.ProfileInDTO;
 import com.william.vo.ProfileVO;
 import com.william.vo.UpdateProfileVO;
@@ -38,10 +41,13 @@ public class ProfileService {
 		
 	}
 	
-	public ProfileVO viewProfileByEmail(ProfileInDTO inDTO){
+	public ProfileVO viewProfileByEmail(String email){
 		ProfileDAO pDAO = new ProfileDAO();
-		ProfileEntity profileEntity=pDAO.readProfile(inDTO.getEmail());
+		ProfileEntity profileEntity=pDAO.readProfile(email);
 		ProfileVO profileVO = new ProfileVO();
+		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
+		
+		//GISDTO gis = new GISDTO();
 		if(profileEntity!=null){
 			profileVO.setStatus("Y");
 			profileVO.setNickname(profileEntity.getNickname());
@@ -55,6 +61,22 @@ public class ProfileService {
 			profileVO.setEmail(profileEntity.getEmail());
 			profileVO.setGender(profileEntity.getGender());
 			profileVO.setSignature(profileEntity.getSignature());
+			
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MONTH, -1);
+			//if(cal.after(profileEntity.getLastAddressUpdate())){
+			if(true){
+				String[] countryArray =  wcDAO.getCountryList();
+				profileVO.setCountryArray(countryArray);
+				String[] provinceArray =  wcDAO.getProvinceList(profileEntity.getCountry());
+				profileVO.setProvinceArray(provinceArray);
+				String[] cityArray =  wcDAO.getCityList(profileEntity.getCountry(),profileEntity.getProvince());
+				profileVO.setCityArray(cityArray);
+				profileVO.setAddressFlag(true);
+			} else {
+				profileVO.setAddressFlag(false);
+			}
+			
 		}else{
 			profileVO.setStatus("N");
 		}

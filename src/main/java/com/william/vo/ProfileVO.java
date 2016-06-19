@@ -2,7 +2,9 @@ package com.william.vo;
 
 import java.util.Date;
 
-public class ProfileVO extends CommonVO {
+import com.william.to.GISDTO;
+
+public class ProfileVO extends GISDTO {
 
 
 	
@@ -14,9 +16,17 @@ public class ProfileVO extends CommonVO {
 	private String province;
 	private String city;	
 	private String signature;
-	
+	private boolean addressFlag;
 	
 
+
+	public boolean isAddressFlag() {
+		return addressFlag;
+	}
+
+	public void setAddressFlag(boolean addressFlag) {
+		this.addressFlag = addressFlag;
+	}
 
 	public String getEmail() {
 		return email;
@@ -86,12 +96,5 @@ public class ProfileVO extends CommonVO {
 	}
 	
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
 	
 }
