@@ -1,14 +1,22 @@
 package com.william.listener;
 
+import java.sql.SQLException;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.junit.Test;
+
 import com.william.DAO.AddressHistoryDAO;
 import com.william.DAO.LatestCoordinateDAO;
+import com.william.DAO.MessageDAO;
+import com.william.filter.LogFile;
 import com.william.to.AddressDTO;
 import com.william.to.AddressHistoryInDTO;
 import com.william.to.LatestCoordinateInDTO;
+import com.william.to.MessageInDTO;
 import com.william.to.ShakeInDTO;
+import com.william.util.ChatMessageQueue;
 import com.william.util.MessageQueue;
 import com.william.util.ParserJsonUtil;
 
@@ -67,7 +75,7 @@ public class ContextListener implements ServletContextListener {
 	
 						AddressHistoryDAO ahDAO = new AddressHistoryDAO();
 						AddressHistoryInDTO addressTo = new AddressHistoryInDTO();
-						addressTo.setUserIntID(msg.getLatitude());
+						addressTo.setUserIntID(msg.getUserid());
 						addressTo.setCity(cordDTO.getCity());
 						addressTo.setProvince(cordDTO.getProvince());
 						addressTo.setCountry(cordDTO.getCountry());
@@ -75,6 +83,21 @@ public class ContextListener implements ServletContextListener {
 						ahDAO.addAddressHistory(addressTo);
 					}
 				});
+		
+		ChatMessageQueue.getInstance().setListener(
+				new ChatMessageQueue.MessageListener() {
+
+					@Override
+					public void onMessage(LogFile msg) throws Exception {
+						// TODO Auto-generated method stub
+						System.out.println("PrintedByWilliam"+msg.toString());
+						MessageInDTO messageInDTO = new MessageInDTO(msg.getLine(),msg.getFromID(),msg.getToID());
+						MessageDAO messageDAO = new MessageDAO();
+						messageDAO.addMessage(messageInDTO);
+					}
+		});
+		
+		
 	}
 
 }
