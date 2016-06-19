@@ -7,8 +7,11 @@ import java.util.Calendar;
 import com.william.DAO.ProfileDAO;
 import com.william.DAO.WorldCitiesDAO;
 import com.william.entity.ProfileEntity;
+import com.william.to.AddressDTO;
+import com.william.to.CoordinateDTO;
 import com.william.to.GISDTO;
 import com.william.to.ProfileInDTO;
+import com.william.util.ParserJsonUtil;
 import com.william.vo.ProfileVO;
 import com.william.vo.UpdateProfileVO;
 
@@ -19,8 +22,25 @@ public class ProfileService {
 	public UpdateProfileVO updateProfile(ProfileInDTO inDTO){
 		ProfileDAO pDAO = new ProfileDAO();
 		UpdateProfileVO cvo = new UpdateProfileVO();
+		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
 		boolean flag = false;
 		try {
+		AddressDTO addressDTO = new AddressDTO();
+		addressDTO.setCountry(inDTO.getCountry());
+		addressDTO.setProvince(inDTO.getProvince());
+		addressDTO.setCity(inDTO.getCity());
+		CoordinateDTO cord=wcDAO.getCoordinateList(addressDTO);
+		inDTO.setLatitude(""+cord.getLatitude());
+		inDTO.setLongitude(""+cord.getLongitude());
+		ParserJsonUtil geo = new ParserJsonUtil();
+		AddressDTO tmp= geo.getAddress(inDTO.getLatitude(),inDTO.getLongitude());
+		if(tmp != null){
+			inDTO.setGoogleCountry(tmp.getCountry());
+			inDTO.setGoogleProvince(tmp.getProvince());
+			inDTO.setGoogleCity(tmp.getCity());
+		}
+		
+		
 			flag = pDAO.updateProfile(inDTO);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -64,8 +84,8 @@ public class ProfileService {
 			
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.MONTH, -1);
-			//if(cal.after(profileEntity.getLastAddressUpdate())){
-			if(true){
+			if(cal.getTime().after(profileEntity.getLastAddressUpdate())){
+			//if(true){
 				String[] countryArray =  wcDAO.getCountryList();
 				profileVO.setCountryArray(countryArray);
 				String[] provinceArray =  wcDAO.getProvinceList(profileEntity.getCountry());

@@ -7,6 +7,7 @@ import com.william.to.CoordinateDTO;
 import com.william.to.GISDTO;
 import com.william.to.RegisterInDTO;
 import com.william.to.RegisterOutDTO;
+import com.william.util.ParserJsonUtil;
 
 public class ProfileService {
 	
@@ -20,6 +21,13 @@ public class ProfileService {
 		CoordinateDTO cord=wcDAO.getCoordinateList(addressDTO);
 		inDTO.setLatitude(""+cord.getLatitude());
 		inDTO.setLongitude(""+cord.getLongitude());
+		ParserJsonUtil geo = new ParserJsonUtil();
+		AddressDTO tmp= geo.getAddress(inDTO.getLatitude(),inDTO.getLongitude());
+		if(tmp != null){
+			inDTO.setGoogleCountry(tmp.getCountry());
+			inDTO.setGoogleProvince(tmp.getProvince());
+			inDTO.setGoogleCity(tmp.getCity());
+		}
 		RegisterOutDTO outDTO = mgDAO.addProfile(inDTO);
 		//TODO add the mapcall
 		if(outDTO!= null)
