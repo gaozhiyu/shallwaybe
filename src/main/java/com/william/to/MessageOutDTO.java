@@ -11,6 +11,7 @@ public class MessageOutDTO {
 	private String messageContents;
 	private String senderIntID;
 	private Date sendTime;
+	//TODO HZ add the nickname here
 	
 	public MessageOutDTO() {
 		super();

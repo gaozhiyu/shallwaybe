@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,10 @@ import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.william.DAO.MessageDAO;
 import com.william.filter.LogFile;
 import com.william.to.LoginResultOutDTO;
+import com.william.to.MessageOutDTO;
 import com.william.util.ChatMessageQueue;
 import com.william.util.JedisUtil;
 
@@ -167,7 +170,7 @@ public class CoreServlet extends HttpServlet {
 	public void init() {
 
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-		config.setHostname("172.23.47.44");
+		config.setHostname("172.17.45.221");
 		config.setPort(9092);
 
 		final SocketIOServer server = new SocketIOServer(config);
@@ -209,12 +212,28 @@ public class CoreServlet extends HttpServlet {
 					Map<String, List<String>> map = data.getUrlParams();
 					List<String> strList = map.get("foo");
 					if (strList != null && strList.size() > 0) {
-						// if(clientMap.containsKey(strList.get(0)))
-						// clientMap.remove(strList.get(0));
-
+						String userid = strList.get(0);
 						client.set("id", strList.get(0));
 						JedisUtil.set(strList.get(0), "chat", client
 								.getSessionId().toString());
+						MessageDAO messageDAO = new MessageDAO();
+						try {
+							MessageOutDTO[] msgArray = messageDAO.retrieveMessage(userid);
+							//for(int i= 0; )
+							if(msgArray !=null && msgArray.length>0 ){
+								//LogFile msg = msgArray[i];
+								for(int i =0 ; i < msgArray.length; i++){
+									LogFile msg = new LogFile();
+									msg.setFromID(msgArray[i].getSenderIntID());
+									msg.setToID(userid);
+									msg.setLine(msgArray[i].getMessageContents());
+									client.sendJsonObject(msg);
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 			}
