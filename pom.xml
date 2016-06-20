@@ -145,7 +145,7 @@
         <dependency>
             <groupId>com.corundumstudio.socketio</groupId>
             <artifactId>netty-socketio</artifactId>
-            <version>1.6.7</version>
+            <version>1.7.9</version>
         </dependency>
         <!-- DB setting start -->
         <dependency>
@@ -224,6 +224,13 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.5.2</version>
+		</dependency>
+		
+		<!-- http://mvnrepository.com/artifact/com.rabbitmq/amqp-client -->
+		<dependency>
+		    <groupId>com.rabbitmq</groupId>
+		    <artifactId>amqp-client</artifactId>
+		    <version>3.6.0</version>
 		</dependency>
 		
 		<!-- DB setting end -->

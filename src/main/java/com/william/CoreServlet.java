@@ -26,6 +26,7 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
+import com.corundumstudio.socketio.protocol.Packet;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.william.DAO.MessageDAO;
@@ -175,7 +176,8 @@ public class CoreServlet extends HttpServlet {
 
 		final SocketIOServer server = new SocketIOServer(config);
 		// server.addNamespace("/chat");
-		server.addJsonObjectListener(LogFile.class,
+		
+		server.addEventListener ("chatevent",LogFile.class,
 				new DataListener<LogFile>() {
 					public void onData(SocketIOClient client, LogFile data,
 							AckRequest ackSender) {
@@ -186,8 +188,9 @@ public class CoreServlet extends HttpServlet {
 							UUID to = UUID.fromString(uuid);
 							SocketIOClient toClient = client.getNamespace()
 									.getClient(to);
+							
 							if (toClient != null)
-								toClient.sendJsonObject(data);
+								toClient.sendEvent("chatevent",data);
 						}
 					}
 				});
@@ -227,7 +230,11 @@ public class CoreServlet extends HttpServlet {
 									msg.setFromID(msgArray[i].getSenderIntID());
 									msg.setToID(userid);
 									msg.setLine(msgArray[i].getMessageContents());
-									client.sendJsonObject(msg);
+									client.sendEvent("chatevent",msg);
+								}
+								
+								for(int i =0 ; i < msgArray.length; i++){
+									messageDAO.updateMessageSendStatus(msgArray[i].getMessageID());
 								}
 							}
 						} catch (SQLException e) {
