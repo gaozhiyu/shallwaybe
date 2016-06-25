@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import com.william.DAO.ShallWayDAO;
+import com.william.DAO.WorldCitiesDAO;
 import com.william.entity.ShallWayEntity;
 import com.william.to.DateDTO;
 import com.william.to.DateInDTO;
@@ -105,6 +106,17 @@ public class DateService {
 		//inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
 		ShallWayDAO msw= new ShallWayDAO();
 		ShallWayOutDTO dateVO=msw.retrieveDateByDateID(inDTO.getDateid());
+		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
+		String[] countryArray =  wcDAO.getCountryList();
+		dateVO.setCountryArray(countryArray);
+		String[] provinceArray =  wcDAO.getProvinceList(dateVO.getCountry());
+		dateVO.setProvinceArray(provinceArray);
+		String[] cityArray =  wcDAO.getCityList(dateVO.getCountry(),dateVO.getProvince());
+		dateVO.setCityArray(cityArray);
+		dateVO.setStartTimeStr(df.format(dateVO.getStartTime()));
+		dateVO.setEndTimeStr(df.format(dateVO.getEndTime()));
+		
+		
 		if(dateVO != null){
 			dateVO.setStatus("Y");
 		}else{

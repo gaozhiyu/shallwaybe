@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.william.vo.CommonVO;
 
-public class ShallWayOutDTO extends CommonVO {
+public class ShallWayOutDTO extends GISDTO {
 
 	private String nickname;
 	private String dateID;
@@ -16,6 +16,8 @@ public class ShallWayOutDTO extends CommonVO {
 	private Date startTime; 
 	private Date endTime;   
 	private Date postTime;   
+	private String endTimeStr;   
+	private String startTimeStr;   
 	
 	private Boolean carPool;
 	private Boolean freeTour;
@@ -187,6 +189,22 @@ public class ShallWayOutDTO extends CommonVO {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getEndTimeStr() {
+		return endTimeStr;
+	}
+
+	public void setEndTimeStr(String endTimeStr) {
+		this.endTimeStr = endTimeStr;
+	}
+
+	public String getStartTimeStr() {
+		return startTimeStr;
+	}
+
+	public void setStartTimeStr(String startTimeStr) {
+		this.startTimeStr = startTimeStr;
 	}
 	
 }

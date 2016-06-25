@@ -69,4 +69,7 @@
 		<listener-class>com.william.listener.ContextListener</listener-class>
 	</listener>
 
+	<session-config>
+	    <session-timeout>-1</session-timeout>
+	</session-config>
 </web-app>
