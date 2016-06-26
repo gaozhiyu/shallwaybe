@@ -1,7 +1,13 @@
 package com.william.service.authenticate;
 
+import java.text.ParseException;
+
 import org.apache.log4j.Logger;
 
+import com.william.DAO.ProfileDAO;
+import com.william.to.CredentailInDTO;
+import com.william.to.LoginResultOutDTO;
+import com.william.to.ProfileInDTO;
 import com.william.util.JedisUtil;
 import com.william.vo.CommonVO;
 
@@ -22,7 +28,28 @@ public class LoginService {
 		return result;
 	}
 	
-	public void changePassword(){
+	public CommonVO changePassword(CredentailInDTO credential){
+		ProfileDAO mgDAO = new ProfileDAO();
+		CommonVO output = new CommonVO();
+		LoginResultOutDTO result = mgDAO.authenticateCredential(credential.getUsername(), credential.getOldPassword());
+		if(result!=null && "Y".equals(result.getStatus())){
+			ProfileInDTO profileTo = new ProfileInDTO();
+			try {
+				profileTo.setUserIntID(result.getUserid());
+				profileTo.setPassword(credential.getPassword0());
+				mgDAO.updateProfile(profileTo);
+				output.setStatus("Y");
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				output.setStatus("F");
+				e.printStackTrace();
+			}
+		} else {
+			output.setStatus("N");
+			output.setReason("Incorrect Old password");
+			//TODO changeto ERROR code
+		}
 		
+		return output;
 	}
 }
