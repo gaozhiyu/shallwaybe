@@ -7,6 +7,7 @@ public class MessageInDTO {
 //	private String messageID;
 	private String messageContents;
 	private String senderIntID;
+	private String senderNickname;
 	private String receiverIntID;
 //	private String sendStatus;
 	
@@ -14,23 +15,13 @@ public class MessageInDTO {
 		super();
 	}
 
-
-	public MessageInDTO(String messageContents, String senderIntID, String receiverIntID) {
-		super();
-//		this.messageID = messageID;
-		this.messageContents = messageContents;
-		this.senderIntID = senderIntID;
-		this.receiverIntID = receiverIntID;
-//		this.sendStatus = sendStatus;
-	}
-
-//	public String getMessageID() {
-//		return messageID;
-//	}
-//
-//	public void setMessageID(String messageID) {
-//		this.messageID = messageID;
-//	}
+public MessageInDTO(String messageContents, String senderIntID, String senderNickname, String receiverIntID) {
+	super();
+	this.messageContents = messageContents;
+	this.senderIntID = senderIntID;
+	this.senderNickname = senderNickname;
+	this.receiverIntID = receiverIntID;
+}
 
 	public String getMessageContents() {
 		return messageContents;
@@ -48,6 +39,14 @@ public class MessageInDTO {
 		this.senderIntID = senderIntID;
 	}
 
+	public String getSenderNickname() {
+		return senderNickname;
+	}
+
+	public void setSenderNickname(String senderNickname) {
+		this.senderNickname = senderNickname;
+	}
+
 	public String getReceiverIntID() {
 		return receiverIntID;
 	}
@@ -55,17 +54,6 @@ public class MessageInDTO {
 	public void setReceiverIntID(String receiverIntID) {
 		this.receiverIntID = receiverIntID;
 	}
-
-
-//	public String getSendStatus() {
-//		return sendStatus;
-//	}
-//
-//
-//	public void setSendStatus(String sendStatus) {
-//		this.sendStatus = sendStatus;
-//	}
-	
 	
 	
 }

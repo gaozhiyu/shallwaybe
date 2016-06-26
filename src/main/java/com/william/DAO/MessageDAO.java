@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -30,13 +31,18 @@ public class MessageDAO {
 	      String messageID = UUID.randomUUID().toString().replaceAll("-", "");
 	      MessageEntity messageEntity = new MessageEntity();
 	      Date sendTime = new Date();	
-	      
+	      Blob messageContents;
+	    		  
 	      try{
 		         tx = session.beginTransaction();
 
 		         messageEntity.setMessageID(messageID);
-		         messageEntity.setMessageContents(messageInDTO.getMessageContents());
+		         
+		         messageContents = Hibernate.getLobCreator(session).createBlob(messageInDTO.getMessageContents().getBytes());
+		         messageEntity.setMessageContents(messageContents);
+		         
 		         messageEntity.setSenderIntID(messageInDTO.getSenderIntID());
+		         messageEntity.setSenderNickname(messageInDTO.getSenderNickname());
 		         messageEntity.setReceiverIntID(messageInDTO.getReceiverIntID());
 		         messageEntity.setSendTime(sendTime);
 //		         messageEntity.setSendStatus(Boolean.parseBoolean(messageInDTO.getSendStatus()));
@@ -67,12 +73,14 @@ public class MessageDAO {
 		      tx = session.beginTransaction();
 
 		      String sql = "select * from message where ReceiverIntID = ? and SendStatus = false order by sendtime asc;";
+//		      String sql = "select * from message where ReceiverIntID = ? order by sendtime asc;";
 		      SQLQuery query = session.createSQLQuery(sql);  
 		      query.setString(0, receiverIntID);
 		      query.addScalar("MessageID", new StringType());
 		      query.addScalar("MessageContents", new BlobType());
 		      query.addScalar("SendTime", new TimestampType());
 		      query.addScalar("SenderIntID", new StringType());
+		      query.addScalar("SenderNickname", new StringType());
 		      query.setResultTransformer(Transformers.aliasToBean(MessageConvertDTO.class));
 		      
 		      @SuppressWarnings("unchecked")
@@ -100,6 +108,7 @@ public class MessageDAO {
 					  messageArray[i].setMessageContents(messageContents);
 					  messageArray[i].setMessageID(message[i].getMessageID());
 					  messageArray[i].setSenderIntID(message[i].getSenderIntID());
+					  messageArray[i].setSenderNickname(message[i].getSenderNickname());
 					  messageArray[i].setSendTime(message[i].getSendTime());
 		    	  }  
 		      }
@@ -139,6 +148,7 @@ public class MessageDAO {
 	/*update message send status: read-true; not yet read-false*/
 //	public boolean updateMessage(MessageInDTO messageInDTO){
 	public boolean updateMessageSendStatus(String messageID){		
+		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;
 	    Boolean flag =false;
@@ -167,8 +177,10 @@ public class MessageDAO {
 		      messageEntity.setSendStatus(true);
 		      
 		      session.update(messageEntity);
+		      
 		      tx.commit();   
 		      flag=true;
+		      
 		}catch (HibernateException e) {
 		      if (tx!=null) tx.rollback();
 		      e.printStackTrace(); 

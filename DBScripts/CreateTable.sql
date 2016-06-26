@@ -95,6 +95,7 @@ create table Message (
    MessageID VARCHAR(64) NOT NULL,
    MessageContents BLOB NOT NULL,
    SenderIntID VARCHAR(64) NOT NULL,
+   SenderNickname VARCHAR(32) NOT NULL,
    ReceiverIntID VARCHAR(64) NOT NULL,
    SendTime TIMESTAMP,
    SendStatus BOOLEAN default false,

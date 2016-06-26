@@ -8,19 +8,23 @@ public class MessageConvertDTO {
 	private String messageID;
 	private Blob messageContents;
 	private String senderIntID;
+	private String senderNickname;
 	private Date sendTime;
 	
 	public MessageConvertDTO() {
 		super();
 	}
 
-	public MessageConvertDTO(String messageID, Blob messageContents, String senderIntID, Date sendTime) {
+	public MessageConvertDTO(String messageID, Blob messageContents, String senderIntID, String senderNickname,
+			Date sendTime) {
 		super();
 		this.messageID = messageID;
 		this.messageContents = messageContents;
 		this.senderIntID = senderIntID;
+		this.senderNickname = senderNickname;
 		this.sendTime = sendTime;
 	}
+
 
 	public String getMessageID() {
 		return messageID;
@@ -44,6 +48,15 @@ public class MessageConvertDTO {
 
 	public void setSenderIntID(String senderIntID) {
 		this.senderIntID = senderIntID;
+	}
+	
+
+	public String getSenderNickname() {
+		return senderNickname;
+	}
+
+	public void setSenderNickname(String senderNickname) {
+		this.senderNickname = senderNickname;
 	}
 
 	public Date getSendTime() {

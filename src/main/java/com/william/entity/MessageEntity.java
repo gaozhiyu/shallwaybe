@@ -7,8 +7,9 @@ public class MessageEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String messageID;
-	private String messageContents;
+	private Blob messageContents;
 	private String senderIntID;
+	private String senderNickname;
 	private String receiverIntID;
 	private Date sendTime;
 	private Boolean sendStatus;
@@ -17,16 +18,21 @@ public class MessageEntity implements java.io.Serializable {
 		super();
 	}
 
-	public MessageEntity(String messageID, String messageContents, String senderIntID, String receiverIntID,
-			Date sendTime, Boolean sendStatus) {
+
+
+	public MessageEntity(String messageID, Blob messageContents, String senderIntID, String senderNickname,
+			String receiverIntID, Date sendTime, Boolean sendStatus) {
 		super();
 		this.messageID = messageID;
 		this.messageContents = messageContents;
 		this.senderIntID = senderIntID;
+		this.senderNickname = senderNickname;
 		this.receiverIntID = receiverIntID;
 		this.sendTime = sendTime;
 		this.sendStatus = sendStatus;
 	}
+
+
 
 	public String getMessageID() {
 		return messageID;
@@ -36,11 +42,11 @@ public class MessageEntity implements java.io.Serializable {
 		this.messageID = messageID;
 	}
 
-	public String getMessageContents() {
+	public Blob getMessageContents() {
 		return messageContents;
 	}
 
-	public void setMessageContents(String messageContents) {
+	public void setMessageContents(Blob messageContents) {
 		this.messageContents = messageContents;
 	}
 
@@ -51,6 +57,19 @@ public class MessageEntity implements java.io.Serializable {
 	public void setSenderIntID(String senderIntID) {
 		this.senderIntID = senderIntID;
 	}
+
+	
+	public String getSenderNickname() {
+		return senderNickname;
+	}
+
+
+
+	public void setSenderNickname(String senderNickname) {
+		this.senderNickname = senderNickname;
+	}
+
+
 
 	public String getReceiverIntID() {
 		return receiverIntID;

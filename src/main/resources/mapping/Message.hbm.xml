@@ -8,12 +8,15 @@
             <column name="MessageID" length="64" not-null="true" unique="true" />
         </id>
         
-        <property name="messageContents" type="string">
+        <property name="messageContents" type="blob">
             <column name="MessageContents"/>
         </property>               
         <property name="senderIntID" type="string">
             <column name="SenderIntID" length="64" />
         </property>
+        <property name="senderNickname" type="string">
+            <column name="SenderNickname" length="32" />
+        </property>        
         <property name="receiverIntID" type="string">
             <column name="ReceiverIntID" length="64" />
         </property>                      

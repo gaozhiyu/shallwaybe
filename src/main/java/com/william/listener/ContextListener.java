@@ -91,7 +91,7 @@ public class ContextListener implements ServletContextListener {
 					public void onMessage(LogFile msg) throws Exception {
 						// TODO Auto-generated method stub
 						System.out.println("PrintedByWilliam"+msg.toString());
-						MessageInDTO messageInDTO = new MessageInDTO(msg.getLine(),msg.getFromID(),msg.getToID());
+						MessageInDTO messageInDTO = new MessageInDTO(msg.getLine(),msg.getFromID(),msg.getFromNickname(),msg.getToID());
 						MessageDAO messageDAO = new MessageDAO();
 						messageDAO.addMessage(messageInDTO);
 					}

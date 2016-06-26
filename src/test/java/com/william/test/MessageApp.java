@@ -19,25 +19,25 @@ public class MessageApp {
 		byte[] bdata= null;
 		Blob blob=null;
 		
-		MessageInDTO messageInDTO = new MessageInDTO("Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어","001","105");
-		MSG.addMessage(messageInDTO);
+//		MessageInDTO messageInDTO = new MessageInDTO("Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어","001","Huzong","106");
+//		MSG.addMessage(messageInDTO);
+//		
+//		messageArray =  MSG.retrieveMessage("106");
+//		
+//		for (int i=0;i< messageArray.length;i++){
+//			System.out.println();
+//			System.out.println(messageArray[i].getMessageID());
+//			System.out.println(messageArray[i].getMessageContents());
+////			blob= messageArray[i].getMessageContents();
+////			bdata = blob.getBytes(1, (int) blob.length());
+////			String messageContents = new String(bdata);
+////			System.out.println(messageContents);
+//			System.out.println(messageArray[i].getSenderIntID());
+//			System.out.println(messageArray[i].getSendTime());
+//			
+//		}
 		
-		messageArray =  MSG.retrieveMessage("105");
-		
-		for (int i=0;i< messageArray.length;i++){
-			System.out.println();
-			System.out.println(messageArray[i].getMessageID());
-			System.out.println(messageArray[i].getMessageContents());
-//			blob= messageArray[i].getMessageContents();
-//			bdata = blob.getBytes(1, (int) blob.length());
-//			String messageContents = new String(bdata);
-//			System.out.println(messageContents);
-			System.out.println(messageArray[i].getSenderIntID());
-			System.out.println(messageArray[i].getSendTime());
-			
-		}
-		
-//		MSG.updateMessageSendStatus("d12c3f91609f49f78667a6f331be5f9b");
+		MSG.updateMessageSendStatus("a99de433105846e087c626c2a6420072");
 
 	}
 
