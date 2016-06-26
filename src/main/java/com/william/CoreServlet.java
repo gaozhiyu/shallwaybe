@@ -171,7 +171,7 @@ public class CoreServlet extends HttpServlet {
 	public void init() {
 
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-		config.setHostname("172.17.45.221");
+		config.setHostname("172.23.46.46");
 		config.setPort(9092);
 
 		final SocketIOServer server = new SocketIOServer(config);
@@ -200,10 +200,9 @@ public class CoreServlet extends HttpServlet {
 				// ...
 
 				String key = client.get("id");
-				JedisUtil.del(key);
+				//TODO
+				JedisUtil.hdel(key,"chat");
 
-				// if(clientMap.containsKey(key))
-				// clientMap.remove(key);
 			}
 		});
 

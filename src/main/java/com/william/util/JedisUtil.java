@@ -55,12 +55,17 @@ public class JedisUtil {
 	public static void set(String key, String field, String value) {
 		// TODO Auto-generated method stub
 		getinstance().hset(key, field, value);
-		getinstance().expire(key,30*85400);
+		getinstance().expire(key,60*60*24);
 		
 	}
 
 	public static String get(String key, String field) {
 		// TODO Auto-generated method stub
 		return getinstance().hget(key, field);
+	}
+	
+	public static void hdel(String key, String field) {
+		// TODO Auto-generated method stub
+		 getinstance().hdel(key, field);
 	}
 }
