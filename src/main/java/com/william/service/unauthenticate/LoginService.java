@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 import com.william.DAO.ProfileDAO;
 import com.william.to.LoginResultInDTO;
 import com.william.to.LoginResultOutDTO;
+import com.william.to.ResetPwdInDTO;
+import com.william.vo.CommonVO;
 
 public class LoginService {
 	
@@ -23,7 +25,13 @@ public class LoginService {
 		return result;
 	}
 	
-	public void resetPassword(){
+	public void resetPassword(ResetPwdInDTO input){
+		
+	}
+	
+	public CommonVO askForOTP(String email){
+		return null;
+		
 		
 	}
 }

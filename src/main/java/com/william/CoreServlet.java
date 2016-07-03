@@ -171,7 +171,7 @@ public class CoreServlet extends HttpServlet {
 	public void init() {
 
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-		config.setHostname("172.23.46.46");
+		config.setHostname("172.23.189.61");
 		config.setPort(9092);
 
 		final SocketIOServer server = new SocketIOServer(config);
@@ -228,6 +228,7 @@ public class CoreServlet extends HttpServlet {
 									LogFile msg = new LogFile();
 									msg.setFromID(msgArray[i].getSenderIntID());
 									msg.setToID(userid);
+									msg.setFromNickname(msgArray[i].getSenderNickname());
 									msg.setLine(msgArray[i].getMessageContents());
 									client.sendEvent("chatevent",msg);
 								}
