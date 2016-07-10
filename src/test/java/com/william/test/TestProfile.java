@@ -21,22 +21,25 @@ public class TestProfile {
 	boolean updateStatus=false;
 	LoginResultOutDTO loginResultOutDTO = new LoginResultOutDTO();
 	
-	@Ignore
+	//@Ignore
 	@Test
 	public void testAddProfile(){
+
 		registerOutDTO = MP.addProfile(registerInDTO);
 		System.out.println(registerOutDTO.getRegisterStatus());	
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testUpdateProfile() throws ParseException{
+		profileEntity = MP.readProfile(registerInDTO.getEmail());
+		profileInDTO.setUserIntID(profileEntity.getUserIntID());
 		updateStatus = MP.updateProfile(profileInDTO);
 		System.out.println("profile updated:"+updateStatus);
 				
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testAuthenticateCredential(){
 		loginResultOutDTO = MP.authenticateCredential("4@gmail.com","MyPassword");
