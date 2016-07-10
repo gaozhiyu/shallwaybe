@@ -13,18 +13,16 @@ import com.william.to.MessageOutDTO;
 
 public class TestMessage {
 
-	MessageDAO messageDAO = new MessageDAO();
+	MessageDAO messageDAO = MessageDAO.getInstance();//MessageDAO messageDAO =new MessageDAO();
 	MessageOutDTO[] messageArray = null;
-	MessageInDTO messageInDTO = new MessageInDTO("Hello,我嘞个去","100","胡总","001");
+	MessageInDTO messageInDTO = new MessageInDTO("Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어","100","胡总","001");
 //  Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어
-	
-	@Ignore
+
 	@Test	
 	public void testAddMessage(){
 		messageDAO.addMessage(messageInDTO);		
 	}
 	
-//	@Ignore
 	@Test
 	public void testRetrieveMessage() throws SQLException{
 		
@@ -37,14 +35,13 @@ public class TestMessage {
 		System.out.println(messageArray[i].getSenderNickname());
 		System.out.println(messageArray[i].getSendTime());
 		
+	}	
 	}
 	
-	}
-	
-	@Ignore	
+	@Ignore
 	@Test
 	public void testUpdateMessageSendStatus(){
-		boolean flag=messageDAO.updateMessageSendStatus("b7dd3379ee194f22ac16eb2ef32cfefc");
+		boolean flag=messageDAO.updateMessageSendStatus("679fafa49b3f48c58aab2f41abc9aece");
 		assertEquals(true,flag);
 		
 	}

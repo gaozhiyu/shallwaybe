@@ -21,6 +21,15 @@ import com.william.util.HibernateUtil;
 
 public class ProfileDAO {
 	
+	private static ProfileDAO instance;
+	
+	public static ProfileDAO getInstance() {
+		if (instance == null) {
+			instance = new ProfileDAO();
+		}
+		return instance;
+	}
+	
 	/*Create Profile Record*/
 	public RegisterOutDTO addProfile(RegisterInDTO profileTo){
 		
@@ -199,7 +208,28 @@ public class ProfileDAO {
 				Boolean profilePhoto =Boolean.parseBoolean(profileTo.getProfilePhoto());
 				profileEntity.setLastUpdate(currentTime); 
 				profileEntity.setProfilePhoto(profilePhoto);
-			 }			 
+			 }
+			 
+			 /* update times of wrong try password */
+			 if(profileTo.getWrongTryPWD()!=null && !"".equals(profileTo.getWrongTryPWD().trim()))
+			 {
+				Integer wrongTryPWD =Integer.parseInt(profileTo.getWrongTryPWD());
+				profileEntity.setWrongTryPWD(wrongTryPWD);
+			 }
+	
+			 /*create OTP to be used by user to update user password */
+			 if(profileTo.getOTP()!=null && !"".equals(profileTo.getOTP().trim()))
+			 {
+				profileEntity.setOTP(CryptWithMD5Util.cryptWithMD5Util(profileTo.getOTP()));				 
+				Date OTPExpiryTime =new Date(currentTime.getTime() + 300000); //OTP will expire in 5 minutes
+				profileEntity.setOTPExpiryTime(OTPExpiryTime);
+			 }
+			 
+			 if(profileTo.getWrongTryOTP()!=null && !"".equals(profileTo.getWrongTryOTP().trim()))
+			 {
+				Integer wrongTryOTP =Integer.parseInt(profileTo.getWrongTryOTP());
+				profileEntity.setWrongTryOTP(wrongTryOTP);
+			 }
   	 
 		      session.update(profileEntity); 	
 		      tx.commit();

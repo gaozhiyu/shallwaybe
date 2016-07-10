@@ -11,6 +11,9 @@ public class ProfileInDTO {
 	private String gender;
 	private String dateOfBirth;
 	private String profilePhoto;
+	private String wrongTryPWD;
+	private String OTP;
+	private String wrongTryOTP;
 	private String country;
 	private String province;
 	private String city;
@@ -28,9 +31,12 @@ public class ProfileInDTO {
 		super();
 	}
 
+
+
 	public ProfileInDTO(String userIntID, String email, String password, String nickname, String gender,
-			String dateOfBirth, String profilePhoto, String country, String province, String city, String googleCountry,
-			String googleProvince, String googleCity, String longitude, String latitude, String signature) {
+			String dateOfBirth, String profilePhoto, String wrongTryPWD, String oTP, String wrongTryOTP,
+			String country, String province, String city, String googleCountry, String googleProvince,
+			String googleCity, String longitude, String latitude, String signature) {
 		super();
 		this.userIntID = userIntID;
 		this.email = email;
@@ -39,6 +45,9 @@ public class ProfileInDTO {
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.profilePhoto = profilePhoto;
+		this.wrongTryPWD = wrongTryPWD;
+		this.OTP = oTP;
+		this.wrongTryOTP = wrongTryOTP;
 		this.country = country;
 		this.province = province;
 		this.city = city;
@@ -49,6 +58,8 @@ public class ProfileInDTO {
 		this.latitude = latitude;
 		this.signature = signature;
 	}
+
+
 
 	public String getUserIntID() {
 		return userIntID;
@@ -98,6 +109,30 @@ public class ProfileInDTO {
 
 	public void setProfilePhoto(String profilePhoto) {
 		this.profilePhoto = profilePhoto;
+	}	
+
+	public String getWrongTryPWD() {
+		return wrongTryPWD;
+	}
+
+	public void setWrongTryPWD(String wrongTryPWD) {
+		this.wrongTryPWD = wrongTryPWD;
+	}
+
+	public String getOTP() {
+		return OTP;
+	}
+
+	public void setOTP(String oTP) {
+		OTP = oTP;
+	}
+
+	public String getWrongTryOTP() {
+		return wrongTryOTP;
+	}
+
+	public void setWrongTryOTP(String wrongTryOTP) {
+		this.wrongTryOTP = wrongTryOTP;
 	}
 
 	public String getCountry() {

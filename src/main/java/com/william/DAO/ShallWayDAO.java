@@ -32,6 +32,15 @@ import com.william.to.ShallWayUpdateDTO;
 
 public class ShallWayDAO {
 	
+	private static ShallWayDAO instance;
+	
+	public static ShallWayDAO getInstance() {
+		if (instance == null) {
+			instance = new ShallWayDAO();
+		}
+		return instance;
+	}
+	
 	/* Create ShallWay Record*/
 		public String addShallWay(ShallWayInDTO shallWayInDTO) throws ParseException{
 			

@@ -17,6 +17,10 @@ public class ProfileEntity implements java.io.Serializable {
 	private String gender;
 	private Date dateOfBirth;
 	private Boolean profilePhoto;
+	private Integer wrongTryPWD;
+	private String OTP;
+	private Date OTPExpiryTime;
+	private Integer wrongTryOTP;
 	private String country;
 	private String province;
 	private String city;
@@ -34,8 +38,10 @@ public class ProfileEntity implements java.io.Serializable {
 		super();
 	}
 
+
 	public ProfileEntity(String userIntID, String email, String password, String nickname, String gender,
-			Date dateOfBirth, Boolean profilePhoto, String country, String province, String city, String googleCountry,
+			Date dateOfBirth, Boolean profilePhoto, Integer wrongTryPWD, String oTP, Date oTPExpiryTime,
+			Integer wrongTryOTP, String country, String province, String city, String googleCountry,
 			String googleProvince, String googleCity, Double longitude, Double latitude, Date lastUpdate,
 			Date createTime, Date lastAddressUpdate, String signature) {
 		super();
@@ -46,6 +52,10 @@ public class ProfileEntity implements java.io.Serializable {
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.profilePhoto = profilePhoto;
+		this.wrongTryPWD = wrongTryPWD;
+		this.OTP = oTP;
+		this.OTPExpiryTime = oTPExpiryTime;
+		this.wrongTryOTP = wrongTryOTP;
 		this.country = country;
 		this.province = province;
 		this.city = city;
@@ -59,6 +69,7 @@ public class ProfileEntity implements java.io.Serializable {
 		this.lastAddressUpdate = lastAddressUpdate;
 		this.signature = signature;
 	}
+
 
 	public String getProvince() {
 		return province;
@@ -122,6 +133,38 @@ public class ProfileEntity implements java.io.Serializable {
 
 	public void setProfilePhoto(Boolean profilePhoto) {
 		this.profilePhoto = profilePhoto;
+	}	
+
+	public Integer getWrongTryPWD() {
+		return wrongTryPWD;
+	}
+
+	public void setWrongTryPWD(Integer wrongTryPWD) {
+		this.wrongTryPWD = wrongTryPWD;
+	}
+
+	public String getOTP() {
+		return OTP;
+	}
+
+	public void setOTP(String oTP) {
+		OTP = oTP;
+	}
+
+	public Date getOTPExpiryTime() {
+		return OTPExpiryTime;
+	}
+
+	public void setOTPExpiryTime(Date oTPExpiryTime) {
+		OTPExpiryTime = oTPExpiryTime;
+	}
+
+	public Integer getWrongTryOTP() {
+		return wrongTryOTP;
+	}
+
+	public void setWrongTryOTP(Integer wrongTryOTP) {
+		this.wrongTryOTP = wrongTryOTP;
 	}
 
 	public String getCountry() {

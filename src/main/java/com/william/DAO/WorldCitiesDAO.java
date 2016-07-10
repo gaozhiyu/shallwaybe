@@ -17,6 +17,15 @@ import com.william.util.HibernateUtil;
 
 public class WorldCitiesDAO {
 	
+	private static WorldCitiesDAO instance;
+	
+	public static WorldCitiesDAO getInstance() {
+		if (instance == null) {
+			instance = new WorldCitiesDAO();
+		}
+		return instance;
+	}
+	
 	public String[] getCountryList(){
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();

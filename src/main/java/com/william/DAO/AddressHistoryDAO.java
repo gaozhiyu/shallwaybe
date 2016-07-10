@@ -18,6 +18,15 @@ import com.william.util.HibernateUtil;
 
 public class AddressHistoryDAO {
 	
+	private static AddressHistoryDAO instance;
+	
+	public static AddressHistoryDAO getInstance() {
+		if (instance == null) {
+			instance = new AddressHistoryDAO();
+		}
+		return instance;
+	}
+	
 	public void addAddressHistory(AddressHistoryInDTO addressTo)
 	{
 		  Session session = HibernateUtil.getSessionFactory().openSession();

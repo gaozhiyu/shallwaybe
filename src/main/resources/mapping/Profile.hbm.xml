@@ -26,6 +26,20 @@
         <property name="profilePhoto" type="boolean">
             <column name="ProfilePhoto" />
         </property>
+        
+        <property name="wrongTryPWD" type="integer">
+            <column name="WrongTryPWD" />
+        </property>
+        <property name="OTP" type="string">
+            <column name="OTP" length="128"/>
+        </property>
+        <property name="OTPExpiryTime" type="java.util.Date">
+            <column name="OTPExpiryTime" />
+        </property>
+        <property name="wrongTryOTP" type="integer">
+            <column name="WrongTryOTP" />
+        </property>                        
+        
         <property name="country" type="string">
             <column name="Country" length="128" />
         </property> 

@@ -17,6 +17,15 @@ import com.william.to.LatestCoordinateOutDTO;
 
 public class LatestCoordinateDAO {
 	
+	private static LatestCoordinateDAO instance;
+	
+	public static LatestCoordinateDAO getInstance() {
+		if (instance == null) {
+			instance = new LatestCoordinateDAO();
+		}
+		return instance;
+	}
+	
 	/*Create Coordinate Record*/
 //	public void addLatestCoordinate(LatestCoordinateInDTO latestCoordinateInDTO){	
 //		

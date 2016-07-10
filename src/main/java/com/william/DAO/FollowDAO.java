@@ -16,6 +16,16 @@ import com.william.to.FollowOutDTO;
 import com.william.util.HibernateUtil;
 
 public class FollowDAO {
+	
+	private static FollowDAO instance;
+	
+	public static FollowDAO getInstance() {
+		if (instance == null) {
+			instance = new FollowDAO();
+		}
+		return instance;
+	}
+	
 	public void addFollow(FollowInDTO followInDTO){
 		
 		  Session session = HibernateUtil.getSessionFactory().openSession();

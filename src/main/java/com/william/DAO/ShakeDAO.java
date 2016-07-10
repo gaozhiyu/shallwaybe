@@ -17,6 +17,15 @@ import com.william.util.HibernateUtil;
 
 public class ShakeDAO {
 	
+	private static ShakeDAO instance;
+	
+	public static ShakeDAO getInstance() {
+		if (instance == null) {
+			instance = new ShakeDAO();
+		}
+		return instance;
+	}
+	
 	public  static void  main(String[] args){
 		ShakeInDTO inDTO = new ShakeInDTO("123","1","1");
 		ShakeDAO dao = new ShakeDAO();

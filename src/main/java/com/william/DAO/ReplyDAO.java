@@ -18,6 +18,16 @@ import com.william.to.ReplyOutDTO;
 import com.william.util.HibernateUtil;
 
 public class ReplyDAO {
+	
+	private static ReplyDAO instance;
+	
+	public static ReplyDAO getInstance() {
+		if (instance == null) {
+			instance = new ReplyDAO();
+		}
+		return instance;
+	}
+	
 	public void addReply(ReplyInDTO replyInDTO){
 		
 		  Session session = HibernateUtil.getSessionFactory().openSession();

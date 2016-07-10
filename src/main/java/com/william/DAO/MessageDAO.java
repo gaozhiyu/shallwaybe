@@ -21,8 +21,18 @@ import com.william.to.MessageConvertDTO;
 import com.william.to.MessageInDTO;
 import com.william.to.MessageOutDTO;
 import com.william.util.HibernateUtil;
+import com.william.util.MessageQueue;
 
 public class MessageDAO {
+	
+	private static MessageDAO instance;
+	
+	public static MessageDAO getInstance() {
+		if (instance == null) {
+			instance = new MessageDAO();
+		}
+		return instance;
+	}
 	
 	public void addMessage(MessageInDTO messageInDTO){
 		
