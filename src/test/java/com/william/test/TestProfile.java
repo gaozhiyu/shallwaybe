@@ -77,15 +77,21 @@ public class TestProfile {
 	
 	// generate random number to be used as OTP
 	@Test
-	public void testRandomNumber(){
+	public String testRandomNumber(){
 		
 	    final String alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	    final int N = alphabet.length();
-
 	    Random r = new Random();
+	    StringBuilder sb = new StringBuilder();
 
 	    for (int i = 0; i < 10; i++) {
-	        System.out.print(alphabet.charAt(r.nextInt(N)));
+	    	char newchar = alphabet.charAt(r.nextInt(N));
+//	        System.out.print(newchar);
+	        sb.append(newchar);
 	    }
+	    
+	    System.out.println("\n New String:" + sb.toString());
+	    
+	    return sb.toString();
 	}
 }
