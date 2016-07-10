@@ -275,6 +275,37 @@ public class ProfileDAO {
 		    }	
 	    return profileEntity;
 	}
+	
+	//read a profile by UserIntID
+	public ProfileEntity readProfileByID(String userIntID){		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction tx = null;
+	    ProfileEntity profileEntity = new ProfileEntity();
+		
+	    try{
+		      tx = session.beginTransaction();
+
+		      String sql = "select * from profile where UserIntID = ?";
+		      SQLQuery query = session.createSQLQuery(sql);  
+		      query.setString(0, userIntID);
+		      query.addEntity(ProfileEntity.class);
+		      
+		      @SuppressWarnings("unchecked")
+		      List<ProfileEntity> profileList = query.list();	
+		      
+		      if (profileList!=null && profileList.size()==1)
+		    	  profileEntity = profileList.get(0);
+
+		     // session.update(profileEntity); 	
+		      tx.commit();   
+		    }catch (HibernateException e) {
+		      if (tx!=null) tx.rollback();
+		      e.printStackTrace(); 
+		    }finally {
+		      session.close(); 
+		    }	
+	    return profileEntity;
+	}
 
 	/* Login Verification*/
 	public LoginResultOutDTO authenticateCredential(String logInEmail, String logInPassword){
