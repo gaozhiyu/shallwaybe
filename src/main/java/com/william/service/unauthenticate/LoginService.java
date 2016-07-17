@@ -10,6 +10,7 @@ import com.william.entity.ProfileEntity;
 import com.william.to.LoginResultInDTO;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.ProfileInDTO;
+import com.william.to.ProfileUpdateResultDTO;
 import com.william.to.ResetPwdInDTO;
 import com.william.util.CryptWithMD5Util;
 import com.william.util.ERRORCode;
@@ -102,7 +103,7 @@ public class LoginService {
 	
 	public CommonVO askForOTP(String email){
 		CommonVO cvo = new CommonVO();
-		boolean flag = false;
+		ProfileUpdateResultDTO resultDTO = new ProfileUpdateResultDTO();
 		ProfileDAO mgDAO = ProfileDAO.getInstance();
 		try {
 			//Add otp validation
@@ -110,9 +111,9 @@ public class LoginService {
 			if(profileEnity.getOTPExpiryTime().getTime()-new Date().getTime() > 86100*1000 || profileEnity.getWrongTryOTP()<5 ){//TODO
 				ProfileInDTO profileTo = new ProfileInDTO();
 				profileTo.setUserIntID(profileEnity.getUserIntID());
-				String oTP ="111111";//TODO later
+				String oTP =CryptWithMD5Util.testRandomNumber(6);//"111111";//TODO later
 				profileTo.setOTP(oTP);
-				flag = mgDAO.updateProfile(profileTo);
+				resultDTO = mgDAO.updateProfile(profileTo);
 			} else {
 				cvo.setReason("Please do so after 24 hours");
 			}
@@ -120,7 +121,7 @@ public class LoginService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(flag)
+		if(resultDTO.isProfileUpdate())
 			cvo.setStatus("Y");
 		else 
 			cvo.setStatus("N");

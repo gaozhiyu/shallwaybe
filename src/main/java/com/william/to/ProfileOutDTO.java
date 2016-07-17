@@ -1,30 +1,74 @@
 package com.william.to;
 
-public class ProfileOutDTO {
+import com.william.vo.CommonVO;
 
-	private String registerStatus;
-	private String ShallwayId;
-	private String userId;//email Address
+public class ProfileOutDTO extends CommonVO{
+
+	private String nickname;
+	private String country;
+	private String province;
+	private String city;
+	private String gender;
+	private Byte[] profilePIC;
+	private String dateOfBirth;
+	private String visitedCities;
+	private String registerCities;
 	
 	
-	public String getRegisterStatus() {
-		return registerStatus;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setRegisterStatus(String registerStatus) {
-		this.registerStatus = registerStatus;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
-	public String getShallwayId() {
-		return ShallwayId; 
+	public String getCountry() {
+		return country;
 	}
-	public void setShallwayId(String shallwayId) {
-		ShallwayId = shallwayId;
+	public void setCountry(String country) {
+		this.country = country;
 	}
-	public String getUserId() {
-		return userId;
+	public String getProvince() {
+		return province;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setProvince(String province) {
+		this.province = province;
 	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public Byte[] getProfilePIC() {
+		return profilePIC;
+	}
+	public void setProfilePIC(Byte[] profilePIC) {
+		this.profilePIC = profilePIC;
+	}
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+	public String getVisitedCities() {
+		return visitedCities;
+	}
+	public void setVisitedCities(String visitedCities) {
+		this.visitedCities = visitedCities;
+	}
+	public String getRegisterCities() {
+		return registerCities;
+	}
+	public void setRegisterCities(String registerCities) {
+		this.registerCities = registerCities;
+	} 
 	
 	
 	

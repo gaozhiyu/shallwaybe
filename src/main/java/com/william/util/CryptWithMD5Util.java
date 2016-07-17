@@ -2,6 +2,7 @@ package com.william.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,4 +27,23 @@ public class CryptWithMD5Util {
 
 
 	   }
+	   
+	   
+		public static String testRandomNumber(int lenght){
+			
+		    final String alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		    final int N = alphabet.length();
+		    Random r = new Random();
+		    StringBuilder sb = new StringBuilder();
+
+		    for (int i = 0; i < lenght; i++) {
+		    	char newchar = alphabet.charAt(r.nextInt(N));
+//		        System.out.print(newchar);
+		        sb.append(newchar);
+		    }
+		    
+		    //System.out.println("\n New String:" + sb.toString());
+		    
+		    return sb.toString();
+		}
 }

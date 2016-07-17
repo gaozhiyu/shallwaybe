@@ -4,14 +4,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.william.DAO.AddressHistoryDAO;
 import com.william.DAO.ProfileDAO;
 import com.william.DAO.WorldCitiesDAO;
 import com.william.entity.ProfileEntity;
 import com.william.to.AddressDTO;
+import com.william.to.AddressHistoryInDTO;
+import com.william.to.AddressHistoryOutDTO;
 import com.william.to.CoordinateDTO;
-import com.william.to.GISDTO;
 import com.william.to.ProfileInDTO;
+import com.william.to.ProfileOutDTO;
+import com.william.to.ProfileUpdateResultDTO;
 import com.william.util.ParserJsonUtil;
+import com.william.vo.CommonInput;
 import com.william.vo.ProfileVO;
 import com.william.vo.UpdateProfileVO;
 
@@ -20,10 +25,10 @@ public class ProfileService {
 	private SimpleDateFormat df =new SimpleDateFormat("dd/MM/yyyy");
 	
 	public UpdateProfileVO updateProfile(ProfileInDTO inDTO){
-		ProfileDAO pDAO = new ProfileDAO();
+		ProfileDAO pDAO = ProfileDAO.getInstance();
 		UpdateProfileVO cvo = new UpdateProfileVO();
 		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
-		boolean flag = false;
+		ProfileUpdateResultDTO resultDTO = new ProfileUpdateResultDTO();
 		try {
 		AddressDTO addressDTO = new AddressDTO();
 		addressDTO.setCountry(inDTO.getCountry());
@@ -41,12 +46,22 @@ public class ProfileService {
 		}
 		
 		
-			flag = pDAO.updateProfile(inDTO);
+			resultDTO = pDAO.updateProfile(inDTO);
+			if(resultDTO.isAddressUpdate()){
+				AddressHistoryDAO ahDAO = AddressHistoryDAO.getInstance();
+				AddressHistoryInDTO addressTo = new AddressHistoryInDTO();
+				addressTo.setUserIntID(inDTO.getUserIntID());
+				addressTo.setCity(tmp.getCity());
+				addressTo.setProvince(tmp.getProvince());
+				addressTo.setCountry(tmp.getCountry());
+				addressTo.setPlaceType("R");
+				ahDAO.addAddressHistory(addressTo);
+			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(flag){
+		if(resultDTO.isProfileUpdate()){
 			cvo.setNickname(inDTO.getNickname());
 			cvo.setStatus("Y");
 		}else{
@@ -62,7 +77,7 @@ public class ProfileService {
 	}
 	
 	public ProfileVO viewProfileByEmail(String email){
-		ProfileDAO pDAO = new ProfileDAO();
+		ProfileDAO pDAO = ProfileDAO.getInstance();
 		ProfileEntity profileEntity=pDAO.readProfile(email);
 		ProfileVO profileVO = new ProfileVO();
 		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
@@ -103,4 +118,40 @@ public class ProfileService {
 		return profileVO;
 	}
 
+	
+	public ProfileOutDTO viewProfileInput(CommonInput input){
+		ProfileDAO profileDAO =ProfileDAO.getInstance();
+		ProfileEntity profile=profileDAO.readProfileByID(input.getUserIntID());
+		ProfileOutDTO profileOutDTO = new ProfileOutDTO();
+		if(profile!=null){
+			profileOutDTO.setNickname(profile.getNickname());
+			profileOutDTO.setGender(profile.getGender());
+			if(profile.getDateOfBirth()!=null)
+				profileOutDTO.setDateOfBirth(df.format(profile.getDateOfBirth()));
+			profileOutDTO.setCity(profile.getCity());
+			profileOutDTO.setProvince(profile.getProvince());
+			profileOutDTO.setCountry(profile.getCountry());
+			profileOutDTO.setStatus("Y");
+			AddressHistoryDAO addressDAO = AddressHistoryDAO.getInstance();
+			AddressHistoryOutDTO[] visitArray=addressDAO.readAddressHistory(input.getUserIntID(), "B");
+			if(visitArray!=null && visitArray.length>0){
+				StringBuilder sb =new StringBuilder();
+				for(AddressHistoryOutDTO dto :visitArray)
+					sb.append(dto.toString1()+"\n");
+				profileOutDTO.setVisitedCities(sb.toString());
+			}
+			AddressHistoryOutDTO[] regArray=addressDAO.readAddressHistory(input.getUserIntID(), "R");
+			if(regArray!=null && regArray.length>0){
+				StringBuilder sb =new StringBuilder();
+				for(AddressHistoryOutDTO dto :regArray)
+					sb.append(dto.toString()+"\n");
+				profileOutDTO.setVisitedCities(sb.toString());
+			}
+		}else{
+			profileOutDTO.setStatus("N");
+		}
+
+		return profileOutDTO;
+		
+	}
 }

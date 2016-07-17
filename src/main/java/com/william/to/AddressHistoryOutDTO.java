@@ -85,4 +85,20 @@ public class AddressHistoryOutDTO {
 		this.placeType = placeType;
 	}
 
+	@Override
+	public String toString() {
+		return "country=" + country + ", province="
+				+ province + ", city=" + city + ", updateTime=" + updateTime
+				;
+	}
+	
+	
+	public String toString1() {
+		return "country=" + country + ", province="
+				+ province + ", city=" + city
+				;
+	}
+	
+	
+
 }
