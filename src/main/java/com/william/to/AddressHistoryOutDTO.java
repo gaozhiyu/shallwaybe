@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class AddressHistoryOutDTO {
 	
-	private String nickname;
+//	private String nickname;
 	private String userIntID;
 	private String addressSequenceID;	
 	private String country;
@@ -17,10 +17,9 @@ public class AddressHistoryOutDTO {
 		super();
 	}
 
-	public AddressHistoryOutDTO(String nickname, String userIntID, String addressSequenceID, String country,
+	public AddressHistoryOutDTO(String userIntID, String addressSequenceID, String country,
 			String province, String city, Date updateTime, String placeType) {
 		super();
-		this.nickname = nickname;
 		this.userIntID = userIntID;
 		this.addressSequenceID = addressSequenceID;
 		this.country = country;
@@ -28,14 +27,6 @@ public class AddressHistoryOutDTO {
 		this.city = city;
 		this.updateTime = updateTime;
 		this.placeType = placeType;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
 	}
 
 	public String getUserIntID() {
@@ -93,8 +84,5 @@ public class AddressHistoryOutDTO {
 	public void setPlaceType(String placeType) {
 		this.placeType = placeType;
 	}
-	
-	
-		
 
 }

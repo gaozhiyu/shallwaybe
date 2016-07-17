@@ -128,8 +128,8 @@ public class LatestCoordinateDAO {
 	
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
-	      LatestCoordinateOutDTO latestCoordinate = new LatestCoordinateOutDTO();
-	      
+//	      LatestCoordinateOutDTO latestCoordinate = new LatestCoordinateOutDTO(); // commented on 17.7.2016
+	      LatestCoordinateOutDTO latestCoordinate = null; // updated on 17.7.2016 for null object
 	      try{
 	         tx = session.beginTransaction();
 	         

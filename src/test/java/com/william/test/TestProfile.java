@@ -10,6 +10,7 @@ import com.william.DAO.ProfileDAO;
 import com.william.entity.ProfileEntity;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.ProfileInDTO;
+import com.william.to.ProfileUpdateResultDTO;
 import com.william.to.RegisterInDTO;
 import com.william.to.RegisterOutDTO;
 
@@ -18,10 +19,11 @@ public class TestProfile {
 	ProfileDAO MP = ProfileDAO.getInstance();
 	RegisterInDTO registerInDTO = new RegisterInDTO("2@gmail.com","MYPasswordMYPasswordMYPasswordMYPassword","Paper Tiger","中国","河南","郑州","新加坡","马林百列","东海岸","1.1","1.2");
 	RegisterOutDTO registerOutDTO = new RegisterOutDTO();
-	ProfileInDTO profileInDTO = new ProfileInDTO("8a0e4da44b904eb3887e7ae5354ce12d","1@gmail.com", "MyPassword","胡总","男","04/09/1987","true","1","123456","0","北","上","广","深","庆","都","3.1","3.2","约吗？Yes！我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어!");
+	ProfileInDTO profileInDTO = new ProfileInDTO("8a0e4da44b904eb3887e7ae5354ce12d","1@gmail.com", "MyPassword","胡总","男","04/09/1987","true","1","123456","0","北","上","广","深","庆","都","3.1","3.2","For test only");
+//	"约吗？Yes！我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어!"
 	boolean updateStatus=false;
 	LoginResultOutDTO loginResultOutDTO = new LoginResultOutDTO();
-	
+	ProfileUpdateResultDTO profileUpdateResultDTO = new ProfileUpdateResultDTO();
 
 	@Test
 	public void testAddProfile(){
@@ -35,8 +37,8 @@ public class TestProfile {
 	public void testUpdateProfile() throws ParseException{
 		profileEntity = MP.readProfile(registerInDTO.getEmail());
 		profileInDTO.setUserIntID(profileEntity.getUserIntID());
-		updateStatus = MP.updateProfile(profileInDTO);
-		System.out.println("profile updated:"+updateStatus);
+		profileUpdateResultDTO = MP.updateProfile(profileInDTO);
+		System.out.println("profile updated:"+profileUpdateResultDTO.isProfileUpdate());
 				
 	}
 	
@@ -77,7 +79,7 @@ public class TestProfile {
 	
 	// generate random number to be used as OTP
 	@Test
-	public String testRandomNumber(){
+	public void testRandomNumber(){
 		
 	    final String alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	    final int N = alphabet.length();
@@ -92,6 +94,6 @@ public class TestProfile {
 	    
 	    System.out.println("\n New String:" + sb.toString());
 	    
-	    return sb.toString();
+//	    return sb.toString();
 	}
 }

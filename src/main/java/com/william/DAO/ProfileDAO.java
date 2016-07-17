@@ -2,6 +2,7 @@ package com.william.DAO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +15,7 @@ import org.hibernate.Transaction;
 import com.william.entity.ProfileEntity;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.ProfileInDTO;
+import com.william.to.ProfileUpdateResultDTO;
 import com.william.to.RegisterInDTO;
 import com.william.to.RegisterOutDTO;
 import com.william.util.CryptWithMD5Util;
@@ -82,16 +84,18 @@ public class ProfileDAO {
 	}
 	
 	/* to update a profile record*/
-	public boolean updateProfile(ProfileInDTO profileTo) throws ParseException
+	public ProfileUpdateResultDTO updateProfile(ProfileInDTO profileTo) throws ParseException
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;
 	    ProfileEntity profileEntity = new ProfileEntity();
-		boolean updateStatus = false;
+		boolean profileUpdateStatus = false;
+		boolean addressUpdate =false;
+		boolean IntAddressUpdate =false;
 		Date currentTime = new Date();
 		String userIntID = profileTo.getUserIntID();
         SimpleDateFormat dobString =new SimpleDateFormat("dd/MM/yyyy");
-        
+        ProfileUpdateResultDTO profileUpdateResultDTO = new ProfileUpdateResultDTO();
 			
 	    try{
 		      tx = session.beginTransaction();
@@ -114,28 +118,36 @@ public class ProfileDAO {
 
 		      /*method 3*/
 //		      LatestCoordinateEntity latestcoordinate = (LatestCoordinateEntity)session.get(LatestCoordinateEntity.class, shallWayID); 
-     
-			 if(profileTo.getCountry()!=null && !"".equals(profileTo.getCountry().trim()))
-			 {
-				profileEntity.setLastUpdate(currentTime);
-				profileEntity.setLastAddressUpdate(currentTime);
-				profileEntity.setCountry(profileTo.getCountry());
-			 }	
-			 
-			 if(profileTo.getProvince()!=null && !"".equals(profileTo.getProvince().trim()))
-			 {
-				profileEntity.setLastUpdate(currentTime);
-				profileEntity.setLastAddressUpdate(currentTime);
-				profileEntity.setProvince(profileTo.getProvince());
-			 }	 
-			 
-			 if(profileTo.getCity()!=null && !"".equals(profileTo.getCity().trim()))
-			 {
-				profileEntity.setLastUpdate(currentTime);
-				profileEntity.setLastAddressUpdate(currentTime);
-				profileEntity.setCity(profileTo.getCity());
-			 }			
-			 
+    
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MONTH, -1);
+			
+			if(cal.getTime().after(profileEntity.getLastAddressUpdate())){	    
+				
+				 if(profileTo.getCountry()!=null && !"".equals(profileTo.getCountry().trim()))
+				 {
+					profileEntity.setLastUpdate(currentTime);
+					profileEntity.setLastAddressUpdate(currentTime);
+					profileEntity.setCountry(profileTo.getCountry());
+					IntAddressUpdate =true;
+				 }	
+				 
+				 if(profileTo.getProvince()!=null && !"".equals(profileTo.getProvince().trim()))
+				 {
+					profileEntity.setLastUpdate(currentTime);
+					profileEntity.setLastAddressUpdate(currentTime);
+					profileEntity.setProvince(profileTo.getProvince());
+					IntAddressUpdate =true;
+				 }	 
+				 
+				 if(profileTo.getCity()!=null && !"".equals(profileTo.getCity().trim()))
+				 {
+					profileEntity.setLastUpdate(currentTime);
+					profileEntity.setLastAddressUpdate(currentTime);
+					profileEntity.setCity(profileTo.getCity());
+					IntAddressUpdate =true;
+				 }			
+			}
 			 if(profileTo.getGoogleCountry()!=null && !"".equals(profileTo.getGoogleCountry().trim()))
 			 {
 				profileEntity.setLastUpdate(currentTime);
@@ -233,14 +245,21 @@ public class ProfileDAO {
   	 
 		      session.update(profileEntity); 	
 		      tx.commit();
-		      updateStatus=true;		      
+		      
+		      profileUpdateStatus=true;
+		      if (IntAddressUpdate)
+		    	  addressUpdate =true;
+		      
 		    }catch (HibernateException e) {
 		      if (tx!=null) tx.rollback();
 		      e.printStackTrace(); 
 		    }finally {
 		      session.close(); 
-		    }		    
-		return updateStatus;
+		    }	
+	    
+	    profileUpdateResultDTO.setAddressUpdate(addressUpdate);
+	    profileUpdateResultDTO.setProfileUpdate(profileUpdateStatus);
+		return profileUpdateResultDTO;
 	}
 
 	
