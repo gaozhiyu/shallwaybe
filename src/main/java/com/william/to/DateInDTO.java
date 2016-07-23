@@ -1,17 +1,11 @@
 package com.william.to;
 
-public class DateInDTO {
-	private String userid;
+import com.william.vo.CommonInput;
+
+public class DateInDTO extends CommonInput{
+	//private String userid;
 	private String page;
 	private String dateid;
-
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
 
 	public String getPage() {
 		return page;

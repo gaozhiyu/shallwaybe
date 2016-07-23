@@ -1,11 +1,13 @@
 package com.william.to;
 
+import com.william.vo.CommonInput;
+
 //TODO refractor move to vo package
 
-public class DateDTO{
+public class DateDTO extends CommonInput{
 //	private String status;
 	private String dateid;
-	private String userid;
+	//private String userid;
 	private String Starttime;
 	private String endtime;
 	private String title;
@@ -22,12 +24,7 @@ public class DateDTO{
 	public void setDateid(String dateid) {
 		this.dateid = dateid;
 	}
-	public String getUserid() {
-		return userid;
-	}
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
+
 
 	public String getStarttime() {
 		return Starttime;

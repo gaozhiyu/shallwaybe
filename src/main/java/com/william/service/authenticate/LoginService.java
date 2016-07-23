@@ -9,6 +9,7 @@ import com.william.to.CredentailInDTO;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.ProfileInDTO;
 import com.william.util.JedisUtil;
+import com.william.vo.CommonInput;
 import com.william.vo.CommonVO;
 
 
@@ -16,8 +17,8 @@ public class LoginService {
 	
 	private final Logger logger =  Logger.getLogger(this.getClass());
 	
-	public CommonVO logout(String id)
-	{
+	public CommonVO logout(CommonInput input){
+		String id = input.getUserIntID();
 		logger.info("Excute Logout print method ");
 		CommonVO result = new CommonVO();
 		result.setStatus("N");

@@ -25,13 +25,13 @@ public class DateService {
 		
 		DateOutDTO outDto = new DateOutDTO();
 		ShallWayDAO msw= new ShallWayDAO();
-		ShallWayEntity[] shallwayArray = msw.readShallWay(dateInDTO.getUserid(),Integer.parseInt(dateInDTO.getPage()));
+		ShallWayEntity[] shallwayArray = msw.readShallWay(dateInDTO.getUserIntID(),Integer.parseInt(dateInDTO.getPage()));
 		DateDTO[] dateArray = null;
 		if(shallwayArray!= null && shallwayArray.length>0){
 			dateArray = new DateDTO[shallwayArray.length];
 			for(int i = 0;i < shallwayArray.length; i++ ){
 				dateArray[i]= new DateDTO();
-				dateArray[i].setUserid(shallwayArray[i].getUserIntID());
+				dateArray[i].setUserIntID(shallwayArray[i].getUserIntID());
 				dateArray[i].setCity(shallwayArray[i].getCity());
 				dateArray[i].setCountry(shallwayArray[i].getCountry());
 				dateArray[i].setStarttime(df.format(shallwayArray[i].getStartTime()));
@@ -63,7 +63,7 @@ public class DateService {
 				dateArray = new DateDTO[shallwayArray.length];
 				for(int i = 0;i < shallwayArray.length; i++ ){
 					dateArray[i]= new DateDTO();
-					dateArray[i].setUserid(shallwayArray[i].getUserIntID());
+					dateArray[i].setUserIntID(shallwayArray[i].getUserIntID());
 					dateArray[i].setCity(shallwayArray[i].getCity());
 					dateArray[i].setCountry(shallwayArray[i].getCountry());
 					dateArray[i].setStarttime(df.format(shallwayArray[i].getStartTime()));

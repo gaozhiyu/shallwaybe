@@ -45,11 +45,11 @@ public class ShakeDAO {
 		ShakeDTO[] shakeDTOArray = null;
 		try {
 			tx = (Transaction) session.beginTransaction();
-			String sql = "select b.distance as distance, p.userintid as userid,  p.nickname as nickname, p.signature as signature, DATE_FORMAT(b.lastshaketime,'%b %d %Y %h:%i %p') as shakeTime from (select calculateDistance(?,?,a.longitude,a.latitude) as distance, a.userintid, a.lastshaketime from latestcoordinate a where a.userintid != ?) b inner join profile p on b.userintid = p.userintid;";
+			String sql = "select b.distance as distance, p.userintid as userIntID,  p.nickname as nickname, p.signature as signature, DATE_FORMAT(b.lastshaketime,'%b %d %Y %h:%i %p') as shakeTime from (select calculateDistance(?,?,a.longitude,a.latitude) as distance, a.userintid, a.lastshaketime from latestcoordinate a where a.userintid != ?) b inner join profile p on b.userintid = p.userintid;";
 			SQLQuery query = session.createSQLQuery(sql);
 			query.setString(0, shakeInDTO.getLatitude());
 			query.setString(1, shakeInDTO.getLongitude());
-			query.setString(2, shakeInDTO.getUserid());
+			query.setString(2, shakeInDTO.getUserIntID());
 			query.setResultTransformer(Transformers.aliasToBean(ShakeDTO.class));
 			List<ShakeDTO> shakeDTOList = query.list();
 

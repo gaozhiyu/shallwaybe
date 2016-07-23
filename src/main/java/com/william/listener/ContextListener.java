@@ -47,7 +47,7 @@ public class ContextListener implements ServletContextListener {
 						AddressDTO address = geo.getAddress(msg.getLatitude(),msg.getLongitude());
 						LatestCoordinateInDTO cordDTO = new LatestCoordinateInDTO();
 						//TODO add the validation
-						cordDTO.setUserIntID(msg.getUserid());
+						cordDTO.setUserIntID(msg.getUserIntID());
 						cordDTO.setLatitude(msg.getLatitude());
 						cordDTO.setLongitude(msg.getLongitude());
 						cordDTO.setCountry(address.getCountry());
@@ -75,7 +75,7 @@ public class ContextListener implements ServletContextListener {
 	
 						AddressHistoryDAO ahDAO = AddressHistoryDAO.getInstance();
 						AddressHistoryInDTO addressTo = new AddressHistoryInDTO();
-						addressTo.setUserIntID(msg.getUserid());
+						addressTo.setUserIntID(msg.getUserIntID());
 						addressTo.setCity(cordDTO.getCity());
 						addressTo.setProvince(cordDTO.getProvince());
 						addressTo.setCountry(cordDTO.getCountry());

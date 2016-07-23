@@ -1,31 +1,27 @@
 package com.william.to;
 
-public class ShakeInDTO {
+import com.william.vo.CommonInput;
 
-	private String userid;
+public class ShakeInDTO extends CommonInput{
+
+	//private String userid;
 	private String latitude;
 	private String longitude;
 
-
-	public String getUserid() {
-		return userid;
-	}
+	
 
 	public ShakeInDTO() {
-		super();
-		// TODO Auto-generated constructor stub
+		//super();
 	}
 
-	public ShakeInDTO(String userid, String latitude, String longitude) {
-		super();
-		this.userid = userid;
+
+	public ShakeInDTO(String userIntID, String latitude, String longitude) {
+		//super();
+		this.setUserIntID(userIntID);
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
 
 	public String getLatitude() {
 		return latitude;
@@ -45,7 +41,7 @@ public class ShakeInDTO {
 
 	@Override
 	public String toString() {
-		return "ShakeInDTO [username=" + userid + ", latitude=" + latitude
+		return "ShakeInDTO [username=" + this.getUserIntID() + ", latitude=" + latitude
 				+ ", longitude=" + longitude + "]";
 	}
 	

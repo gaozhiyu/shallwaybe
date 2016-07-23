@@ -1,11 +1,13 @@
 package com.william.to;
 
-public class ShakeDTO{
+import com.william.vo.CommonInput;
+
+public class ShakeDTO extends CommonInput{
 
 	//private String username;
 	private String distance;
 	private String shakeTime;
-	private String userid;
+	//private String userid;
 	private String nickname;
 	private String signature;
 	
@@ -19,26 +21,14 @@ public class ShakeDTO{
 
 
 	public ShakeDTO(String distance, String shakeTime,
-			String userid, String nickname, String signature) {
+			String userIntID, String nickname, String signature) {
 		super();
 		
 		this.distance = distance;
 		this.shakeTime = shakeTime;
-		this.userid = userid;
+		this.setUserIntID(userIntID);
 		this.nickname = nickname;
 		this.signature = signature;
-	}
-
-
-
-	public String getUserid() {
-		return userid;
-	}
-
-
-
-	public void setUserid(String userid) {
-		this.userid = userid;
 	}
 
 
