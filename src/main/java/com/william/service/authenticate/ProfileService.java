@@ -15,143 +15,147 @@ import com.william.to.CoordinateDTO;
 import com.william.to.ProfileInDTO;
 import com.william.to.ProfileOutDTO;
 import com.william.to.ProfileUpdateResultDTO;
+import com.william.util.JedisUtil;
 import com.william.util.ParserJsonUtil;
 import com.william.vo.CommonInput;
 import com.william.vo.ProfileVO;
 import com.william.vo.UpdateProfileVO;
 
 public class ProfileService {
-	
-	private SimpleDateFormat df =new SimpleDateFormat("dd/MM/yyyy");
-	
-	public UpdateProfileVO updateProfile(ProfileInDTO inDTO){
+
+	private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+	public UpdateProfileVO updateProfile(ProfileInDTO inDTO) {
+
+		String sessionid = "";
+		if (!"".equals("" + inDTO.getUserIntID()))
+			sessionid = JedisUtil.get(inDTO.getUserIntID());
+
 		ProfileDAO pDAO = ProfileDAO.getInstance();
 		UpdateProfileVO cvo = new UpdateProfileVO();
 		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
 		ProfileUpdateResultDTO resultDTO = new ProfileUpdateResultDTO();
-		try {
-		AddressDTO addressDTO = new AddressDTO();
-		addressDTO.setCountry(inDTO.getCountry());
-		addressDTO.setProvince(inDTO.getProvince());
-		addressDTO.setCity(inDTO.getCity());
-		CoordinateDTO cord=wcDAO.getCoordinateList(addressDTO);
-		inDTO.setLatitude(""+cord.getLatitude());
-		inDTO.setLongitude(""+cord.getLongitude());
-		ParserJsonUtil geo = new ParserJsonUtil();
-		AddressDTO tmp= geo.getAddress(inDTO.getLatitude(),inDTO.getLongitude());
-		if(tmp != null){
-			inDTO.setGoogleCountry(tmp.getCountry());
-			inDTO.setGoogleProvince(tmp.getProvince());
-			inDTO.setGoogleCity(tmp.getCity());
-		}
-		
-		
-			resultDTO = pDAO.updateProfile(inDTO);
-			if(resultDTO.isAddressUpdate()){
-				AddressHistoryDAO ahDAO = AddressHistoryDAO.getInstance();
-				AddressHistoryInDTO addressTo = new AddressHistoryInDTO();
-				addressTo.setUserIntID(inDTO.getUserIntID());
-				addressTo.setCity(tmp.getCity());
-				addressTo.setProvince(tmp.getProvince());
-				addressTo.setCountry(tmp.getCountry());
-				addressTo.setPlaceType("R");
-				ahDAO.addAddressHistory(addressTo);
+		if (("" + sessionid).equals(inDTO.getSessionID())) {
+			try {
+				AddressDTO addressDTO = new AddressDTO();
+				addressDTO.setCountry(inDTO.getCountry());
+				addressDTO.setProvince(inDTO.getProvince());
+				addressDTO.setCity(inDTO.getCity());
+				CoordinateDTO cord = wcDAO.getCoordinateList(addressDTO);
+				inDTO.setLatitude("" + cord.getLatitude());
+				inDTO.setLongitude("" + cord.getLongitude());
+				ParserJsonUtil geo = new ParserJsonUtil();
+				AddressDTO tmp = geo.getAddress(inDTO.getLatitude(), inDTO.getLongitude());
+				if (tmp != null) {
+					inDTO.setGoogleCountry(tmp.getCountry());
+					inDTO.setGoogleProvince(tmp.getProvince());
+					inDTO.setGoogleCity(tmp.getCity());
+				}
+
+				resultDTO = pDAO.updateProfile(inDTO);
+				if (resultDTO.isAddressUpdate()) {
+					AddressHistoryDAO ahDAO = AddressHistoryDAO.getInstance();
+					AddressHistoryInDTO addressTo = new AddressHistoryInDTO();
+					addressTo.setUserIntID(inDTO.getUserIntID());
+					addressTo.setCity(tmp.getCity());
+					addressTo.setProvince(tmp.getProvince());
+					addressTo.setCountry(tmp.getCountry());
+					addressTo.setPlaceType("R");
+					ahDAO.addAddressHistory(addressTo);
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if(resultDTO.isProfileUpdate()){
-			cvo.setNickname(inDTO.getNickname());
-			cvo.setStatus("Y");
-		}else{
+
+			if (resultDTO.isProfileUpdate()) {
+				cvo.setNickname(inDTO.getNickname());
+				cvo.setStatus("Y");
+			} else {
+				cvo.setStatus("N");
+			}
+		} else {
 			cvo.setStatus("N");
 		}
 		return cvo;
-			
+
 	}
-	
-	
-	public void changePassword(){
-		
-	}
-	
-	public ProfileVO viewProfileByEmail(String email){
+
+	public ProfileVO viewProfileByEmail(String email) {
 		ProfileDAO pDAO = ProfileDAO.getInstance();
-		ProfileEntity profileEntity=pDAO.readProfile(email);
+		ProfileEntity profileEntity = pDAO.readProfile(email);
 		ProfileVO profileVO = new ProfileVO();
 		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
-		
-		//GISDTO gis = new GISDTO();
-		if(profileEntity!=null){
+
+		// GISDTO gis = new GISDTO();
+		if (profileEntity != null) {
 			profileVO.setStatus("Y");
 			profileVO.setNickname(profileEntity.getNickname());
 			profileVO.setUserid(profileEntity.getUserIntID());
 			profileVO.setCountry(profileEntity.getCountry());
 			profileVO.setProvince(profileEntity.getProvince());
-			if(profileEntity.getDateOfBirth()!=null){
+			if (profileEntity.getDateOfBirth() != null) {
 				profileVO.setDateOfBirth(df.format(profileEntity.getDateOfBirth()));
 			}
 			profileVO.setCity(profileEntity.getCity());
 			profileVO.setEmail(profileEntity.getEmail());
 			profileVO.setGender(profileEntity.getGender());
 			profileVO.setSignature(profileEntity.getSignature());
-			
+
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.MONTH, -1);
-			if(cal.getTime().after(profileEntity.getLastAddressUpdate())){
-			//if(true){
-				String[] countryArray =  wcDAO.getCountryList();
+			if (cal.getTime().after(profileEntity.getLastAddressUpdate())) {
+				// if(true){
+				String[] countryArray = wcDAO.getCountryList();
 				profileVO.setCountryArray(countryArray);
-				String[] provinceArray =  wcDAO.getProvinceList(profileEntity.getCountry());
+				String[] provinceArray = wcDAO.getProvinceList(profileEntity.getCountry());
 				profileVO.setProvinceArray(provinceArray);
-				String[] cityArray =  wcDAO.getCityList(profileEntity.getCountry(),profileEntity.getProvince());
+				String[] cityArray = wcDAO.getCityList(profileEntity.getCountry(), profileEntity.getProvince());
 				profileVO.setCityArray(cityArray);
 				profileVO.setAddressFlag(true);
 			} else {
 				profileVO.setAddressFlag(false);
 			}
-			
-		}else{
+
+		} else {
 			profileVO.setStatus("N");
 		}
 		return profileVO;
 	}
 
-	
-	public ProfileOutDTO viewProfileInput(CommonInput input){
-		ProfileDAO profileDAO =ProfileDAO.getInstance();
-		ProfileEntity profile=profileDAO.readProfileByID(input.getUserIntID());
+	public ProfileOutDTO viewProfileInput(CommonInput input) {
+		ProfileDAO profileDAO = ProfileDAO.getInstance();
+		ProfileEntity profile = profileDAO.readProfileByID(input.getUserIntID());
 		ProfileOutDTO profileOutDTO = new ProfileOutDTO();
-		if(profile!=null){
+		if (profile != null) {
 			profileOutDTO.setNickname(profile.getNickname());
 			profileOutDTO.setGender(profile.getGender());
-			if(profile.getDateOfBirth()!=null)
+			if (profile.getDateOfBirth() != null)
 				profileOutDTO.setDateOfBirth(df.format(profile.getDateOfBirth()));
 			profileOutDTO.setCity(profile.getCity());
 			profileOutDTO.setProvince(profile.getProvince());
 			profileOutDTO.setCountry(profile.getCountry());
 			profileOutDTO.setStatus("Y");
 			AddressHistoryDAO addressDAO = AddressHistoryDAO.getInstance();
-			AddressHistoryOutDTO[] visitArray=addressDAO.readAddressHistory(input.getUserIntID(), "B");
-			if(visitArray!=null && visitArray.length>0){
-				StringBuilder sb =new StringBuilder();
-				for(AddressHistoryOutDTO dto :visitArray)
-					sb.append(dto.toString1()+"\n");
+			AddressHistoryOutDTO[] visitArray = addressDAO.readAddressHistory(input.getUserIntID(), "B");
+			if (visitArray != null && visitArray.length > 0) {
+				StringBuilder sb = new StringBuilder();
+				for (AddressHistoryOutDTO dto : visitArray)
+					sb.append(dto.toString1() + "\n");
 				profileOutDTO.setVisitedCities(sb.toString());
 			}
-			AddressHistoryOutDTO[] regArray=addressDAO.readAddressHistory(input.getUserIntID(), "R");
-			if(regArray!=null && regArray.length>0){
-				StringBuilder sb =new StringBuilder();
-				for(AddressHistoryOutDTO dto :regArray)
-					sb.append(dto.toString()+"\n");
+			AddressHistoryOutDTO[] regArray = addressDAO.readAddressHistory(input.getUserIntID(), "R");
+			if (regArray != null && regArray.length > 0) {
+				StringBuilder sb = new StringBuilder();
+				for (AddressHistoryOutDTO dto : regArray)
+					sb.append(dto.toString() + "\n");
 				profileOutDTO.setVisitedCities(sb.toString());
 			}
-		}else{
+		} else {
 			profileOutDTO.setStatus("N");
 		}
 
 		return profileOutDTO;
-		
+
 	}
 }

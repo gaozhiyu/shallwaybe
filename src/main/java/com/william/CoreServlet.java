@@ -3,6 +3,7 @@ package com.william;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -48,8 +49,7 @@ public class CoreServlet extends HttpServlet {
 		doProcess(request, response);
 	}
 
-	public void doProcess(HttpServletRequest request,
-			HttpServletResponse response) {
+	public void doProcess(HttpServletRequest request, HttpServletResponse response) {
 		PrintWriter out;
 		try {
 
@@ -58,27 +58,24 @@ public class CoreServlet extends HttpServlet {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			IOUtils.copy(is, baos);
 			String utilJson = new String(baos.toByteArray(), "UTF-8");
+			HttpSession session = request.getSession(true);
 
-			logger.info(utilJson + "Baby I know you are here"
-					+ request.getRequestURI());
+			logger.info(utilJson + "Baby I know you are here" + request.getRequestURI());
 
-			Object returnValue = invokeService(request.getRequestURI(),
-					utilJson);
+			Object returnValue = invokeService(request.getRequestURI(), utilJson, session.getId());
 
 			ObjectMapper mapper = new ObjectMapper();
 			String str = "";
 			try {
 				str = mapper.writeValueAsString(returnValue);
 				// TODO make it more specific
-				if (request.getRequestURI().equals(
-						request.getContextPath()
-								+ "/unauthenticate/LoginService/login")) {
+				if (request.getRequestURI().equals(request.getContextPath() + "/unauthenticate/LoginService/login")) {
 					logger.info("Store the datat to memory");
 					LoginResultOutDTO tmp = (LoginResultOutDTO) returnValue;
 					if ("Y".equalsIgnoreCase(tmp.getStatus())) {
 						logger.info("Userid\t" + tmp.getUserid());
 						// Fixme update the logic
-						HttpSession session = request.getSession(true);
+						// HttpSession session = request.getSession(true);
 						session.setAttribute("userid", tmp.getUserid());
 						// String tmpid = (String)
 						// session.getAttribute("userid");
@@ -113,7 +110,7 @@ public class CoreServlet extends HttpServlet {
 		}
 	}
 
-	public Object invokeService(String uri, String utilJson) {
+	public Object invokeService(String uri, String utilJson, String sessionID) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String[] uriArray = uri.split("/");
 		Object returnvalue = "";
@@ -129,41 +126,50 @@ public class CoreServlet extends HttpServlet {
 			Method service[] = serviceProvider.getMethods();
 			Method method = null;
 			for (int i = 0; i < service.length; i++) {
-				if (service[i].getName().equalsIgnoreCase(
-						uriArray[uriArray.length - 1])) {
+				if (service[i].getName().equalsIgnoreCase(uriArray[uriArray.length - 1])) {
 					method = service[i];
 					break;
 				}
 			}
 			Class<?>[] types = method.getParameterTypes();
-			if(types.length>0){
-			Object[] params = new Object[types.length];
-			JsonNode tree = objectMapper.readTree(utilJson);
-			if (!tree.isArray()) {
-				System.out.println("Parameters must in array!");
-				throw new IllegalAccessError("Parameters must in array!");
-			}
-			Iterator<JsonNode> it = tree.iterator();
-			int i = 0;
-			while (it.hasNext()) {
-				JsonNode node = it.next();
-				Class<?> type = types[i];
-				params[i] = objectMapper.readValue(node.traverse(), type);
-				if (i < types.length) {
-					i++;
-				} else {
-					break;
+			if (types.length > 0) {
+				Object[] params = new Object[types.length];
+				JsonNode tree = objectMapper.readTree(utilJson);
+				if (!tree.isArray()) {
+					System.out.println("Parameters must in array!");
+					throw new IllegalAccessError("Parameters must in array!");
 				}
-			}
-			// Method c=cls.getMethod("print", new Class[]{String.class});
+				Iterator<JsonNode> it = tree.iterator();
+				int i = 0;
+				while (it.hasNext()) {
+					JsonNode node = it.next();
+					Class<?> type = types[i];
+					params[i] = objectMapper.readValue(node.traverse(), type);
+
+					try {
+						if (uriArray.length > 3 && "authenticate".equals(uriArray[2])) {
+							System.out.println("set seseeion id into DTO");
+							Method d = type.getMethod("setSessionID",String.class);
+							d.invoke(params[i], sessionID);
+						}
+					} catch (Exception e) {
+						logger.info("There is no setSessionID method");
+					}
+					if (i < types.length) {
+						i++;
+					} else {
+						break;
+					}
+				}
+				// Method c=cls.getMethod("print", new Class[]{String.class});
 				returnvalue = method.invoke(serviceProvider.newInstance(), params);
-			}else {
+			} else {
 				returnvalue = method.invoke(serviceProvider.newInstance());
 			}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info("Invoke method Failed", e);
 		}
 		return returnvalue;
 	}
@@ -171,37 +177,34 @@ public class CoreServlet extends HttpServlet {
 	public void init() {
 
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-		config.setHostname("172.23.189.61");
+		config.setHostname("172.23.47.93");
 		config.setPort(9092);
 
 		final SocketIOServer server = new SocketIOServer(config);
 		// server.addNamespace("/chat");
-		
-		server.addEventListener ("chatevent",LogFile.class,
-				new DataListener<LogFile>() {
-					public void onData(SocketIOClient client, LogFile data,
-							AckRequest ackSender) {
-						String uuid = JedisUtil.get(data.getToID(), "chat");
-						if (uuid == null || "".equals(uuid)) {
-							ChatMessageQueue.getInstance().postMessage(data);
-						} else {
-							UUID to = UUID.fromString(uuid);
-							SocketIOClient toClient = client.getNamespace()
-									.getClient(to);
-							
-							if (toClient != null)
-								toClient.sendEvent("chatevent",data);
-						}
-					}
-				});
+
+		server.addEventListener("chatevent", LogFile.class, new DataListener<LogFile>() {
+			public void onData(SocketIOClient client, LogFile data, AckRequest ackSender) {
+				String uuid = JedisUtil.get(data.getToID(), "chat");
+				if (uuid == null || "".equals(uuid)) {
+					ChatMessageQueue.getInstance().postMessage(data);
+				} else {
+					UUID to = UUID.fromString(uuid);
+					SocketIOClient toClient = client.getNamespace().getClient(to);
+
+					if (toClient != null)
+						toClient.sendEvent("chatevent", data);
+				}
+			}
+		});
 
 		server.addDisconnectListener(new DisconnectListener() {
 			public void onDisconnect(SocketIOClient client) {
 				// ...
 
 				String key = client.get("id");
-				//TODO
-				JedisUtil.hdel(key,"chat");
+				// TODO
+				JedisUtil.hdel(key, "chat");
 
 			}
 		});
@@ -216,30 +219,29 @@ public class CoreServlet extends HttpServlet {
 					if (strList != null && strList.size() > 0) {
 						String userid = strList.get(0);
 						client.set("id", strList.get(0));
-						JedisUtil.set(strList.get(0), "chat", client
-								.getSessionId().toString());
+						JedisUtil.set(strList.get(0), "chat", client.getSessionId().toString());
 						MessageDAO messageDAO = new MessageDAO();
 						try {
 							MessageOutDTO[] msgArray = messageDAO.retrieveMessage(userid);
-							//for(int i= 0; )
-							if(msgArray !=null && msgArray.length>0 ){
-								//LogFile msg = msgArray[i];
-								for(int i =0 ; i < msgArray.length; i++){
+							// for(int i= 0; )
+							if (msgArray != null && msgArray.length > 0) {
+								// LogFile msg = msgArray[i];
+								for (int i = 0; i < msgArray.length; i++) {
 									LogFile msg = new LogFile();
 									msg.setFromID(msgArray[i].getSenderIntID());
 									msg.setToID(userid);
 									msg.setFromNickname(msgArray[i].getSenderNickname());
 									msg.setLine(msgArray[i].getMessageContents());
-									client.sendEvent("chatevent",msg);
+									client.sendEvent("chatevent", msg);
 								}
-								
-								for(int i =0 ; i < msgArray.length; i++){
+
+								for (int i = 0; i < msgArray.length; i++) {
 									messageDAO.updateMessageSendStatus(msgArray[i].getMessageID());
 								}
 							}
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
-							e.printStackTrace();
+							logger.info("Invoke method Failed", e);
 						}
 					}
 				}

@@ -1,8 +1,8 @@
 package com.william.to;
 
-import java.util.Date;
+import com.william.vo.CommonInput;
 
-public class ProfileInDTO {
+public class ProfileInDTO extends CommonInput{
 
 	private String userIntID;
 	private String email;
