@@ -36,6 +36,7 @@ import com.william.to.LoginResultOutDTO;
 import com.william.to.MessageOutDTO;
 import com.william.util.ChatMessageQueue;
 import com.william.util.JedisUtil;
+import com.william.vo.CommonInput;
 
 public class CoreServlet extends HttpServlet {
 
@@ -149,8 +150,10 @@ public class CoreServlet extends HttpServlet {
 					try {
 						if (uriArray.length > 3 && "authenticate".equals(uriArray[2])) {
 							System.out.println("set seseeion id into DTO");
-							Method d = type.getMethod("setSessionID",String.class);
-							d.invoke(params[i], sessionID);
+							if(params[i] instanceof  CommonInput){
+								Method d = type.getMethod("setSessionID",String.class);
+								d.invoke(params[i], sessionID);
+							}
 						}
 					} catch (Exception e) {
 						logger.info("There is no setSessionID method");
@@ -177,7 +180,7 @@ public class CoreServlet extends HttpServlet {
 	public void init() {
 
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-		config.setHostname("172.23.47.93");
+		config.setHostname("172.23.44.122");
 		config.setPort(9092);
 
 		final SocketIOServer server = new SocketIOServer(config);
