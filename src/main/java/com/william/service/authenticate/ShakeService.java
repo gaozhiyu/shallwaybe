@@ -11,7 +11,7 @@ public class ShakeService {
 	public ShakeOutDTO shakeForPpList(ShakeInDTO shakeInDTO){
 		
 		ShakeDTO[] shakeList = null;
-		ShakeDAO dao = new ShakeDAO();
+		ShakeDAO dao = ShakeDAO.getInstance();
 		ShakeOutDTO shakeDTO = new ShakeOutDTO();
 		shakeList = dao.shakeForList(shakeInDTO);
 		if(shakeList!=null){

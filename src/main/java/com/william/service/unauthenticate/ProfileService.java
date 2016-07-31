@@ -13,7 +13,7 @@ public class ProfileService {
 	
 	public RegisterOutDTO register(RegisterInDTO inDTO){
 		ProfileDAO mgDAO = new ProfileDAO();
-		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
+		WorldCitiesDAO wcDAO = WorldCitiesDAO.getInstance();;
 		AddressDTO addressDTO = new AddressDTO();
 		addressDTO.setCountry(inDTO.getCountry());
 		addressDTO.setProvince(inDTO.getProvince());
@@ -38,7 +38,7 @@ public class ProfileService {
 	}
 	
 	public GISDTO getCountryList(){
-		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
+		WorldCitiesDAO wcDAO = WorldCitiesDAO.getInstance();;
 		String[] countryArray =  wcDAO.getCountryList();
 		GISDTO gisDTO = new GISDTO();
 		if(countryArray!=null && countryArray.length>0){
@@ -51,7 +51,7 @@ public class ProfileService {
 	}
 	
 	public GISDTO getProvinceList(String country){
-		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
+		WorldCitiesDAO wcDAO = WorldCitiesDAO.getInstance();;
 		String[] provinceArray =  wcDAO.getProvinceList(country);
 		GISDTO gisDTO = new GISDTO();
 		if(provinceArray!=null && provinceArray.length>0){
@@ -64,7 +64,7 @@ public class ProfileService {
 	}
 	
 	public GISDTO getCityList(AddressDTO address){
-		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
+		WorldCitiesDAO wcDAO = WorldCitiesDAO.getInstance();;
 		String[] cityArray =  wcDAO.getCityList(address.getCountry(),address.getProvince());
 		GISDTO gisDTO = new GISDTO();
 		if(cityArray!=null && cityArray.length>0){

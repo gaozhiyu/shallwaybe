@@ -63,7 +63,7 @@ public class ContextListener implements ServletContextListener {
 
 						
 						//cordDTO.setCountry(address.getCountry());
-						LatestCoordinateDAO mlcDAO = new LatestCoordinateDAO();
+						LatestCoordinateDAO mlcDAO = LatestCoordinateDAO.getInstance();
 /*
 						if(!msg.getUserid().equals(mlcDAO.readLatestCoordinate(msg.getUserid()).getUserIntID())){
 							mlcDAO.addLatestCoordinate(cordDTO);
@@ -92,7 +92,7 @@ public class ContextListener implements ServletContextListener {
 						// TODO Auto-generated method stub
 						System.out.println("PrintedByWilliam"+msg.toString());
 						MessageInDTO messageInDTO = new MessageInDTO(msg.getLine(),msg.getFromID(),msg.getFromNickname(),msg.getToID());
-						MessageDAO messageDAO = new MessageDAO();
+						MessageDAO messageDAO = MessageDAO.getInstance();
 						messageDAO.addMessage(messageInDTO);
 					}
 		});

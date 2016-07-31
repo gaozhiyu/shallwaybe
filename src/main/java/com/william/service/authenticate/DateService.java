@@ -24,7 +24,7 @@ public class DateService {
 		
 		
 		DateOutDTO outDto = new DateOutDTO();
-		ShallWayDAO msw= new ShallWayDAO();
+		ShallWayDAO msw= ShallWayDAO.getInstance();
 		ShallWayEntity[] shallwayArray = msw.readShallWay(dateInDTO.getUserIntID(),Integer.parseInt(dateInDTO.getPage()));
 		DateDTO[] dateArray = null;
 		if(shallwayArray!= null && shallwayArray.length>0){
@@ -54,7 +54,7 @@ public class DateService {
 	
 	public DateOutDTO searchDate(ShallWaySearchDTO inDTO){
 		DateOutDTO outDto = new DateOutDTO();
-		ShallWayDAO msw= new ShallWayDAO();
+		ShallWayDAO msw= ShallWayDAO.getInstance();
 		DateDTO[] dateArray = null;
 		try {
 //ToWilliam: 	ShallWayOutDTO[] shallwayArray = msw.readShallWay(inDTO,1) change to ShallWayOutDTO[] shallwayArray = msw.readShallWay(inDTO); page number should be included in FE.
@@ -88,7 +88,7 @@ public class DateService {
 	public CreateDateOutVO createDate(ShallWayInDTO inDTO){
 		CreateDateOutVO output = new CreateDateOutVO();
 		//inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
-		ShallWayDAO msw= new ShallWayDAO();
+		ShallWayDAO msw= ShallWayDAO.getInstance();
 		try {
 			msw.addShallWay(inDTO);
 			output.setStatus("Y");
@@ -104,9 +104,9 @@ public class DateService {
 	public ShallWayOutDTO viewDate(DateInDTO inDTO){
 		
 		//inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
-		ShallWayDAO msw= new ShallWayDAO();
+		ShallWayDAO msw= ShallWayDAO.getInstance();
 		ShallWayOutDTO dateVO=msw.retrieveDateByDateID(inDTO.getDateid());
-		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
+		WorldCitiesDAO wcDAO = WorldCitiesDAO.getInstance();
 		String[] countryArray =  wcDAO.getCountryList();
 		dateVO.setCountryArray(countryArray);
 		String[] provinceArray =  wcDAO.getProvinceList(dateVO.getCountry());
@@ -127,7 +127,7 @@ public class DateService {
 	}
 	
 	public CommonVO updateDate (ShallWayUpdateDTO shallWayUpdateDTO){
-		ShallWayDAO msw= new ShallWayDAO();	
+		ShallWayDAO msw= ShallWayDAO.getInstance();	
 		CommonVO output =new CommonVO();
 		try {
 			boolean flag=msw.updateShallWay(shallWayUpdateDTO);

@@ -33,7 +33,7 @@ public class ProfileService {
 
 		ProfileDAO pDAO = ProfileDAO.getInstance();
 		UpdateProfileVO cvo = new UpdateProfileVO();
-		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
+		WorldCitiesDAO wcDAO = WorldCitiesDAO.getInstance();
 		ProfileUpdateResultDTO resultDTO = new ProfileUpdateResultDTO();
 		if (("" + sessionid).equals(inDTO.getSessionID())) {
 			try {
@@ -85,7 +85,7 @@ public class ProfileService {
 		ProfileDAO pDAO = ProfileDAO.getInstance();
 		ProfileEntity profileEntity = pDAO.readProfile(email);
 		ProfileVO profileVO = new ProfileVO();
-		WorldCitiesDAO wcDAO = new WorldCitiesDAO();
+		WorldCitiesDAO wcDAO = WorldCitiesDAO.getInstance();;
 
 		// GISDTO gis = new GISDTO();
 		if (profileEntity != null) {

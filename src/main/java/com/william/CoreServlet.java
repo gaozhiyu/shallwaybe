@@ -223,7 +223,7 @@ public class CoreServlet extends HttpServlet {
 						String userid = strList.get(0);
 						client.set("id", strList.get(0));
 						JedisUtil.set(strList.get(0), "chat", client.getSessionId().toString());
-						MessageDAO messageDAO = new MessageDAO();
+						MessageDAO messageDAO = MessageDAO.getInstance();
 						try {
 							MessageOutDTO[] msgArray = messageDAO.retrieveMessage(userid);
 							// for(int i= 0; )
