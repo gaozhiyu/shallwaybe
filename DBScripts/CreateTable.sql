@@ -9,7 +9,7 @@ create table Profile (
    ProfilePhoto BOOLEAN,
    WrongTryPWD Integer default 0,
    OTP VARCHAR(128),
-   OTPExpiryTime TIMESTAMP,
+   OTPExpiryTime TIMESTAMP NULL DEFAULT NULL,
    WrongTryOTP Integer default 0,
    Country VARCHAR(128) NOT NULL,
    Province VARCHAR(128) NOT NULL,
@@ -19,9 +19,9 @@ create table Profile (
    GoogleCity VARCHAR(128),
    Longitude DOUBLE NOT NULL,
    Latitude DOUBLE NOT NULL,   
-   LastUpdate TIMESTAMP,
-   CreateTime TIMESTAMP,
-   LastAddressUpdate TIMESTAMP,
+   LastUpdate TIMESTAMP default CURRENT_TIMESTAMP,
+   CreateTime TIMESTAMP default CURRENT_TIMESTAMP,
+   LastAddressUpdate TIMESTAMP default CURRENT_TIMESTAMP,
    Signature VARCHAR(1024) default NULL,
    PRIMARY KEY (UserIntID),
    UNIQUE (Email)
@@ -34,7 +34,7 @@ create table AddressHistory (
    Country VARCHAR(128),
    Province VARCHAR(128),
    City VARCHAR(128),
-   UpdateTime TIMESTAMP,
+   UpdateTime TIMESTAMP default CURRENT_TIMESTAMP,
    PlaceType VARCHAR(1) NOT NULL,
    PRIMARY KEY (AddressSequenceID)
 )character set = utf8;
@@ -49,7 +49,7 @@ create table ShallWay (
    Place VARCHAR(128) default NULL,
    StartTime Date,
    EndTime Date,
-   PostTime TIMESTAMP,
+   PostTime TIMESTAMP default CURRENT_TIMESTAMP,
    CarPool BOOLEAN default NULL,
    FreeTour BOOLEAN default NULL,
    HotelShare BOOLEAN default NULL,
@@ -69,7 +69,7 @@ create table LatestCoordinate (
    Country VARCHAR(128),
    Province VARCHAR(128),
    City VARCHAR(128),
-   LastAddressUpdate TIMESTAMP,
+   LastAddressUpdate TIMESTAMP default CURRENT_TIMESTAMP,
    PRIMARY KEY (UserIntID)
 )character set = utf8;
 
@@ -80,7 +80,7 @@ create table Follow (
    ID VARCHAR(64) NOT NULL,
    DateID VARCHAR(64) NOT NULL,
    FollowerIntID VARCHAR(64) NOT NULL,
-   FollowTime TIMESTAMP,
+   FollowTime TIMESTAMP default CURRENT_TIMESTAMP,
    PRIMARY KEY (ID)
 )character set = utf8;
 
@@ -89,7 +89,7 @@ create table Reply (
    ID VARCHAR(64) NOT NULL,
    DateID VARCHAR(64) NOT NULL,
    ReplierIntID VARCHAR(64) NOT NULL,
-   ReplyTime TIMESTAMP,
+   ReplyTime TIMESTAMP default CURRENT_TIMESTAMP,
    ReplyContents BLOB NOT NULL,
    PRIMARY KEY (ID)
 )character set = utf8;
@@ -101,7 +101,7 @@ create table Message (
    SenderIntID VARCHAR(64) NOT NULL,
    SenderNickname VARCHAR(32) NOT NULL,
    ReceiverIntID VARCHAR(64) NOT NULL,
-   SendTime TIMESTAMP,
+   SendTime TIMESTAMP default CURRENT_TIMESTAMP,
    SendStatus BOOLEAN default false,
    PRIMARY KEY (MessageID)
 )character set = utf8;
