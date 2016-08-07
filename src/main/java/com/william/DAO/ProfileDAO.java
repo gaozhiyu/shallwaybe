@@ -230,7 +230,7 @@ public class ProfileDAO {
 			 /* update times of wrong try password */
 			 if(profileTo.getWrongTryPWD()!=null && !"".equals(profileTo.getWrongTryPWD().trim()))
 			 {
-				Integer wrongTryPWD =Integer.parseInt(profileTo.getWrongTryPWD());
+				int wrongTryPWD =Integer.parseInt(profileTo.getWrongTryPWD());
 				profileEntity.setWrongTryPWD(wrongTryPWD);
 			 }
 	
@@ -244,7 +244,7 @@ public class ProfileDAO {
 			 
 			 if(profileTo.getWrongTryOTP()!=null && !"".equals(profileTo.getWrongTryOTP().trim()))
 			 {
-				Integer wrongTryOTP =Integer.parseInt(profileTo.getWrongTryOTP());
+				int wrongTryOTP =Integer.parseInt(profileTo.getWrongTryOTP());
 				profileEntity.setWrongTryOTP(wrongTryOTP);
 			 }
   	 

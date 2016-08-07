@@ -17,10 +17,10 @@ public class ProfileEntity implements java.io.Serializable {
 	private String gender;
 	private Date dateOfBirth;
 	private Boolean profilePhoto;
-	private Integer wrongTryPWD;
+	private int wrongTryPWD;
 	private String OTP;
 	private Date OTPExpiryTime;
-	private Integer wrongTryOTP;
+	private int wrongTryOTP;
 	private String country;
 	private String province;
 	private String city;
