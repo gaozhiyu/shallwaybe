@@ -3781,7 +3781,8 @@ INSERT INTO world_cities_table(city,city_ascii,lat,lng,pop,country,iso2,iso3,pro
 INSERT INTO world_cities_table(city,city_ascii,lat,lng,pop,country,iso2,iso3,province) VALUES ('Maroantsetra','Maroantsetra',-15.43333576,49.73333614,30952.5,'Madagascar','MG','MDG','Toamasina');
 INSERT INTO world_cities_table(city,city_ascii,lat,lng,pop,country,iso2,iso3,province) VALUES ('Tolanaro','Tolanaro',-25.02680703,46.99004106,16818,'Madagascar','MG','MDG','Toliary');
 INSERT INTO world_cities_table(city,city_ascii,lat,lng,pop,country,iso2,iso3,province) VALUES ('Morombe','Morombe',-21.73913848,43.36567763,16727,'Madagascar','MG','MDG','Toliary');
-INSERT INTO world_cities_table(city,city_ascii,lat,lng,pop,country,iso2,iso3,province) VALUES ('Morondava','Morondava',-20.28327228,44.28333288,20018.5,'Madagascar','MG','MDG', '');;INSERT INTO world_cities_table(city,city_ascii,lat,lng,pop,country,iso2,iso3,province) VALUES ('Antsiranana','Antsiranana',-12.27650152,49.3115261,76312,'Madagascar','MG','MDG','Antsiranana');
+INSERT INTO world_cities_table(city,city_ascii,lat,lng,pop,country,iso2,iso3,province) VALUES ('Morondava','Morondava',-20.28327228,44.28333288,20018.5,'Madagascar','MG','MDG', '');
+INSERT INTO world_cities_table(city,city_ascii,lat,lng,pop,country,iso2,iso3,province) VALUES ('Antsiranana','Antsiranana',-12.27650152,49.3115261,76312,'Madagascar','MG','MDG','Antsiranana');
 INSERT INTO world_cities_table(city,city_ascii,lat,lng,pop,country,iso2,iso3,province) VALUES ('Fianarantsoa','Fianarantsoa',-21.43333128,47.08326534,175705.5,'Madagascar','MG','MDG','Fianarantsoa');
 INSERT INTO world_cities_table(city,city_ascii,lat,lng,pop,country,iso2,iso3,province) VALUES ('Mahajanga','Mahajanga',-15.67001382,46.34501583,145158.5,'Madagascar','MG','MDG','Mahajanga');
 INSERT INTO world_cities_table(city,city_ascii,lat,lng,pop,country,iso2,iso3,province) VALUES ('Toliara','Toliara',-23.35683144,43.68998409,106278,'Madagascar','MG','MDG','Toliary');
