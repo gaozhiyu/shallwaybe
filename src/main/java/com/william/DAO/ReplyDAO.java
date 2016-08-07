@@ -1,14 +1,19 @@
 package com.william.DAO;
 
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.BlobType;
+import org.hibernate.type.BooleanType;
 import org.hibernate.type.StringType;
 import org.hibernate.type.TimestampType;
 
@@ -16,6 +21,7 @@ import com.william.entity.ReplyEntity;
 import com.william.to.ReplyInDTO;
 import com.william.to.ReplyOutDTO;
 import com.william.util.HibernateUtil;
+import com.william.util.XssShieldUtil;
 
 public class ReplyDAO {
 	
@@ -43,7 +49,12 @@ public class ReplyDAO {
 		         replyEntity.setDateID(replyInDTO.getDateID());
 		         replyEntity.setReplierIntID(replyInDTO.getReplierIntID());
 		         replyEntity.setReplyTime(replyTime);
-		         replyEntity.setReplyContents(replyInDTO.getReplyContents());
+		         
+		         String replyContentsString = XssShieldUtil.stripXss(replyInDTO.getReplyContents());
+		         Blob replyContents = Hibernate.getLobCreator(session).createBlob(replyContentsString.getBytes());		         
+		         replyEntity.setReplyContents(replyContents);
+		         
+		         replyEntity.setDeleteStatus(false);
 		         
 		         session.save(replyEntity);
 		         tx.commit();
@@ -56,17 +67,19 @@ public class ReplyDAO {
 		      }		
 	}
 	
-	public ReplyOutDTO[] readReply(String dateID){
+	public ReplyOutDTO[] readReply(String dateID) throws SQLException{
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;
 	    ReplyOutDTO[] replyArray = null;
-	    
+	    byte[] bdata= null;
+	    Blob blob=null;
+	      
 	    try{
 		      tx = session.beginTransaction();
 
 //		      String sql = "select a.ID as id,a.DateID,a.ReplierIntID,a.ReplyTime,a.ReplyContents, b.Nickname as replierNickname from reply a join profile b on a.replierintid = b.userintid where a.dateID = ? order by replytime desc;";
-		      String sql = "select a.*, b.Nickname as replierNickname from reply a join profile b on a.replierintid = b.userintid where a.dateID = ? order by replytime asc;";
+		      String sql = "select a.*, b.Nickname as replierNickname from reply a join profile b on a.replierintid = b.userintid where a.dateID = ? and a.deletestatus = false order by replytime asc;";
 		      SQLQuery query = session.createSQLQuery(sql);  
 		      query.setString(0, dateID);
 		      query.addScalar("id", new StringType());
@@ -74,7 +87,8 @@ public class ReplyDAO {
 		      query.addScalar("ReplierIntID", new StringType());
 		      query.addScalar("ReplyTime", new TimestampType());
 		      query.addScalar("replierNickname", new StringType());
-		      query.addScalar("ReplyContents", new StringType());
+		      query.addScalar("ReplyContents", new BlobType());
+		      query.addScalar("DeleteStatus", new BooleanType());
 		      query.setResultTransformer(Transformers.aliasToBean(ReplyOutDTO.class));
 		      List<ReplyOutDTO> replyList = query.list();	
 		      replyArray = new ReplyOutDTO[replyList.size()];
@@ -82,6 +96,12 @@ public class ReplyDAO {
 		      if (replyList!=null && replyList.size()>0){
 		    	  for (int i=0;i<replyList.size();i++){
 		    		  replyArray[i] = replyList.get(i);
+		    		  
+ 		    		  blob = replyArray[i].getReplyContents();
+		    		  bdata = blob.getBytes(1, (int) blob.length());
+					  String replyContents = new String(bdata);
+					  replyArray[i].setReplyContentsStr(replyContents);
+
 		    	  }
 		      }
 	
@@ -114,10 +134,12 @@ public class ReplyDAO {
 		      @SuppressWarnings("unchecked")
 		      List<ReplyEntity> replyList = query.list();	
 		      
-		      if (replyList!=null && replyList.size()>0 )
+		      if (replyList!=null && replyList.size()>0 ){
 		    	  replyEntity = replyList.get(0);
-	            
-	         session.delete(replyEntity);
+		    	  replyEntity.setDeleteStatus(true);
+		      }
+		      
+	         session.update(replyEntity);
 	         tx.commit();
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();

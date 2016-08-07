@@ -1,5 +1,6 @@
 package com.william.to;
 
+import java.sql.Blob;
 import java.util.Date;
 
 public class ReplyOutDTO{
@@ -9,21 +10,24 @@ public class ReplyOutDTO{
     private String replierIntID;
     private String replierNickname;
 	private Date replyTime;
-	private String replyContents;
+	private String replyContentsStr;
+	private Blob replyContents;
+	private Boolean deleteStatus;
 	
 	public ReplyOutDTO() {
 		super();
 	}
 
 	public ReplyOutDTO(String id, String dateID, String replierIntID, String replierNickname, Date replyTime,
-			String replyContents) {
+			String replyContentsStr, Boolean deleteStatus) {
 		super();
 		this.id = id;
 		this.dateID = dateID;
 		this.replierIntID = replierIntID;
 		this.replierNickname = replierNickname;
 		this.replyTime = replyTime;
-		this.replyContents = replyContents;
+		this.replyContentsStr = replyContentsStr;
+		this.deleteStatus = deleteStatus;
 	}
 
 	public String getId() {
@@ -66,12 +70,28 @@ public class ReplyOutDTO{
 		this.replyTime = replyTime;
 	}
 
-	public String getReplyContents() {
+	public String getReplyContentsStr() {
+		return replyContentsStr;
+	}
+
+	public void setReplyContentsStr(String replyContentsStr) {
+		this.replyContentsStr = replyContentsStr;
+	}
+
+	public Blob getReplyContents() {
 		return replyContents;
 	}
 
-	public void setReplyContents(String replyContents) {
+	public void setReplyContents(Blob replyContents) {
 		this.replyContents = replyContents;
 	}
-		
+
+	public Boolean getDeleteStatus() {
+		return deleteStatus;
+	}
+
+	public void setDeleteStatus(Boolean deleteStatus) {
+		this.deleteStatus = deleteStatus;
+	}
+			
 }

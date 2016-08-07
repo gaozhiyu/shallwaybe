@@ -17,6 +17,9 @@
         <property name="followTime" type="java.util.Date">
             <column name="FollowTime" />
         </property>               
-
+        <property name="deleteStatus" type="boolean">
+            <column name="DeleteStatus"/>
+        </property> 
+        
     </class>
 </hibernate-mapping>

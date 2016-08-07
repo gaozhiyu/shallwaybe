@@ -9,19 +9,21 @@ public class FollowOutDTO{
     private String followerIntID;
     private String followerNickname;
 	private Date followTime;
+	private Boolean deleteStatus;
 	
 	public FollowOutDTO() {
 		super();
 	}
 
-
-	public FollowOutDTO(String id, String dateID, String followerIntID, String followerNickname, Date followTime) {
+	public FollowOutDTO(String id, String dateID, String followerIntID, String followerNickname, Date followTime,
+			Boolean deleteStatus) {
 		super();
 		this.id = id;
 		this.dateID = dateID;
 		this.followerIntID = followerIntID;
 		this.followerNickname = followerNickname;
 		this.followTime = followTime;
+		this.deleteStatus = deleteStatus;
 	}
 
 	public String getId() {
@@ -56,15 +58,20 @@ public class FollowOutDTO{
 		this.followTime = followTime;
 	}
 
-
 	public String getFollowerNickname() {
 		return followerNickname;
 	}
 
-
 	public void setFollowerNickname(String followerNickname) {
 		this.followerNickname = followerNickname;
 	}
-	
+
+	public Boolean getDeleteStatus() {
+		return deleteStatus;
+	}
+
+	public void setDeleteStatus(Boolean deleteStatus) {
+		this.deleteStatus = deleteStatus;
+	}
 	
 }

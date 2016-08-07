@@ -1,20 +1,25 @@
 package com.william.test;
 
+import org.junit.Test;
+
 import com.william.DAO.FollowDAO;
 import com.william.to.FollowInDTO;
 import com.william.to.FollowOutDTO;
 
-public class FollowApp {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		FollowDAO followDAO = new FollowDAO();
-		FollowOutDTO[] followArray = null;
-		
-		FollowInDTO followInDTO = new FollowInDTO("5b3ad3653abf47729f5147405e16bead","981e630a59964937a006d320d2d097df");
-		
+public class TestFollow {
+	
+	FollowDAO followDAO = new FollowDAO();
+	FollowOutDTO[] followArray = null;
+	FollowInDTO followInDTO = new FollowInDTO("9d1472c02617443fa558a0e5b90c4007","3f46187fd7904aedb59537d6288e052f");
+	
+	@Test
+	public void testAddFollow(){
 		followDAO.addFollow(followInDTO);
-		followArray = followDAO.readFollow("5b3ad3653abf47729f5147405e16bead");
+	}
+
+	@Test
+	public void testReadFollow(){
+		followArray = followDAO.readFollow("9d1472c02617443fa558a0e5b90c4007");
 		
 		for(int i=0; i<followArray.length;i++){
 			System.out.println();
@@ -23,10 +28,12 @@ public class FollowApp {
 			System.out.println("\tFollowerIntID: "+followArray[i].getFollowerIntID());
 			System.out.println("\tFollowerNickname: " + followArray[i].getFollowerNickname());
 			System.out.println("\tFollowTime: "+followArray[i].getFollowTime());
+			System.out.println("\tDeleteStatus: "+followArray[i].getDeleteStatus());
 		}
-		
-//		followDAO.deleteFollow("f483ce4efca14d8bbf96a5f8b66327af");
-
 	}
-
+	
+	@Test
+	public void testDeleteFollow(){
+		followDAO.deleteFollow("3b3a38d89c564428a47d75c33f79dcb0");
+	}
 }

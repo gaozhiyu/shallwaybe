@@ -57,6 +57,7 @@ create table ShallWay (
    Title VARCHAR(512) default NULL,
    Contact VARCHAR(128) default NULL,
    Description BLOB default NULL,
+   DeleteStatus BOOLEAN default false,
    PRIMARY KEY (DateID)
 )character set = utf8;
 
@@ -81,6 +82,7 @@ create table Follow (
    DateID VARCHAR(64) NOT NULL,
    FollowerIntID VARCHAR(64) NOT NULL,
    FollowTime TIMESTAMP default CURRENT_TIMESTAMP,
+   DeleteStatus BOOLEAN default false,
    PRIMARY KEY (ID)
 )character set = utf8;
 
@@ -91,6 +93,7 @@ create table Reply (
    ReplierIntID VARCHAR(64) NOT NULL,
    ReplyTime TIMESTAMP default CURRENT_TIMESTAMP,
    ReplyContents BLOB NOT NULL,
+   DeleteStatus BOOLEAN default false,
    PRIMARY KEY (ID)
 )character set = utf8;
 
@@ -105,4 +108,3 @@ create table Message (
    SendStatus BOOLEAN default false,
    PRIMARY KEY (MessageID)
 )character set = utf8;
-

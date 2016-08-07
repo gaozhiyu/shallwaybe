@@ -22,6 +22,7 @@ import com.william.to.MessageInDTO;
 import com.william.to.MessageOutDTO;
 import com.william.util.HibernateUtil;
 import com.william.util.MessageQueue;
+import com.william.util.XssShieldUtil;
 
 public class MessageDAO {
 	
@@ -48,7 +49,8 @@ public class MessageDAO {
 
 		         messageEntity.setMessageID(messageID);
 		         
-		         messageContents = Hibernate.getLobCreator(session).createBlob(messageInDTO.getMessageContents().getBytes());
+		         String messageContentsString = XssShieldUtil.stripXss(messageInDTO.getMessageContents());
+		         messageContents = Hibernate.getLobCreator(session).createBlob(messageContentsString.getBytes());
 		         messageEntity.setMessageContents(messageContents);
 		         
 		         messageEntity.setSenderIntID(messageInDTO.getSenderIntID());
@@ -111,9 +113,11 @@ public class MessageDAO {
 		    	  }
 		    	  
 		    	  for (int i=0;i<messageList.size();i++){
+		    		  
 		    		  blob = message[i].getMessageContents();
 		    		  bdata = blob.getBytes(1, (int) blob.length());
 					  String messageContents = new String(bdata);
+					  
 					  messageArray[i] = new MessageOutDTO();
 					  messageArray[i].setMessageContents(messageContents);
 					  messageArray[i].setMessageID(message[i].getMessageID());

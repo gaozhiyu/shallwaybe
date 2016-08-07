@@ -17,9 +17,13 @@
         <property name="replyTime" type="java.util.Date">
             <column name="ReplyTime" />
         </property> 
-        <property name="replyContents" type="string">
+        <property name="replyContents" type="blob">
             <column name="ReplyContents"/>
-        </property>               
+        </property>    
+        <property name="deleteStatus" type="boolean">
+            <column name="DeleteStatus"/>
+        </property>          
+                   
 
     </class>
 </hibernate-mapping>

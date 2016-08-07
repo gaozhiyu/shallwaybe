@@ -1,5 +1,7 @@
 package com.william.DAO;
 
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,8 +25,8 @@ import org.hibernate.transform.Transformers;
 import org.hibernate.type.StringType;
 
 import com.william.util.HibernateUtil;
+import com.william.util.XssShieldUtil;
 import com.william.entity.ShallWayEntity;
-import com.william.to.LatestCoordinateOutDTO;
 import com.william.to.ShallWayInDTO;
 import com.william.to.ShallWayOutDTO;
 import com.william.to.ShallWaySearchDTO;
@@ -60,7 +62,10 @@ public class ShallWayDAO {
 	         shallWayEntity.setCountry(shallWayInDTO.getCountry());
 	         shallWayEntity.setProvince(shallWayInDTO.getProvince());
 	         shallWayEntity.setCity(shallWayInDTO.getCity());
-	         shallWayEntity.setPlace(shallWayInDTO.getPlace());
+	         
+	         String place = XssShieldUtil.stripXss(shallWayInDTO.getPlace());
+	         shallWayEntity.setPlace(place);
+	         
 		     Date startTime =sdfd.parse(shallWayInDTO.getStartTime());
 	         shallWayEntity.setStartTime(startTime);
 	         Date endTime =sdfd.parse(shallWayInDTO.getEndTime());
@@ -70,9 +75,17 @@ public class ShallWayDAO {
 	         shallWayEntity.setFreeTour(Boolean.parseBoolean(shallWayInDTO.getFreeTour()));
 	         shallWayEntity.setHotelShare(Boolean.parseBoolean(shallWayInDTO.getHotelShare()));
 	         shallWayEntity.setFreeGuide(Boolean.parseBoolean(shallWayInDTO.getFreeGuide()));
-	         shallWayEntity.setTitle(shallWayInDTO.getTitle());
-	         shallWayEntity.setContact(shallWayInDTO.getContact());
-	         shallWayEntity.setDescription(shallWayInDTO.getDescription());
+	         
+	         String title = XssShieldUtil.stripXss(shallWayInDTO.getTitle());
+	         shallWayEntity.setTitle(title);
+	         String contact = XssShieldUtil.stripXss(shallWayInDTO.getContact());
+	         shallWayEntity.setContact(contact);
+	         
+	         String descriptionString = XssShieldUtil.stripXss(shallWayInDTO.getDescription());
+	         Blob description = Hibernate.getLobCreator(session).createBlob(descriptionString.getBytes());
+	         shallWayEntity.setDescription(description);
+	         
+	         shallWayEntity.setDeleteStatus(false);
 	         
 	         session.save(shallWayEntity);
 	         tx.commit();
@@ -88,16 +101,19 @@ public class ShallWayDAO {
 		
 		
 		/* Read one ShallWay Record to be displayed with details in APP*/
-	public ShallWayOutDTO retrieveDateByDateID(String dateID){
+	public ShallWayOutDTO retrieveDateByDateID(String dateID) throws SQLException{
 		   
 			  Session session = HibernateUtil.getSessionFactory().openSession();
 		      Transaction tx = null;
-		      ShallWayOutDTO shallWay = new ShallWayOutDTO();
+//		      ShallWayOutDTO shallWay = new ShallWayOutDTO();
+		      ShallWayOutDTO shallWay = null;
+		      byte[] bdata= null;
+		      Blob blob=null;
 		      
 		      try{
 		         tx = session.beginTransaction();
 		         
-			      String sql = "select * from ShallWayView where dateID = ?";
+			      String sql = "select * from ShallWayView where dateID = ? and deletestatus = false";
 			      SQLQuery query = session.createSQLQuery(sql);
 			      query.setString(0, dateID);
 			      query.addEntity(ShallWayOutDTO.class);
@@ -108,9 +124,15 @@ public class ShallWayDAO {
 			      @SuppressWarnings("unchecked")
 			      List<ShallWayOutDTO> shallWayList = query.list();	
 			      
-			      if (shallWayList!=null && shallWayList.size()>0)
+			      if (shallWayList!=null && shallWayList.size()>0){
 			    	  shallWay= shallWayList.get(0);
-			      
+// updated on 01.08.2016 for Blob conversion in ShallWayOutDTO			    	  		    	  
+ 		    		  blob = shallWay.getDescriptionBlob();
+		    		  bdata = blob.getBytes(1, (int) blob.length());
+					  String description = new String(bdata);
+					  shallWay.setDescriptionStr(description);
+// end of update 01.08.2016
+			      }
 		         tx.commit();
 		      }catch (HibernateException e) {
 		         if (tx!=null) tx.rollback();
@@ -132,7 +154,7 @@ public class ShallWayDAO {
 		      try{
 		         tx = session.beginTransaction();
 		         
-			      String sql = "select * from ShallWay where UserIntID = ? order by posttime DESC";
+			      String sql = "select * from ShallWay where UserIntID = ? and deletestatus = false order by posttime DESC";
 			      SQLQuery query = session.createSQLQuery(sql);
 			      query.setString(0, userIntID);
 			      query.addEntity(ShallWayEntity.class);
@@ -162,13 +184,15 @@ public class ShallWayDAO {
 		   }
 	
 	/* Search ShallWay Record based on criteria with Pagination */
-	public ShallWayOutDTO[] readShallWay(ShallWaySearchDTO shallWaySearchDTO) throws ParseException{
+	public ShallWayOutDTO[] readShallWay(ShallWaySearchDTO shallWaySearchDTO) throws ParseException, SQLException{
 	   
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
 	      ShallWayOutDTO[] shallWayArray =null;
 	      SimpleDateFormat sdfd =new SimpleDateFormat("dd/MM/yyyy");
 	      int pageSize =10;
+	      byte[] bdata= null;
+	      Blob blob=null;
 	      
 	      try{
 	         tx = session.beginTransaction();
@@ -195,6 +219,8 @@ public class ShallWayDAO {
 //	        		 							           .add(Restrictions.eq("freeGuide", Boolean.parseBoolean(shallWaySearchDTO.getFreeGuide())))
 //	        		 							       )
 //	        		 								 .list();  
+	         
+	         crit.add(Restrictions.eq("deleteStatus",false)); //by Huzong, updated on 07.08.2016
 	         
 	         crit.add(Restrictions.ne("userIntID",shallWaySearchDTO.getUserIntID()));
 	         
@@ -239,9 +265,15 @@ public class ShallWayDAO {
 		    shallWayArray = new ShallWayOutDTO[shallWayList.size()];
 	            
 		      if (shallWayList!=null && shallWayList.size()>0){
-		    	  for (int i=0;i<shallWayList.size();i++)
+		    	  for (int i=0;i<shallWayList.size();i++){
 		    		  shallWayArray[i] = shallWayList.get(i);
+	    		  
+		    		  blob = shallWayArray[i].getDescriptionBlob();
+		    		  bdata = blob.getBytes(1, (int) blob.length());
+					  String description = new String(bdata);
+					  shallWayArray[i].setDescriptionStr(description);
 
+		    	  }
 		      }
 
 	         tx.commit();
@@ -269,7 +301,7 @@ public class ShallWayDAO {
 		      try{
 		         tx = session.beginTransaction();
 		         
-			      String sql = "select * from shallway where dateID = ? and userIntID = ?";
+			      String sql = "select * from shallway where dateID = ? and userIntID = ? and deletestatus = false";
 			      SQLQuery query = session.createSQLQuery(sql);
 			      query.setString(0, dateID);
 			      query.setString(1, userIntID);
@@ -297,7 +329,8 @@ public class ShallWayDAO {
 			      }
 			      
 			      if (shallWayUpdateDTO.getPlace()!=null && !"".equals(shallWayUpdateDTO.getPlace().trim())){
-			    	  shallWayEntity.setPlace(shallWayUpdateDTO.getPlace());
+			    	  String place = XssShieldUtil.stripXss(shallWayUpdateDTO.getPlace());
+			    	  shallWayEntity.setPlace(place);
 			    	  shallWayEntity.setPostTime(postTime);
 			      }
 			      
@@ -334,17 +367,21 @@ public class ShallWayDAO {
 			      }
 			      
 			      if (shallWayUpdateDTO.getTitle()!=null && !"".equals(shallWayUpdateDTO.getTitle().trim())){
-			    	  shallWayEntity.setTitle(shallWayUpdateDTO.getTitle());
+			    	  String title = XssShieldUtil.stripXss(shallWayUpdateDTO.getTitle());
+			    	  shallWayEntity.setTitle(title);
 			    	  shallWayEntity.setPostTime(postTime);
 			      }
 			      
 			      if (shallWayUpdateDTO.getContact()!=null && !"".equals(shallWayUpdateDTO.getContact().trim())){
-			    	  shallWayEntity.setContact(shallWayUpdateDTO.getContact());
+			    	  String contact = XssShieldUtil.stripXss(shallWayUpdateDTO.getContact());
+			    	  shallWayEntity.setContact(contact);
 			    	  shallWayEntity.setPostTime(postTime);
 			      }
 			      
 			      if (shallWayUpdateDTO.getDescription()!=null && !"".equals(shallWayUpdateDTO.getDescription().trim())){
-			    	  shallWayEntity.setDescription(shallWayUpdateDTO.getDescription());
+			    	  String descriptionString = XssShieldUtil.stripXss(shallWayUpdateDTO.getDescription());
+			    	  Blob description = Hibernate.getLobCreator(session).createBlob(descriptionString.getBytes());		         
+			    	  shallWayEntity.setDescription(description);
 			    	  shallWayEntity.setPostTime(postTime);
 			      }
 			       
@@ -379,10 +416,11 @@ public class ShallWayDAO {
 				      @SuppressWarnings("unchecked")
 				      List<ShallWayEntity> shallWayList = query.list();	
 				      
-				      if (shallWayList!=null && shallWayList.size()>0 )
+				      if (shallWayList!=null && shallWayList.size()>0 ){
 				    	  shallWayEntity = shallWayList.get(0);
-			            
-			         session.delete(shallWayEntity);
+				    	  shallWayEntity.setDeleteStatus(true);
+				      }
+			         session.update(shallWayEntity);
 			         tx.commit();
 			      }catch (HibernateException e) {
 			         if (tx!=null) tx.rollback();

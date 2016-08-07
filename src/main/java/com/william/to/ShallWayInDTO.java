@@ -144,4 +144,7 @@ public class ShallWayInDTO {
 		this.description = description;
 	}
 	
+	public Object isValid(){
+		return null;
+	}
 }

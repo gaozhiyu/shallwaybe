@@ -1,5 +1,6 @@
 package com.william.service.authenticate;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -52,7 +53,7 @@ public class DateService {
 		return outDto;
 	}
 	
-	public DateOutDTO searchDate(ShallWaySearchDTO inDTO){
+	public DateOutDTO searchDate(ShallWaySearchDTO inDTO) throws SQLException{
 		DateOutDTO outDto = new DateOutDTO();
 		ShallWayDAO msw= ShallWayDAO.getInstance();
 		DateDTO[] dateArray = null;
@@ -90,6 +91,10 @@ public class DateService {
 		//inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
 		ShallWayDAO msw= ShallWayDAO.getInstance();
 		try {
+		/*
+		 * Object return = inDTO.isvalid();//return has two attrbute, validresult && errormsg
+		 * if(return.isValid())
+		 */
 			msw.addShallWay(inDTO);
 			output.setStatus("Y");
 		} catch (ParseException e) {
@@ -101,7 +106,7 @@ public class DateService {
 	}
 	
 	
-	public ShallWayOutDTO viewDate(DateInDTO inDTO){
+	public ShallWayOutDTO viewDate(DateInDTO inDTO) throws SQLException{
 		
 		//inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
 		ShallWayDAO msw= ShallWayDAO.getInstance();

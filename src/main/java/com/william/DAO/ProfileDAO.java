@@ -20,6 +20,7 @@ import com.william.to.RegisterInDTO;
 import com.william.to.RegisterOutDTO;
 import com.william.util.CryptWithMD5Util;
 import com.william.util.HibernateUtil;
+import com.william.util.XssShieldUtil;
 
 public class ProfileDAO {
 	
@@ -50,7 +51,8 @@ public class ProfileDAO {
 	         profileEntity.setUserIntID(userIntID);
 	         profileEntity.setPassword(password);
 	         profileEntity.setEmail(profileTo.getEmail());
-	         profileEntity.setNickname(profileTo.getNickname());
+	         String nickname = XssShieldUtil.stripXss(profileTo.getNickname());
+	         profileEntity.setNickname(nickname);
 	         profileEntity.setCountry(profileTo.getCountry());
 	         profileEntity.setProvince(profileTo.getProvince());
 	         profileEntity.setCity(profileTo.getCity());
@@ -96,6 +98,7 @@ public class ProfileDAO {
 		String userIntID = profileTo.getUserIntID();
         SimpleDateFormat dobString =new SimpleDateFormat("dd/MM/yyyy");
         ProfileUpdateResultDTO profileUpdateResultDTO = new ProfileUpdateResultDTO();
+ 
 			
 	    try{
 		      tx = session.beginTransaction();
@@ -191,14 +194,16 @@ public class ProfileDAO {
 
 			 if(profileTo.getNickname()!=null && !"".equals(profileTo.getNickname().trim()))
 			 {
+				String nickname = XssShieldUtil.stripXss(profileTo.getNickname()); 
 				profileEntity.setLastUpdate(currentTime);
-				profileEntity.setNickname(profileTo.getNickname());
+				profileEntity.setNickname(nickname);
 			 }	
 			 
 			 if(profileTo.getSignature()!=null && !"".equals(profileTo.getSignature().trim()))
 			 {
+				String signature = XssShieldUtil.stripXss(profileTo.getSignature()); 
 				profileEntity.setLastUpdate(currentTime);
-				profileEntity.setSignature(profileTo.getSignature());
+				profileEntity.setSignature(signature);
 			 }	
 			 
 			 if(profileTo.getGender()!=null && !"".equals(profileTo.getGender().trim()))
@@ -268,8 +273,9 @@ public class ProfileDAO {
 	public ProfileEntity readProfile(String email){		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;
-	    ProfileEntity profileEntity = new ProfileEntity();
-		
+//	    ProfileEntity profileEntity = new ProfileEntity();
+	    ProfileEntity profileEntity = null;
+	    
 	    try{
 		      tx = session.beginTransaction();
 
@@ -299,8 +305,9 @@ public class ProfileDAO {
 	public ProfileEntity readProfileByID(String userIntID){		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;
-	    ProfileEntity profileEntity = new ProfileEntity();
-		
+//	    ProfileEntity profileEntity = new ProfileEntity();
+	    ProfileEntity profileEntity = null;
+	    
 	    try{
 		      tx = session.beginTransaction();
 

@@ -15,7 +15,7 @@ public class TestMessage {
 
 	MessageDAO messageDAO = MessageDAO.getInstance();//MessageDAO messageDAO =new MessageDAO();
 	MessageOutDTO[] messageArray = null;
-	MessageInDTO messageInDTO = new MessageInDTO("Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어","100","胡总","001");
+	MessageInDTO messageInDTO = new MessageInDTO("Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어,欧了","100","胡总","001");
 //  Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어
 
 	@Test	
@@ -38,10 +38,10 @@ public class TestMessage {
 	}	
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void testUpdateMessageSendStatus(){
-		boolean flag=messageDAO.updateMessageSendStatus("679fafa49b3f48c58aab2f41abc9aece");
+		boolean flag=messageDAO.updateMessageSendStatus("6f9a2abd17834857b33aecf5535e610c");
 		assertEquals(true,flag);
 		
 	}

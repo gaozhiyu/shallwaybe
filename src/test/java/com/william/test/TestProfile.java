@@ -2,6 +2,7 @@ package com.william.test;
 
 import java.text.ParseException;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class TestProfile {
 	ProfileDAO MP = ProfileDAO.getInstance();
 	RegisterInDTO registerInDTO = new RegisterInDTO("2@gmail.com","MYPasswordMYPasswordMYPasswordMYPassword","Paper Tiger","中国","河南","郑州","新加坡","马林百列","东海岸","1.1","1.2");
 	RegisterOutDTO registerOutDTO = new RegisterOutDTO();
-	ProfileInDTO profileInDTO = new ProfileInDTO("8a0e4da44b904eb3887e7ae5354ce12d","1@gmail.com", "MyPassword","胡总","男","04/09/1987","true","1","123456","0","北","上","广","深","庆","都","3.1","3.2","For test only");
+	ProfileInDTO profileInDTO = new ProfileInDTO("8a0e4da44b904eb3887e7ae5354ce12d","21157@shall-way.com.sg", "MyPassword","胡总","男","04/09/1987","true","1","123456","0","北","上","广","深","庆","都","179.12345","9.9","For test only");
 //	"约吗？Yes！我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어!"
 	boolean updateStatus=false;
 	LoginResultOutDTO loginResultOutDTO = new LoginResultOutDTO();
@@ -52,7 +53,7 @@ public class TestProfile {
 
 	@Test
 	public void testReadProfile(){
-		profileEntity = MP.readProfile("1@gmail.com");
+		profileEntity = MP.readProfile("2@gmail.com");
 		System.out.println(profileEntity.getNickname());	
 		System.out.println(profileEntity.getGender());
 		System.out.println(profileEntity.getOTPExpiryTime());
@@ -95,5 +96,43 @@ public class TestProfile {
 	    System.out.println("\n New String:" + sb.toString());
 	    
 //	    return sb.toString();
+	}
+	
+	@Test
+	public void testInputValidation(){
+
+/*		private String userIntID;
+		private String email;
+		private String password;
+		private String nickname;
+		private String gender;
+		private String dateOfBirth;
+		private String profilePhoto;
+		private String wrongTryPWD;
+		private String OTP;
+		private String wrongTryOTP;
+		private String country;
+		private String province;
+		private String city;
+		private String googleCountry;
+		private String googleProvince;
+		private String googleCity;
+		private String longitude; ^[-\+]?((1[0-7]\d{1}|0?\d{1,2})\.\d{1,5}|180\.0{1,5})$
+		private String latitude;	^[-\+]?([0-8]?\d{1}\.\d{1,5}|90\.0{1,5})$
+		private String signature;
+		
+*/	
+    	String emailString ="^([a-z0-9A-Z_]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+    	boolean emailMatch = Pattern.matches(emailString, profileInDTO.getEmail());
+    	System.out.println("Email Pattern matches?: "+emailMatch);
+    	
+    	String longitudeString = "^[-|+]?((1[0-7]\\d{1}|0?\\d{1,2})\\.\\d{1,5}|180\\.0{1,5})$";
+    	boolean longitudeMatch = Pattern.matches(longitudeString, profileInDTO.getLongitude());
+    	System.out.println("Longitude Pattern matches?: "+longitudeMatch);
+    	
+       	String latitudeString = "^[-|+]?([0-8]?\\d{1}\\.\\d{1,5}|90\\.0{1,5})$";
+    	boolean latitudeMatch = Pattern.matches(latitudeString, profileInDTO.getLatitude());
+    	System.out.println("Latitude Pattern matches?: "+latitudeMatch);
+		
 	}
 }

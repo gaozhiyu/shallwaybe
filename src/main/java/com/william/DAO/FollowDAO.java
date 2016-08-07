@@ -41,6 +41,7 @@ public class FollowDAO {
 		         followEntity.setDateID(followInDTO.getDateID());
 		         followEntity.setFollowerIntID(followInDTO.getFollowerIntID());
 		         followEntity.setFollowTime(followTime);
+		         followEntity.setDeleteStatus(false);
 		         
 		         session.save(followEntity);
 		         tx.commit();
@@ -62,7 +63,7 @@ public class FollowDAO {
 	    try{
 		      tx = session.beginTransaction();
 
-		      String sql = "select a.ID as id,a.DateID,a.FollowerIntID,a.FollowTime, b.Nickname as followerNickname from follow a join profile b on a.followerintid = b.userintid where a.dateID = ? order by followtime desc;";
+		      String sql = "select a.ID as id,a.DateID,a.FollowerIntID,a.FollowTime,a.DeleteStatus, b.Nickname as followerNickname from follow a join profile b on a.followerintid = b.userintid where a.dateID = ? and a.deletestatus =false order by followtime desc;";
 		      SQLQuery query = session.createSQLQuery(sql);  
 		      query.setString(0, dateID);
 		      query.setResultTransformer(Transformers.aliasToBean(FollowOutDTO.class));
@@ -104,10 +105,11 @@ public class FollowDAO {
 		      @SuppressWarnings("unchecked")
 		      List<FollowEntity> followList = query.list();	
 		      
-		      if (followList!=null && followList.size()>0 )
+		      if (followList!=null && followList.size()>0 ){
 		    	  followEntity = followList.get(0);
-	            
-	         session.delete(followEntity);
+		    	  followEntity.setDeleteStatus(true);
+		      }
+	         session.update(followEntity);
 	         tx.commit();
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();

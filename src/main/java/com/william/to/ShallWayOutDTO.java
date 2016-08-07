@@ -1,5 +1,6 @@
 package com.william.to;
 
+import java.sql.Blob;
 import java.util.Date;
 
 import com.william.vo.CommonVO;
@@ -26,15 +27,19 @@ public class ShallWayOutDTO extends GISDTO {
 	
 	private String title;
 	private String contact;
-	private String description;
-		
+	private String descriptionStr;
+	private Blob descriptionBlob;
+	private Boolean deleteStatus;
+
+
 	public ShallWayOutDTO() {
 		super();
 	}
 
 	public ShallWayOutDTO(String nickname, String dateID, String userIntID, String country, String province,
-			String city, String place, Date startTime, Date endTime, Date postTime, Boolean carPool, Boolean freeTour,
-			Boolean hotelShare, Boolean freeGuide, String title, String contact, String description) {
+			String city, String place, Date startTime, Date endTime, Date postTime, String endTimeStr,
+			String startTimeStr, Boolean carPool, Boolean freeTour, Boolean hotelShare, Boolean freeGuide, String title,
+			String contact, String descriptionStr, Boolean deleteStatus) {
 		super();
 		this.nickname = nickname;
 		this.dateID = dateID;
@@ -46,13 +51,16 @@ public class ShallWayOutDTO extends GISDTO {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.postTime = postTime;
+		this.endTimeStr = endTimeStr;
+		this.startTimeStr = startTimeStr;
 		this.carPool = carPool;
 		this.freeTour = freeTour;
 		this.hotelShare = hotelShare;
 		this.freeGuide = freeGuide;
 		this.title = title;
 		this.contact = contact;
-		this.description = description;
+		this.descriptionStr = descriptionStr;
+		this.deleteStatus = deleteStatus;
 	}
 
 	public String getNickname() {
@@ -183,12 +191,12 @@ public class ShallWayOutDTO extends GISDTO {
 		this.contact = contact;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDescriptionStr() {
+		return descriptionStr;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescriptionStr(String description) {
+		this.descriptionStr = description;
 	}
 
 	public String getEndTimeStr() {
@@ -205,6 +213,22 @@ public class ShallWayOutDTO extends GISDTO {
 
 	public void setStartTimeStr(String startTimeStr) {
 		this.startTimeStr = startTimeStr;
+	}
+	
+	public Blob getDescriptionBlob() {
+		return descriptionBlob;
+	}
+
+	public void setDescriptionBlob(Blob descriptionBlob) {
+		this.descriptionBlob = descriptionBlob;
+	}
+
+	public Boolean getDeleteStatus() {
+		return deleteStatus;
+	}
+
+	public void setDeleteStatus(Boolean deleteStatus) {
+		this.deleteStatus = deleteStatus;
 	}
 	
 }

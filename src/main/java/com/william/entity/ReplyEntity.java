@@ -1,5 +1,6 @@
 package com.william.entity;
 
+import java.sql.Blob;
 import java.util.Date;
 
 public class ReplyEntity implements java.io.Serializable {
@@ -9,19 +10,22 @@ public class ReplyEntity implements java.io.Serializable {
 	private String dateID;
     private String replierIntID;
 	private Date replyTime;
-	private String replyContents;
+	private Blob replyContents;
+	private Boolean deleteStatus;
 	
 	public ReplyEntity() {
 		super();
 	}
 
-	public ReplyEntity(String id, String dateID, String replierIntID, Date replyTime, String replyContents) {
+	public ReplyEntity(String id, String dateID, String replierIntID, Date replyTime, Blob replyContents,
+			Boolean deleteStatus) {
 		super();
 		this.id = id;
 		this.dateID = dateID;
 		this.replierIntID = replierIntID;
 		this.replyTime = replyTime;
 		this.replyContents = replyContents;
+		this.deleteStatus = deleteStatus;
 	}
 
 	public String getId() {
@@ -56,12 +60,22 @@ public class ReplyEntity implements java.io.Serializable {
 		this.replyTime = replyTime;
 	}
 
-	public String getReplyContents() {
+	public Blob getReplyContents() {
 		return replyContents;
 	}
 
-	public void setReplyContents(String replyContents) {
+	public void setReplyContents(Blob replyContents) {
 		this.replyContents = replyContents;
 	}
+
+	public Boolean getDeleteStatus() {
+		return deleteStatus;
+	}
+
+	public void setDeleteStatus(Boolean deleteStatus) {
+		this.deleteStatus = deleteStatus;
+	}
+	
+	
 		
 }

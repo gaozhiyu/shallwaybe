@@ -1,5 +1,6 @@
 package com.william.entity;
 
+import java.sql.Blob;
 import java.util.Date;
 
 public class ShallWayEntity implements java.io.Serializable {
@@ -13,9 +14,6 @@ public class ShallWayEntity implements java.io.Serializable {
 	private String userIntID;
 	private String country;
 	private String province;
-	public String getProvince() {
-		return province;
-	}
 	private String city;
 	private String place;
 	private Date startTime; // check correct format to use 28.2.2016
@@ -29,15 +27,16 @@ public class ShallWayEntity implements java.io.Serializable {
 	
 	private String title;
 	private String contact;
-	private String description;
+	private Blob description;
+	private Boolean deleteStatus;
 		
 	public ShallWayEntity() {
 		super();
 	}
 	
-	public ShallWayEntity(String dateID, String userIntID, String country, String province,
-			String city, String place, Date startTime, Date endTime, Date postTime, Boolean carPool, Boolean freeTour,
-			Boolean hotelShare, Boolean freeGuide, String title, String contact, String description) {
+	public ShallWayEntity(String dateID, String userIntID, String country, String province, String city, String place,
+			Date startTime, Date endTime, Date postTime, Boolean carPool, Boolean freeTour, Boolean hotelShare,
+			Boolean freeGuide, String title, String contact, Blob description, Boolean deleteStatus) {
 		super();
 		this.dateID = dateID;
 		this.userIntID = userIntID;
@@ -55,8 +54,11 @@ public class ShallWayEntity implements java.io.Serializable {
 		this.title = title;
 		this.contact = contact;
 		this.description = description;
+		this.deleteStatus = deleteStatus;
 	}
-	
+
+
+
 	public String getDateID() {
 		return dateID;
 	}
@@ -80,6 +82,9 @@ public class ShallWayEntity implements java.io.Serializable {
 		this.country = country;
 	}
 	
+	public String getProvince() {
+		return province;
+	}	
 
 	public void setProvince(String province) {
 		this.province = province;
@@ -151,11 +156,19 @@ public class ShallWayEntity implements java.io.Serializable {
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
-	public String getDescription() {
+	public Blob getDescription() {
 		return description;
 	}
-	public void setDescription(String description) {
+	public void setDescription(Blob description) {
 		this.description = description;
 	}
-	
+
+	public Boolean getDeleteStatus() {
+		return deleteStatus;
+	}
+
+	public void setDeleteStatus(Boolean deleteStatus) {
+		this.deleteStatus = deleteStatus;
+	}
+		
 }

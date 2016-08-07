@@ -53,8 +53,11 @@
          <property name="contact" type="string">
             <column name="Contact" length="128" />
         </property>  
-         <property name="description" type="string">
+         <property name="descriptionBlob" type="blob">
             <column name="Description" />
+        </property> 
+        <property name="deleteStatus" type="boolean">
+            <column name="DeleteStatus"/>
         </property> 
                 
     </class>
