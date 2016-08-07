@@ -120,6 +120,13 @@ public class ProfileService {
 			} else {
 				profileVO.setAddressFlag(false);
 			}
+			
+			try{
+				if(profileEntity != null && profileEntity.getProfilePhoto())
+					profileVO.setProfilePIC(FileUtil.getFileData(profileEntity.getUserIntID()));
+			} catch(Exception e){
+				logger.error("Profile Image loaded Failed\n",e);
+			}
 
 		} else {
 			profileVO.setStatus("N");

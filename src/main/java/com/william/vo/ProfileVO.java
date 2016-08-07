@@ -17,8 +17,17 @@ public class ProfileVO extends GISDTO {
 	private String city;	
 	private String signature;
 	private boolean addressFlag;
+	private byte[] profilePIC;
 	
 
+
+	public byte[] getProfilePIC() {
+		return profilePIC;
+	}
+
+	public void setProfilePIC(byte[] profilePIC) {
+		this.profilePIC = profilePIC;
+	}
 
 	public boolean isAddressFlag() {
 		return addressFlag;
