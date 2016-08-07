@@ -10,7 +10,18 @@ public class ShakeDTO extends CommonInput{
 	//private String userid;
 	private String nickname;
 	private String signature;
-	
+	private boolean photoFlag;
+
+	public boolean isPhotoFlag() {
+		return photoFlag;
+	}
+
+
+
+	public void setPhotoFlag(boolean photoFlag) {
+		this.photoFlag = photoFlag;
+	}
+
 
 
 	public ShakeDTO() {

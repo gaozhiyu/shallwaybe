@@ -28,7 +28,8 @@ public class FileDownloadServlet extends HttpServlet {
 		
 		try {
 			OutputStream out = response.getOutputStream();
-			FileInputStream in = new FileInputStream("d:/r001-001.jpg");
+			String userid= (String)request.getParameter("id");
+			FileInputStream in = new FileInputStream("d:/shallwayprofilephoto/"+userid+".jpg");
 			byte[] buffer = new byte[4096];
 			int length;
 			while ((length = in.read(buffer)) > 0){

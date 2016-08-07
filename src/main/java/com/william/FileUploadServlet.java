@@ -8,9 +8,12 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.william.DAO.ProfileDAO;
+import com.william.to.ProfileInDTO;
 import com.william.util.Position;
 
 public class FileUploadServlet extends HttpServlet {
@@ -32,13 +35,20 @@ public class FileUploadServlet extends HttpServlet {
 			byte[] body = readBody(request);
 
 	        String textBody = new String(body, "ISO-8859-1");
-
-	        String fileName = getFileName(textBody);
+	        String userid = (String)request.getParameter("id");//TODO in future
+	       // String fileName = getFileName(textBody);
 
 	        Position p = getFilePosition(request, textBody);
 
-	        writeTo(fileName, body, p);
-		} catch (IOException e) {
+	        writeTo(userid+".jpg", body, p);
+	        
+	        ProfileDAO pDAO = ProfileDAO.getInstance();
+	        ProfileInDTO profileTo = new ProfileInDTO();
+	        profileTo.setUserIntID(userid);
+	        profileTo.setProfilePhoto("TRUE");
+			pDAO.updateProfile(profileTo);
+	        
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -88,7 +98,7 @@ public class FileUploadServlet extends HttpServlet {
 	    }
 	 
 	    private void writeTo(String fileName, byte[] body, Position p) throws IOException {
-	        FileOutputStream fileOutputStream = new FileOutputStream("d:/" + fileName);
+	        FileOutputStream fileOutputStream = new FileOutputStream("d:/shallwayprofilephoto/" + fileName);
 	        fileOutputStream.write(body, p.begin, (p.end - p.begin));
 	        fileOutputStream.flush();
 	        fileOutputStream.close();
