@@ -9,7 +9,7 @@ public class ProfileOutDTO extends CommonVO{
 	private String province;
 	private String city;
 	private String gender;
-	private Byte[] profilePIC;
+	private byte[] profilePIC;
 	private String dateOfBirth;
 	private String visitedCities;
 	private String registerCities;
@@ -45,10 +45,10 @@ public class ProfileOutDTO extends CommonVO{
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public Byte[] getProfilePIC() {
+	public byte[] getProfilePIC() {
 		return profilePIC;
 	}
-	public void setProfilePIC(Byte[] profilePIC) {
+	public void setProfilePIC(byte[] profilePIC) {
 		this.profilePIC = profilePIC;
 	}
 	public String getDateOfBirth() {

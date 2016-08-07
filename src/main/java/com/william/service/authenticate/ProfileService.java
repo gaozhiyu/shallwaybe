@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.apache.log4j.Logger;
+
 import com.william.DAO.AddressHistoryDAO;
 import com.william.DAO.ProfileDAO;
 import com.william.DAO.WorldCitiesDAO;
@@ -15,6 +17,7 @@ import com.william.to.CoordinateDTO;
 import com.william.to.ProfileInDTO;
 import com.william.to.ProfileOutDTO;
 import com.william.to.ProfileUpdateResultDTO;
+import com.william.util.FileUtil;
 import com.william.util.JedisUtil;
 import com.william.util.ParserJsonUtil;
 import com.william.vo.CommonInput;
@@ -23,6 +26,7 @@ import com.william.vo.UpdateProfileVO;
 
 public class ProfileService {
 
+	private final Logger logger = Logger.getLogger(this.getClass());
 	private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
 	public UpdateProfileVO updateProfile(ProfileInDTO inDTO) {
@@ -151,6 +155,13 @@ public class ProfileService {
 					sb.append(dto.toString() + "\n");
 				profileOutDTO.setVisitedCities(sb.toString());
 			}
+			try{
+				if(profile.getProfilePhoto())
+					profileOutDTO.setProfilePIC(FileUtil.getFileData(input.getUserIntID()));
+			} catch(Exception e){
+				logger.error("Profile Image loaded Failed\n",e);
+			}
+			
 		} else {
 			profileOutDTO.setStatus("N");
 		}
