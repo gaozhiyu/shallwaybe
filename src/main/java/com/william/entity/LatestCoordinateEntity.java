@@ -9,8 +9,8 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String userIntID;
-	private Double longitude;
-	private Double latitude;
+	private double longitude;
+	private double latitude;
 	private Date lastShakeTime;
 	private String country;
 	private String province; 
@@ -21,10 +21,8 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 		super();
 	}
 
-
-
-	public LatestCoordinateEntity(String userIntID,Double longitude, Double latitude,
-			Date lastShakeTime, String country, String province, String city, Date lastAddressUpdate) {
+	public LatestCoordinateEntity(String userIntID, double longitude, double latitude, Date lastShakeTime,
+			String country, String province, String city, Date lastAddressUpdate) {
 		super();
 		this.userIntID = userIntID;
 		this.longitude = longitude;
@@ -35,7 +33,7 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 		this.city = city;
 		this.lastAddressUpdate = lastAddressUpdate;
 	}
-		
+
 	public String getUserIntID() {
 		return userIntID;
 	}
@@ -44,19 +42,19 @@ public class LatestCoordinateEntity implements java.io.Serializable {
 		this.userIntID = userIntID;
 	}
 
-	public Double getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Double longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
-	public Double getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Double latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 

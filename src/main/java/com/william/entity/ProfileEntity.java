@@ -16,7 +16,7 @@ public class ProfileEntity implements java.io.Serializable {
 	private String nickname;
 	private String gender;
 	private Date dateOfBirth;
-	private Boolean profilePhoto;
+	private boolean profilePhoto;
 	private int wrongTryPWD;
 	private String OTP;
 	private Date OTPExpiryTime;
@@ -27,8 +27,8 @@ public class ProfileEntity implements java.io.Serializable {
 	private String googleCountry;
 	private String googleProvince;
 	private String googleCity;
-	private Double longitude;
-	private Double latitude;
+	private double longitude;
+	private double latitude;
 	private Date lastUpdate; 
 	private Date createTime;   
 	private Date lastAddressUpdate;  	
@@ -40,9 +40,9 @@ public class ProfileEntity implements java.io.Serializable {
 
 
 	public ProfileEntity(String userIntID, String email, String password, String nickname, String gender,
-			Date dateOfBirth, Boolean profilePhoto, Integer wrongTryPWD, String oTP, Date oTPExpiryTime,
-			Integer wrongTryOTP, String country, String province, String city, String googleCountry,
-			String googleProvince, String googleCity, Double longitude, Double latitude, Date lastUpdate,
+			Date dateOfBirth, boolean profilePhoto, int wrongTryPWD, String oTP, Date oTPExpiryTime,
+			int wrongTryOTP, String country, String province, String city, String googleCountry,
+			String googleProvince, String googleCity, double longitude, double latitude, Date lastUpdate,
 			Date createTime, Date lastAddressUpdate, String signature) {
 		super();
 		this.userIntID = userIntID;
@@ -127,21 +127,34 @@ public class ProfileEntity implements java.io.Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public Boolean getProfilePhoto() {
+	
+	
+	public boolean isProfilePhoto() {
 		return profilePhoto;
 	}
 
-	public void setProfilePhoto(Boolean profilePhoto) {
+	public void setProfilePhoto(boolean profilePhoto) {
 		this.profilePhoto = profilePhoto;
 	}	
 
-	public Integer getWrongTryPWD() {
+//	public boolean isProfilePhoto() {
+//		return profilePhoto;
+//	}
+//
+//
+//	public void setProfilePhoto(boolean profilePhoto) {
+//		this.profilePhoto = profilePhoto;
+//	}
+
+
+	public int getWrongTryPWD() {
 		return wrongTryPWD;
 	}
 
-	public void setWrongTryPWD(Integer wrongTryPWD) {
+	public void setWrongTryPWD(int wrongTryPWD) {
 		this.wrongTryPWD = wrongTryPWD;
 	}
+
 
 	public String getOTP() {
 		return OTP;
@@ -159,11 +172,11 @@ public class ProfileEntity implements java.io.Serializable {
 		OTPExpiryTime = oTPExpiryTime;
 	}
 
-	public Integer getWrongTryOTP() {
+	public int getWrongTryOTP() {
 		return wrongTryOTP;
 	}
 
-	public void setWrongTryOTP(Integer wrongTryOTP) {
+	public void setWrongTryOTP(int wrongTryOTP) {
 		this.wrongTryOTP = wrongTryOTP;
 	}
 
@@ -207,19 +220,19 @@ public class ProfileEntity implements java.io.Serializable {
 		this.googleCity = gCity;
 	}
 
-	public Double getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Double longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
-	public Double getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Double latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 

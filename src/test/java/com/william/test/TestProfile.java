@@ -18,7 +18,7 @@ import com.william.to.RegisterOutDTO;
 public class TestProfile {
 	ProfileEntity profileEntity = new ProfileEntity();
 	ProfileDAO MP = ProfileDAO.getInstance();
-	RegisterInDTO registerInDTO = new RegisterInDTO("2@gmail.com","MYPasswordMYPasswordMYPasswordMYPassword","Paper Tiger","中国","河南","郑州","新加坡","马林百列","东海岸","1.1","1.2");
+	RegisterInDTO registerInDTO = new RegisterInDTO("8@gmail.com","MYPasswordMYPasswordMYPasswordMYPassword","Paper Tiger","中国","河南","郑州","新加坡","马林百列","东海岸","1.1","1.2");
 	RegisterOutDTO registerOutDTO = new RegisterOutDTO();
 	ProfileInDTO profileInDTO = new ProfileInDTO("8a0e4da44b904eb3887e7ae5354ce12d","21157@shall-way.com.sg", "MyPassword","胡总","男","04/09/1987","true","1","123456","0","北","上","广","深","庆","都","179.12345","9.9","For test only");
 //	"约吗？Yes！我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어!"

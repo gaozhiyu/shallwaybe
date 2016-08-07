@@ -122,7 +122,7 @@ public class ProfileService {
 			}
 			
 			try{
-				if(profileEntity != null && profileEntity.getProfilePhoto())
+				if(profileEntity != null && profileEntity.isProfilePhoto())
 					profileVO.setProfilePIC(FileUtil.getFileData(profileEntity.getUserIntID()));
 			} catch(Exception e){
 				logger.error("Profile Image loaded Failed\n",e);
@@ -163,7 +163,7 @@ public class ProfileService {
 				profileOutDTO.setVisitedCities(sb.toString());
 			}
 			try{
-				if(profile.getProfilePhoto())
+				if(profile.isProfilePhoto())
 					profileOutDTO.setProfilePIC(FileUtil.getFileData(input.getUserIntID()));
 			} catch(Exception e){
 				logger.error("Profile Image loaded Failed\n",e);
