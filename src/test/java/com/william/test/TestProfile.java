@@ -15,14 +15,15 @@ import com.william.to.ProfileInDTO;
 import com.william.to.ProfileUpdateResultDTO;
 import com.william.to.RegisterInDTO;
 import com.william.to.RegisterOutDTO;
+import com.william.util.FieldPassFilterUtil;
 
 public class TestProfile {
 	Date currentTime = new Date();
 	ProfileEntity profileEntity = new ProfileEntity();
 	ProfileDAO MP = ProfileDAO.getInstance();
-	RegisterInDTO registerInDTO = new RegisterInDTO("1@gmail.com","MYPasswordMYPasswordMYPasswordMYPassword","Paper Tiger","中国","河南","郑州","新加坡","马林百列","东海岸","1.1","1.2");
+	RegisterInDTO registerInDTO = new RegisterInDTO("3@gmail.com","MYPasswordMYPasswordMYPasswordMYPassword","Paper Tiger","中国","河南","郑州","新加坡","马林百列","东海岸","1.1","1.2");
 	RegisterOutDTO registerOutDTO = new RegisterOutDTO();
-	ProfileInDTO profileInDTO = new ProfileInDTO("8a0e4da44b904eb3887e7ae5354ce12d","21157@shall-way.com.sg", "MyPassword","胡总","男","04/09/1987",currentTime,"1","123456","0","北","上","广","深","庆","都","179.12345","9.9","For test only");
+	ProfileInDTO profileInDTO = new ProfileInDTO("8a0e4da44b904eb3887e7ae5354ce12d","hu-zong@gmail.com", "MyPassword","胡总","男","04/09/1987",currentTime,"1","123456","0","北","上","广","深","庆","都","179.12345","9.9","For test only");
 //	"约吗？Yes！我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어!"
 	boolean updateStatus=false;
 	LoginResultOutDTO loginResultOutDTO = new LoginResultOutDTO();
@@ -30,7 +31,7 @@ public class TestProfile {
 
 	@Test
 	public void testAddProfile(){
-
+		System.out.println(FieldPassFilterUtil.validEmailAdreess(registerInDTO.getEmail()));
 		registerOutDTO = MP.addProfile(registerInDTO);
 		System.out.println(registerOutDTO.getRegisterStatus());	
 	}
@@ -124,7 +125,7 @@ public class TestProfile {
 		private String signature;
 		
 */	
-    	String emailString ="^([a-z0-9A-Z_]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+    	String emailString ="^([a-z0-9A-Z_]+[-|\\.]?)+[a-z0-9A-Z]?@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
     	boolean emailMatch = Pattern.matches(emailString, profileInDTO.getEmail());
     	System.out.println("Email Pattern matches?: "+emailMatch);
     	

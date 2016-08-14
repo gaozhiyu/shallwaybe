@@ -17,7 +17,6 @@ import org.hibernate.type.StringType;
 import org.hibernate.type.TimestampType;
 
 import com.william.entity.MessageEntity;
-import com.william.to.MessageConvertDTO;
 import com.william.to.MessageInDTO;
 import com.william.to.MessageOutDTO;
 import com.william.util.HibernateUtil;
@@ -57,7 +56,6 @@ public class MessageDAO {
 		         messageEntity.setSenderNickname(messageInDTO.getSenderNickname());
 		         messageEntity.setReceiverIntID(messageInDTO.getReceiverIntID());
 		         messageEntity.setSendTime(sendTime);
-//		         messageEntity.setSendStatus(Boolean.parseBoolean(messageInDTO.getSendStatus()));
 		         messageEntity.setSendStatus(false);
 		         
 		         session.save(messageEntity);
@@ -77,7 +75,6 @@ public class MessageDAO {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;
 	    MessageOutDTO[] messageArray = null;
-	    MessageConvertDTO[] message=null;
 		byte[] bdata= null;
 		Blob blob=null;
 	    
@@ -85,7 +82,6 @@ public class MessageDAO {
 		      tx = session.beginTransaction();
 
 		      String sql = "select * from message where ReceiverIntID = ? and SendStatus = false order by sendtime asc;";
-//		      String sql = "select * from message where ReceiverIntID = ? order by sendtime asc;";
 		      SQLQuery query = session.createSQLQuery(sql);  
 		      query.setString(0, receiverIntID);
 		      query.addScalar("MessageID", new StringType());
@@ -93,61 +89,23 @@ public class MessageDAO {
 		      query.addScalar("SendTime", new TimestampType());
 		      query.addScalar("SenderIntID", new StringType());
 		      query.addScalar("SenderNickname", new StringType());
-		      query.setResultTransformer(Transformers.aliasToBean(MessageConvertDTO.class));
+		      query.setResultTransformer(Transformers.aliasToBean(MessageOutDTO.class));
 		      
 		      @SuppressWarnings("unchecked")
-			  List<MessageConvertDTO> messageList = query.list();	
+			  List<MessageOutDTO> messageList = query.list();	
 		      messageArray = new MessageOutDTO[messageList.size()];
-		      message = new MessageConvertDTO[messageList.size()];
 	    	  
 		      if (messageList!=null && messageList.size()>0 ){
 		    	  for (int i=0;i<messageList.size();i++){
-		    		  message[i] = messageList.get(i);
-//		    		  blob = message[i].getMessageContents();
-//		    		  bdata = blob.getBytes(1, (int) blob.length());
-//					  String messageContents = new String(bdata);
-//					  messageArray[i].setMessageContents(messageContents);
-//					  messageArray[i].setMessageID(message[i].getMessageID());
-//					  messageArray[i].setSenderIntID(message[i].getSenderIntID());
-//					  messageArray[i].setSendTime(message[i].getSendTime());
-		    	  }
-		    	  
-		    	  for (int i=0;i<messageList.size();i++){
+		    		  messageArray[i] = messageList.get(i);
 		    		  
-		    		  blob = message[i].getMessageContents();
+		    		  blob = messageArray[i].getMessageContents();
 		    		  bdata = blob.getBytes(1, (int) blob.length());
 					  String messageContents = new String(bdata);
-					  
-					  messageArray[i] = new MessageOutDTO();
-					  messageArray[i].setMessageContents(messageContents);
-					  messageArray[i].setMessageID(message[i].getMessageID());
-					  messageArray[i].setSenderIntID(message[i].getSenderIntID());
-					  messageArray[i].setSenderNickname(message[i].getSenderNickname());
-					  messageArray[i].setSendTime(message[i].getSendTime());
-		    	  }  
+					  messageArray[i].setMessageContentsStr(messageContents);			  
+		    	  }	    	    
 		      }
-		      	      
-//		      String sql = "select * from message where ReceiverIntID = ? and SendStatus = false order by sendtime asc;";
-//		      SQLQuery query = session.createSQLQuery(sql);  
-//		      query.setString(0, receiverIntID);
-////		      query.setString(1, false);
-////		      query.addEntity(MessageOutDTO.class);
-//		      query.addScalar("MessageID", new StringType());
-//		      query.addScalar("MessageContents", new StringType());
-//		      query.addScalar("SendTime", new TimestampType());
-//		      query.addScalar("SenderIntID", new StringType());
-//		      query.setResultTransformer(Transformers.aliasToBean(MessageOutDTO.class));
-//		      
-//		      @SuppressWarnings("unchecked")
-//			  List<MessageOutDTO> messageList = query.list();	
-//		      messageArray = new MessageOutDTO[messageList.size()];
-//	    	  
-//		      if (messageList!=null){
-//		    	  for (int i=0;i<messageList.size();i++){
-//		    		  messageArray[i] = messageList.get(i);
-//		    	  }
-//		      }
-		          		      
+		      	      	          		      
 		      tx.commit();   
 		    }catch (HibernateException e) {
 		      if (tx!=null) tx.rollback();
@@ -183,11 +141,7 @@ public class MessageDAO {
 		      if (messageList!=null && messageList.size()>0){
 		    	  messageEntity = messageList.get(0);
 		      }
-		      
-//		      if (messageInDTO.getSendStatus()!=null && !"".equals(messageInDTO.getSendStatus().trim())){
-//		    	  messageEntity.setSendStatus(Boolean.parseBoolean(messageInDTO.getSendStatus()));
-//			  }
-		      
+		      		      
 		      messageEntity.setSendStatus(true);
 		      
 		      session.update(messageEntity);

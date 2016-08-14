@@ -8,10 +8,11 @@ import org.hibernate.type.TextType;
 public class MessageOutDTO {
 
 	private String messageID;
-	private String messageContents;
+	private String messageContentsStr;
 	private String senderIntID;
 	private String senderNickname;
 	private Date sendTime;
+	private Blob messageContents;
 	//TODO HZ add the nickname here
 	
 	public MessageOutDTO() {
@@ -22,7 +23,7 @@ public class MessageOutDTO {
 			Date sendTime) {
 		super();
 		this.messageID = messageID;
-		this.messageContents = messageContents;
+		this.messageContentsStr = messageContents;
 		this.senderIntID = senderIntID;
 		this.senderNickname = senderNickname;
 		this.sendTime = sendTime;
@@ -37,12 +38,12 @@ public class MessageOutDTO {
 		this.messageID = messageID;
 	}
 
-	public String getMessageContents() {
-		return messageContents;
+	public String getMessageContentsStr() {
+		return messageContentsStr;
 	}
 
-	public void setMessageContents(String messageContents) {
-		this.messageContents = messageContents;
+	public void setMessageContentsStr(String messageContents) {
+		this.messageContentsStr = messageContents;
 	}
 
 	public String getSenderIntID() {
@@ -69,5 +70,12 @@ public class MessageOutDTO {
 		this.sendTime = sendTime;
 	}
 
+	public Blob getMessageContents() {
+		return messageContents;
+	}
+
+	public void setMessageContents(Blob messageContents) {
+		this.messageContents = messageContents;
+	}	
 	
 }

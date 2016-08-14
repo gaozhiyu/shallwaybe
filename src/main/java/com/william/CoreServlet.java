@@ -234,7 +234,7 @@ public class CoreServlet extends HttpServlet {
 									msg.setFromID(msgArray[i].getSenderIntID());
 									msg.setToID(userid);
 									msg.setFromNickname(msgArray[i].getSenderNickname());
-									msg.setLine(msgArray[i].getMessageContents());
+									msg.setLine(msgArray[i].getMessageContentsStr());
 									client.sendEvent("chatevent", msg);
 								}
 
