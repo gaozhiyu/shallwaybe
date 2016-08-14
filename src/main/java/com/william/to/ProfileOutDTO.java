@@ -1,5 +1,7 @@
 package com.william.to;
 
+import java.util.Date;
+
 import com.william.vo.CommonVO;
 
 public class ProfileOutDTO extends CommonVO{
@@ -9,10 +11,11 @@ public class ProfileOutDTO extends CommonVO{
 	private String province;
 	private String city;
 	private String gender;
-	private byte[] profilePIC;
+	private Date profilePhoto;
 	private String dateOfBirth;
 	private String visitedCities;
 	private String registerCities;
+	
 	
 	
 	public String getNickname() {
@@ -45,11 +48,13 @@ public class ProfileOutDTO extends CommonVO{
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public byte[] getProfilePIC() {
-		return profilePIC;
+
+	
+	public Date getProfilePhoto() {
+		return profilePhoto;
 	}
-	public void setProfilePIC(byte[] profilePIC) {
-		this.profilePIC = profilePIC;
+	public void setProfilePhoto(Date profilePhoto) {
+		this.profilePhoto = profilePhoto;
 	}
 	public String getDateOfBirth() {
 		return dateOfBirth;

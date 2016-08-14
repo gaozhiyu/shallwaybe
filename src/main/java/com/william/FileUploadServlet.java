@@ -34,6 +34,7 @@ public class FileUploadServlet extends HttpServlet {
 		PrintWriter out;
 		Date currentTime = new Date();
 		try {
+			//TODO imagesize restriction
 			byte[] body = readBody(request);
 
 	        String textBody = new String(body, "ISO-8859-1");

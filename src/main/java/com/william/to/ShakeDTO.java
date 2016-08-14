@@ -1,5 +1,7 @@
 package com.william.to;
 
+import java.util.Date;
+
 import com.william.vo.CommonInput;
 
 public class ShakeDTO extends CommonInput{
@@ -10,15 +12,18 @@ public class ShakeDTO extends CommonInput{
 	//private String userid;
 	private String nickname;
 	private String signature;
-	private boolean photoFlag;
+	private Date photoFlag;
 
-	public boolean isPhotoFlag() {
+
+
+
+	public Date getPhotoFlag() {
 		return photoFlag;
 	}
 
 
 
-	public void setPhotoFlag(boolean photoFlag) {
+	public void setPhotoFlag(Date photoFlag) {
 		this.photoFlag = photoFlag;
 	}
 

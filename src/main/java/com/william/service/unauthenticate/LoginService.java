@@ -27,35 +27,40 @@ public class LoginService {
 		ProfileDAO mgDAO = ProfileDAO.getInstance();
 		ProfileEntity profileEntity = mgDAO.readProfile(cto.getUsername());
 		LoginResultOutDTO result = new LoginResultOutDTO();
-		if(profileEntity.getWrongTryPWD()>4){
+		if(profileEntity==null){
 			result.setStatus("N");
-			result.setReason(ERRORCode.exceedLoginMaxTrial);
-		}else if(CryptWithMD5Util.cryptWithMD5Util(cto.getPassword()).equals(profileEntity.getPassword()) && profileEntity.getWrongTryOTP()<5){
-			result.setUsername(profileEntity.getEmail());
-			result.setUserid(profileEntity.getUserIntID());
-			result.setNickname(profileEntity.getNickname());
-			result.setStatus("Y");
-			if(profileEntity.getWrongTryPWD()!=0){
+			result.setReason("UserID does not exist");
+		} else {
+			if(profileEntity.getWrongTryPWD()>4){
+				result.setStatus("N");
+				result.setReason(ERRORCode.exceedLoginMaxTrial);
+			}else if(CryptWithMD5Util.cryptWithMD5Util(cto.getPassword()).equals(profileEntity.getPassword()) && profileEntity.getWrongTryOTP()<5){
+				result.setUsername(profileEntity.getEmail());
+				result.setUserid(profileEntity.getUserIntID());
+				result.setNickname(profileEntity.getNickname());
+				result.setStatus("Y");
+				if(profileEntity.getWrongTryPWD()!=0){
+					try {
+						ProfileInDTO profileTo = new ProfileInDTO();
+						profileTo.setUserIntID(profileEntity.getUserIntID());
+						profileTo.setWrongTryPWD("0");
+						mgDAO.updateProfile(profileTo);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			} else {
+				ProfileInDTO profileTo = new ProfileInDTO();
+				profileTo.setUserIntID(profileEntity.getUserIntID());
+				profileTo.setWrongTryPWD(profileEntity.getWrongTryPWD()+1+"");
+				result.setStatus("N");
 				try {
-					ProfileInDTO profileTo = new ProfileInDTO();
-					profileTo.setUserIntID(profileEntity.getUserIntID());
-					profileTo.setWrongTryPWD("0");
 					mgDAO.updateProfile(profileTo);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
-		} else {
-			ProfileInDTO profileTo = new ProfileInDTO();
-			profileTo.setUserIntID(profileEntity.getUserIntID());
-			profileTo.setWrongTryPWD(profileEntity.getWrongTryPWD()+1+"");
-			result.setStatus("N");
-			try {
-				mgDAO.updateProfile(profileTo);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 		return result;

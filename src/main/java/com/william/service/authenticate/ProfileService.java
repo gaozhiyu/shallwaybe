@@ -14,6 +14,7 @@ import com.william.to.AddressDTO;
 import com.william.to.AddressHistoryInDTO;
 import com.william.to.AddressHistoryOutDTO;
 import com.william.to.CoordinateDTO;
+import com.william.to.PhotoOutDTO;
 import com.william.to.ProfileInDTO;
 import com.william.to.ProfileOutDTO;
 import com.william.to.ProfileUpdateResultDTO;
@@ -162,12 +163,8 @@ public class ProfileService {
 					sb.append(dto.toString() + "\n");
 				profileOutDTO.setVisitedCities(sb.toString());
 			}
-			try{
-				if(profile.getProfilePhoto() != null)
-					profileOutDTO.setProfilePIC(FileUtil.getFileData(input.getUserIntID()));
-			} catch(Exception e){
-				logger.error("Profile Image loaded Failed\n",e);
-			}
+			profileOutDTO.setProfilePhoto(profile.getProfilePhoto());
+
 			
 		} else {
 			profileOutDTO.setStatus("N");
@@ -175,5 +172,25 @@ public class ProfileService {
 
 		return profileOutDTO;
 
+	}
+	
+	public PhotoOutDTO getProfilePhoto(CommonInput input){
+		byte[] array = null;
+		PhotoOutDTO result = new PhotoOutDTO();
+		try{
+			array = FileUtil.getFileData(input.getUserIntID());
+			if(array!=null && array.length>0){
+				result.setStatus("Y");
+				result.setProfilePIC(array);
+			}else{
+				result.setStatus("N");
+			}
+			
+		} catch (Exception e){
+			logger.error("Excetion happending here",e);
+			result.setStatus("N");
+		}
+		return result;
+		
 	}
 }
