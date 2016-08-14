@@ -1,6 +1,7 @@
 package com.william.test;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -16,11 +17,12 @@ import com.william.to.RegisterInDTO;
 import com.william.to.RegisterOutDTO;
 
 public class TestProfile {
+	Date currentTime = new Date();
 	ProfileEntity profileEntity = new ProfileEntity();
 	ProfileDAO MP = ProfileDAO.getInstance();
-	RegisterInDTO registerInDTO = new RegisterInDTO("8@gmail.com","MYPasswordMYPasswordMYPasswordMYPassword","Paper Tiger","中国","河南","郑州","新加坡","马林百列","东海岸","1.1","1.2");
+	RegisterInDTO registerInDTO = new RegisterInDTO("1@gmail.com","MYPasswordMYPasswordMYPasswordMYPassword","Paper Tiger","中国","河南","郑州","新加坡","马林百列","东海岸","1.1","1.2");
 	RegisterOutDTO registerOutDTO = new RegisterOutDTO();
-	ProfileInDTO profileInDTO = new ProfileInDTO("8a0e4da44b904eb3887e7ae5354ce12d","21157@shall-way.com.sg", "MyPassword","胡总","男","04/09/1987","true","1","123456","0","北","上","广","深","庆","都","179.12345","9.9","For test only");
+	ProfileInDTO profileInDTO = new ProfileInDTO("8a0e4da44b904eb3887e7ae5354ce12d","21157@shall-way.com.sg", "MyPassword","胡总","男","04/09/1987",currentTime,"1","123456","0","北","上","广","深","庆","都","179.12345","9.9","For test only");
 //	"约吗？Yes！我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어!"
 	boolean updateStatus=false;
 	LoginResultOutDTO loginResultOutDTO = new LoginResultOutDTO();
@@ -53,7 +55,7 @@ public class TestProfile {
 
 	@Test
 	public void testReadProfile(){
-		profileEntity = MP.readProfile("2@gmail.com");
+		profileEntity = MP.readProfile("1@gmail.com");
 		System.out.println(profileEntity.getNickname());	
 		System.out.println(profileEntity.getGender());
 		System.out.println(profileEntity.getOTPExpiryTime());

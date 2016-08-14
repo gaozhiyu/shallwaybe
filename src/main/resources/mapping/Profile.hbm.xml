@@ -23,7 +23,7 @@
         <property name="dateOfBirth" type="java.util.Date">
             <column name="DateOfBirth" />
         </property>
-        <property name="profilePhoto" type="boolean">
+        <property name="profilePhoto" type="java.util.Date">
             <column name="ProfilePhoto" />
         </property>
         

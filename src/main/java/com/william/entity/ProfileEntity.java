@@ -16,7 +16,7 @@ public class ProfileEntity implements java.io.Serializable {
 	private String nickname;
 	private String gender;
 	private Date dateOfBirth;
-	private boolean profilePhoto;
+	private Date profilePhoto;
 	private int wrongTryPWD;
 	private String OTP;
 	private Date OTPExpiryTime;
@@ -40,7 +40,7 @@ public class ProfileEntity implements java.io.Serializable {
 
 
 	public ProfileEntity(String userIntID, String email, String password, String nickname, String gender,
-			Date dateOfBirth, boolean profilePhoto, int wrongTryPWD, String oTP, Date oTPExpiryTime,
+			Date dateOfBirth, Date profilePhoto, int wrongTryPWD, String oTP, Date oTPExpiryTime,
 			int wrongTryOTP, String country, String province, String city, String googleCountry,
 			String googleProvince, String googleCity, double longitude, double latitude, Date lastUpdate,
 			Date createTime, Date lastAddressUpdate, String signature) {
@@ -128,15 +128,6 @@ public class ProfileEntity implements java.io.Serializable {
 	}
 
 	
-	
-	public boolean isProfilePhoto() {
-		return profilePhoto;
-	}
-
-	public void setProfilePhoto(boolean profilePhoto) {
-		this.profilePhoto = profilePhoto;
-	}	
-
 //	public boolean isProfilePhoto() {
 //		return profilePhoto;
 //	}
@@ -145,6 +136,16 @@ public class ProfileEntity implements java.io.Serializable {
 //	public void setProfilePhoto(boolean profilePhoto) {
 //		this.profilePhoto = profilePhoto;
 //	}
+
+
+	public Date getProfilePhoto() {
+		return profilePhoto;
+	}
+
+
+	public void setProfilePhoto(Date profilePhoto) {
+		this.profilePhoto = profilePhoto;
+	}
 
 
 	public int getWrongTryPWD() {

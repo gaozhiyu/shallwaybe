@@ -6,7 +6,7 @@ create table Profile (
    Nickname VARCHAR(32) NOT NULL,
    Gender VARCHAR(4),
    DateOfBirth Date,
-   ProfilePhoto BOOLEAN,
+   ProfilePhoto TIMESTAMP NULL DEFAULT NULL,
    WrongTryPWD Integer default 0,
    OTP VARCHAR(128),
    OTPExpiryTime TIMESTAMP NULL DEFAULT NULL,

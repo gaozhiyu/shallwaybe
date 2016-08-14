@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ public class FileUploadServlet extends HttpServlet {
 	public void doProcess(HttpServletRequest request,
 			HttpServletResponse response) {
 		PrintWriter out;
+		Date currentTime = new Date();
 		try {
 			byte[] body = readBody(request);
 
@@ -45,7 +47,8 @@ public class FileUploadServlet extends HttpServlet {
 	        ProfileDAO pDAO = ProfileDAO.getInstance();
 	        ProfileInDTO profileTo = new ProfileInDTO();
 	        profileTo.setUserIntID(userid);
-	        profileTo.setProfilePhoto("TRUE");
+//	        profileTo.setProfilePhoto("TRUE");
+	        profileTo.setProfilePhoto(currentTime);
 			pDAO.updateProfile(profileTo);
 	        
 		} catch (Exception e) {

@@ -1,5 +1,7 @@
 package com.william.to;
 
+import java.util.Date;
+
 import com.william.vo.CommonInput;
 
 public class ProfileInDTO extends CommonInput{
@@ -10,7 +12,7 @@ public class ProfileInDTO extends CommonInput{
 	private String nickname;
 	private String gender;
 	private String dateOfBirth;
-	private String profilePhoto;
+	private Date profilePhoto;
 	private String wrongTryPWD;
 	private String OTP;
 	private String wrongTryOTP;
@@ -34,7 +36,7 @@ public class ProfileInDTO extends CommonInput{
 
 
 	public ProfileInDTO(String userIntID, String email, String password, String nickname, String gender,
-			String dateOfBirth, String profilePhoto, String wrongTryPWD, String oTP, String wrongTryOTP,
+			String dateOfBirth, Date profilePhoto, String wrongTryPWD, String oTP, String wrongTryOTP,
 			String country, String province, String city, String googleCountry, String googleProvince,
 			String googleCity, String longitude, String latitude, String signature) {
 		super();
@@ -103,11 +105,11 @@ public class ProfileInDTO extends CommonInput{
 		this.dateOfBirth = dateOfBirth;
 	}
 	
-	public String getProfilePhoto() {
+	public Date getProfilePhoto() {
 		return profilePhoto;
 	}
 
-	public void setProfilePhoto(String profilePhoto) {
+	public void setProfilePhoto(Date profilePhoto) {
 		this.profilePhoto = profilePhoto;
 	}	
 

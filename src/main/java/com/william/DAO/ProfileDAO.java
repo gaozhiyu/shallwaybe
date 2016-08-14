@@ -220,11 +220,14 @@ public class ProfileDAO {
 			 }
 
 			 /* update profile photo status, true means have profile photo, false means no*/
-			 if(profileTo.getProfilePhoto()!=null && !"".equals(profileTo.getProfilePhoto().trim()))
+//			 if(profileTo.getProfilePhoto()!=null && !"".equals(profileTo.getProfilePhoto().trim()))
+			 if(profileTo.getProfilePhoto()!=null)
 			 {
-				Boolean profilePhoto =Boolean.parseBoolean(profileTo.getProfilePhoto());
-				profileEntity.setLastUpdate(currentTime); 
-				profileEntity.setProfilePhoto(profilePhoto);
+//				Boolean profilePhoto =Boolean.parseBoolean(profileTo.getProfilePhoto());
+//				profileEntity.setLastUpdate(currentTime); 
+//				profileEntity.setProfilePhoto(profilePhoto);
+				profileEntity.setProfilePhoto(profileTo.getProfilePhoto());
+				profileEntity.setLastUpdate(currentTime);
 			 }
 			 
 			 /* update times of wrong try password */
