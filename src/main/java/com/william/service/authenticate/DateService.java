@@ -14,6 +14,7 @@ import com.william.to.ShallWayInDTO;
 import com.william.to.ShallWayOutDTO;
 import com.william.to.ShallWaySearchDTO;
 import com.william.to.ShallWayUpdateDTO;
+import com.william.to.ShallWayValidation;
 import com.william.vo.CommonVO;
 import com.william.vo.CreateDateOutVO;
 
@@ -90,13 +91,22 @@ public class DateService {
 		CreateDateOutVO output = new CreateDateOutVO();
 		//inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
 		ShallWayDAO msw= ShallWayDAO.getInstance();
+		ShallWayValidation shallWayValidation= null;
+		
 		try {
 		/*
 		 * Object return = inDTO.isvalid();//return has two attrbute, validresult && errormsg
 		 * if(return.isValid())
 		 */
+			shallWayValidation = inDTO.isValid();
+			if(!shallWayValidation.isResultValid()){
+				output.setStatus("N");
+				output.setReason(shallWayValidation.getResultString());
+				return output;
+			}
 			msw.addShallWay(inDTO);
 			output.setStatus("Y");
+		
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -134,7 +144,16 @@ public class DateService {
 	public CommonVO updateDate (ShallWayUpdateDTO shallWayUpdateDTO){
 		ShallWayDAO msw= ShallWayDAO.getInstance();	
 		CommonVO output =new CommonVO();
+		ShallWayValidation shallWayValidation= null;
 		try {
+			
+			shallWayValidation = shallWayUpdateDTO.isValid();
+			if (!shallWayValidation.isResultValid()){
+				output.setReason(shallWayValidation.getResultString());
+				output.setStatus("N");
+				return output;
+			}
+			
 			boolean flag=msw.updateShallWay(shallWayUpdateDTO);
 			if(flag)
 				output.setStatus("Y");

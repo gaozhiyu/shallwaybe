@@ -1,6 +1,7 @@
 package com.william.to;
 
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class ShallWayUpdateDTO {
 
@@ -168,5 +169,82 @@ public class ShallWayUpdateDTO {
 	public void setDescription(String description) {
 		this.description = description;
 	}	
+	
+	public ShallWayValidation isValid(){
+		ShallWayValidation shallWayUpdateValidationResult = new ShallWayValidation();
+		StringBuilder sb = new StringBuilder();
+		boolean inputValid = true;
+		
+		String userIntIDString ="^[0-9a-zA-Z]+$";
+    	boolean userIntIDMatch = Pattern.matches(userIntIDString, this.getUserIntID());
+    	if (userIntIDMatch == false){
+    		sb.append("\nUserIntID is not valid!");
+    		inputValid =false;
+    	}
+    	
+    	String countryString ="^[\u4e00-\u9fa5a-zA-Z]+$";
+    	boolean countryMatch = Pattern.matches(countryString, this.getCountry());
+    	if (countryMatch == false){
+    		sb.append("\nCountry is not valid!");
+    		inputValid =false;
+    	}
+    	
+    	String provinceString ="^[\u4e00-\u9fa5a-zA-Z]+$";
+    	boolean provinceMatch = Pattern.matches(provinceString, this.getProvince());
+    	if (provinceMatch == false){
+    		sb.append("\nProvince is not valid!");
+    		inputValid =false;
+    	}
+    	
+    	String cityString ="^[\u4e00-\u9fa5 a-zA-Z]+$";
+    	boolean cityMatch = Pattern.matches(cityString, this.getCity());
+    	if (cityMatch == false){
+    		sb.append("\nCity is not valid!");
+    		inputValid =false;
+    	}
+    	
+    	String startTimeString ="^(\\d{1,2}/\\d{1,2}/\\d{4})$";
+    	boolean startTimeMatch = Pattern.matches(startTimeString, this.getStartTime());
+    	if (startTimeMatch == false){
+    		sb.append("\nStartTime is not valid!");
+    		inputValid =false;
+    	}
+    	
+    	String endTimeString ="^(\\d{1,2}/\\d{1,2}/\\d{4})$";
+    	boolean endTimeMatch = Pattern.matches(endTimeString, this.getEndTime());
+    	if (endTimeMatch == false){
+    		sb.append("\nEndTime is not valid!");
+    		inputValid =false;
+    	}
+    	
+    	String booleanString ="true|false";
+    	boolean carPoolMatch = Pattern.matches(booleanString, this.getCarPool());
+    	if (carPoolMatch == false){
+    		sb.append("\nCarPool is not valid!");
+    		inputValid =false;
+    	}
+    	
+    	boolean freeTourMatch = Pattern.matches(booleanString, this.getFreeTour());
+    	if (freeTourMatch == false){
+    		sb.append("\nFreeTour is not valid!");
+    		inputValid =false;
+    	}
+    	
+    	boolean hotelShareMatch = Pattern.matches(booleanString, this.getHotelShare());
+    	if (hotelShareMatch == false){
+    		sb.append("\nHotelShare is not valid!");
+    		inputValid =false;
+    	}
+
+    	boolean freeGuideMatch = Pattern.matches(booleanString, this.getFreeGuide());
+    	if (freeGuideMatch == false){
+    		sb.append("\nFreeGuide is not valid!");
+    		inputValid =false;
+    	}
+    	
+    	shallWayUpdateValidationResult.setResultString(sb.toString());
+    	shallWayUpdateValidationResult.setResultValid(inputValid);
+		return shallWayUpdateValidationResult;
+	}
 	
 }

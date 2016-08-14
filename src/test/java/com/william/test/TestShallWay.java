@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.william.DAO.ShallWayDAO;
 import com.william.entity.ShallWayEntity;
 import com.william.to.ShallWayInDTO;
+import com.william.to.ShallWayValidation;
 import com.william.to.ShallWayOutDTO;
 import com.william.to.ShallWaySearchDTO;
 import com.william.to.ShallWayUpdateDTO;
@@ -22,10 +23,11 @@ public class TestShallWay {
     SimpleDateFormat sdfd1 =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     SimpleDateFormat sdfd2 =new SimpleDateFormat("yyyy-MM-dd");
     
-	ShallWayInDTO shallWayIn = new ShallWayInDTO ("9d39464ce8ce43a597acfe5e43c1c523","新加坡","大士", "CMR P", "风水宝地", startTimeString, endTimeString, "true", "false", "true", "false", "投标开放", "Tel: 62688311", "欢迎来竞标，价格越低越好");
+	ShallWayInDTO shallWayIn = new ShallWayInDTO ("1234","singapore","大士", "CMR P", "风水宝地", startTimeString, endTimeString, "true", "false", "true", "false", "投标开放", "Tel: 62688311", "欢迎来竞标，价格越低越好");
 	ShallWayUpdateDTO shallWayUpdate = new ShallWayUpdateDTO ("0ec2979b4417496088fcb0124cc9a057","3f46187fd7904aedb59537d6288e052f","Singapore","Tuas", "CMR FE", "S 17", startTimeString, endTimeString, "false", "false", "false", "false", "ONE DAY TREK", "HP: 554163030", "Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어");
 	ShallWaySearchDTO shallWaySearch = new ShallWaySearchDTO("userintidtest1","1","新加坡","勿洛","芬兰花园","", startTimeString, endTimeString, "true", "false", "false", "false");
 //  Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어	
+	ShallWayValidation shallWayValidation=null;
 	
 	ShallWayDAO MSW= new ShallWayDAO();
 	ShallWayOutDTO[] shallWayArray =null;
@@ -33,7 +35,12 @@ public class TestShallWay {
 //	ShallWayOutDTO shallWayArray = new ShallWayOutDTO();
 	ShallWayEntity[] shallWayEntity =null;
 	
-
+	@Test
+	public void testInput(){
+		shallWayValidation = shallWayIn.isValid();
+		System.out.println(shallWayValidation.isResultValid());
+		System.out.println(shallWayValidation.getResultString());
+	}
 	
     @Test
     public void testAddShallWay() throws ParseException{
