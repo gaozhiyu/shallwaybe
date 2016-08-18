@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.HandshakeData;
+import com.corundumstudio.socketio.SocketConfig;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
@@ -180,8 +181,11 @@ public class CoreServlet extends HttpServlet {
 	public void init() {
 
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-		config.setHostname("172.23.44.122");
+		config.setHostname("192.168.1.239");
 		config.setPort(9092);
+		SocketConfig sockConfig =  new SocketConfig();
+	    sockConfig.setReuseAddress(true);
+	    config.setSocketConfig(sockConfig);
 
 		final SocketIOServer server = new SocketIOServer(config);
 		// server.addNamespace("/chat");

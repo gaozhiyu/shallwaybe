@@ -1,3 +1,4 @@
+drop table world_cities_table;
 CREATE TABLE IF NOT EXISTS `world_cities_table`(
   city VARCHAR(33) DEFAULT NULL
 , city_ascii VARCHAR(39) DEFAULT NULL
