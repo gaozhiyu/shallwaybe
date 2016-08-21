@@ -3,6 +3,7 @@ package com.william.to;
 import java.sql.Blob;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.william.vo.CommonVO;
 
 public class ShallWayOutDTO extends GISDTO {
@@ -28,7 +29,7 @@ public class ShallWayOutDTO extends GISDTO {
 	private String title;
 	private String contact;
 	private String descriptionStr;
-	private Blob descriptionBlob;
+	private transient Blob descriptionBlob;
 	private Boolean deleteStatus;
 
 
@@ -215,6 +216,7 @@ public class ShallWayOutDTO extends GISDTO {
 		this.startTimeStr = startTimeStr;
 	}
 	
+	@JsonIgnore
 	public Blob getDescriptionBlob() {
 		return descriptionBlob;
 	}
