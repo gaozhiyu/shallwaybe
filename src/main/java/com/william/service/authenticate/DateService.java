@@ -11,6 +11,7 @@ import com.william.entity.ShallWayEntity;
 import com.william.to.DateDTO;
 import com.william.to.DateInDTO;
 import com.william.to.DateOutDTO;
+import com.william.to.ReplyInDTO;
 import com.william.to.ReplyOutDTO;
 import com.william.to.ShallWayInDTO;
 import com.william.to.ShallWayOutDTO;
@@ -141,9 +142,9 @@ public class DateService {
 		
 		
 		if(dateVO != null){
-			dateVO.setStatus("Y");
+			dvo.setStatus("Y");
 		}else{
-			dateVO.setStatus("N");
+			dvo.setStatus("N");
 		}
 		
 		return dvo;
@@ -175,5 +176,12 @@ public class DateService {
 		return output;
 	
 	}
-
+	
+	public CommonVO addDateReply(ReplyInDTO inDTO){
+		ReplyDAO replyDAO = ReplyDAO.getInstance();
+		replyDAO.addReply(inDTO);
+		CommonVO cvo = new CommonVO();
+		cvo.setStatus("Y");
+		return cvo;
+	}
 }
