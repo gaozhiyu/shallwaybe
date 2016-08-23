@@ -4,12 +4,14 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import com.william.DAO.ReplyDAO;
 import com.william.DAO.ShallWayDAO;
 import com.william.DAO.WorldCitiesDAO;
 import com.william.entity.ShallWayEntity;
 import com.william.to.DateDTO;
 import com.william.to.DateInDTO;
 import com.william.to.DateOutDTO;
+import com.william.to.ReplyOutDTO;
 import com.william.to.ShallWayInDTO;
 import com.william.to.ShallWayOutDTO;
 import com.william.to.ShallWaySearchDTO;
@@ -17,6 +19,7 @@ import com.william.to.ShallWayUpdateDTO;
 import com.william.to.ShallWayValidation;
 import com.william.vo.CommonVO;
 import com.william.vo.CreateDateOutVO;
+import com.william.vo.DateDetailVO;
 
 public class DateService {
 	
@@ -116,9 +119,10 @@ public class DateService {
 	}
 	
 	
-	public ShallWayOutDTO viewDate(DateInDTO inDTO) throws SQLException{
+	public DateDetailVO viewDate(DateInDTO inDTO) throws SQLException{
 		
 		//inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
+		DateDetailVO dvo = new DateDetailVO();
 		ShallWayDAO msw= ShallWayDAO.getInstance();
 		ShallWayOutDTO dateVO=msw.retrieveDateByDateID(inDTO.getDateid());
 		WorldCitiesDAO wcDAO = WorldCitiesDAO.getInstance();
@@ -130,6 +134,10 @@ public class DateService {
 		dateVO.setCityArray(cityArray);
 		dateVO.setStartTimeStr(df.format(dateVO.getStartTime()));
 		dateVO.setEndTimeStr(df.format(dateVO.getEndTime()));
+		ReplyDAO replyDAO = ReplyDAO.getInstance();
+		ReplyOutDTO[] replyList = replyDAO.readReply(inDTO.getDateid());
+		dvo.setReplyList(replyList);
+		dvo.setDateDetails(dateVO);
 		
 		
 		if(dateVO != null){
@@ -138,7 +146,7 @@ public class DateService {
 			dateVO.setStatus("N");
 		}
 		
-		return dateVO;
+		return dvo;
 	}
 	
 	public CommonVO updateDate (ShallWayUpdateDTO shallWayUpdateDTO){
