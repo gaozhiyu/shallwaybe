@@ -3,6 +3,8 @@ package com.william.to;
 import java.sql.Blob;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class ReplyOutDTO{
 	
 	private String id;
@@ -11,7 +13,7 @@ public class ReplyOutDTO{
     private String replierNickname;
 	private Date replyTime;
 	private String replyContentsStr;
-	private Blob replyContents;
+	private transient Blob replyContents;
 	private Boolean deleteStatus;
 	
 	public ReplyOutDTO() {
@@ -70,6 +72,7 @@ public class ReplyOutDTO{
 		this.replyTime = replyTime;
 	}
 
+	
 	public String getReplyContentsStr() {
 		return replyContentsStr;
 	}
@@ -78,6 +81,7 @@ public class ReplyOutDTO{
 		this.replyContentsStr = replyContentsStr;
 	}
 
+	@JsonIgnore
 	public Blob getReplyContents() {
 		return replyContents;
 	}
