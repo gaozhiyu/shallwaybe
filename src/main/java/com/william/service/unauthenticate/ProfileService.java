@@ -22,7 +22,7 @@ public class ProfileService {
 		inDTO.setLatitude(""+cord.getLatitude());
 		inDTO.setLongitude(""+cord.getLongitude());
 		ParserJsonUtil geo = new ParserJsonUtil();
-		AddressDTO tmp= geo.getAddress(inDTO.getLatitude(),inDTO.getLongitude());
+		AddressDTO tmp= geo.getAddress(cord.getLatitude(),cord.getLongitude());
 		if(tmp != null){
 			inDTO.setGoogleCountry(tmp.getCountry());
 			inDTO.setGoogleProvince(tmp.getProvince());

@@ -48,8 +48,8 @@ public class ContextListener implements ServletContextListener {
 						LatestCoordinateInDTO cordDTO = new LatestCoordinateInDTO();
 						//TODO add the validation
 						cordDTO.setUserIntID(msg.getUserIntID());
-						cordDTO.setLatitude(msg.getLatitude());
-						cordDTO.setLongitude(msg.getLongitude());
+						cordDTO.setLatitude(""+msg.getLatitude());
+						cordDTO.setLongitude(""+msg.getLongitude());
 						cordDTO.setCountry(address.getCountry());
 						//TODO Enable the null value
 						if(address.getProvince()==null || "".equals(address.getProvince()))

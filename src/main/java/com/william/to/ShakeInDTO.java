@@ -5,8 +5,8 @@ import com.william.vo.CommonInput;
 public class ShakeInDTO extends CommonInput{
 
 	//private String userid;
-	private String latitude;
-	private String longitude;
+	private double latitude;
+	private double longitude;
 
 	
 
@@ -15,7 +15,7 @@ public class ShakeInDTO extends CommonInput{
 	}
 
 
-	public ShakeInDTO(String userIntID, String latitude, String longitude) {
+	public ShakeInDTO(String userIntID, double latitude, double longitude) {
 		//super();
 		this.setUserIntID(userIntID);
 		this.latitude = latitude;
@@ -23,19 +23,19 @@ public class ShakeInDTO extends CommonInput{
 	}
 
 
-	public String getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
-	public String getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 

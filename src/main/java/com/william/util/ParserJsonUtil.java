@@ -1,28 +1,14 @@
 package com.william.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.TextUtils;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationConfig;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationConfig;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.model.AddressComponent;
+import com.google.maps.model.AddressComponentType;
+import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.LatLng;
 import com.william.to.AddressDTO;
-import com.william.to.GeoDTO;
-import com.william.to.GeoDTO.Result;
-import com.william.to.GeoDTO.Result.Address_component;
 
 
 public class ParserJsonUtil {
@@ -30,50 +16,53 @@ public class ParserJsonUtil {
 	//private static HttpClient client = HttpClientBuilder.create().build();
 	private final static String USER_AGENT = "Mozilla/5.0";
 	
-	public AddressDTO getAddress(String lat1,String long1) {
+	public AddressDTO getAddress(double lat1,double long1) {
     	AddressDTO address = new AddressDTO();
 
-        try {
-
-            GeoDTO jsonObj = getJSONfromURL("http://maps.google.com/maps/api/geocode/json?latlng="+lat1+","+long1+"&language=zh-EN&sensor=true");
-            String Status = jsonObj.status;//getString("status");
-            if (Status.equalsIgnoreCase("OK")) {
-                Result[] results = jsonObj.results;//getJSONArray("results");
-                Result zero = results[1];//.getJSONObject(0);
-                Address_component[] address_components = zero.address_components;//getJSONArray("address_components");
-                address = new AddressDTO();
-                for (int i = 0; i < address_components.length; i++) {
-                    Address_component zero2 = address_components[i];
-                    String long_name = zero2.long_name;//getString("long_name");
-                    String[] mtypes = zero2.types;
-                    String Type = mtypes[0];
-                    
-                    if (TextUtils.isEmpty(long_name) == false || !long_name.equals(null) || long_name.length() > 0 || long_name != "") {
-                        if (Type.equalsIgnoreCase("locality")) {
-                            // Address2 = Address2 + long_name + ", ";
-                            address.setCity(long_name);
-                        } else if (Type.equalsIgnoreCase("administrative_area_level_2")) {
-                            address.setCounty(long_name);
-                        } else if (Type.equalsIgnoreCase("administrative_area_level_1")) {
-                        	address.setProvince(long_name);
-                        } else if (Type.equalsIgnoreCase("country")) {
-                        	address.setCountry(long_name);
-                        }
-                    }
-                    	
-                    // JSONArray mtypes = zero2.getJSONArray("types");
-                    // String Type = mtypes.getString(0);
-                    // Log.e(Type,long_name);
-                }
-                System.out.println(address.toString());
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    	try {
+			GeoApiContext context = new GeoApiContext();
+			context.setApiKey("AIzaSyBiO3BkXmztiLF0R5YW8gtcR9-q6pkpTVc");
+			GeocodingResult[] results = GeocodingApi.newRequest(context)
+			        .latlng(new LatLng(lat1, long1)).await();
+			
+			for(int j =0;j<results.length;j++){
+				GeocodingResult zero = results[j];//.getJSONObject(0);
+	            AddressComponent[] address_components = zero.addressComponents;//getJSONArray("address_components");
+	           // AddressDTO address = new AddressDTO();
+	            if (address_components!= null && address_components.length>0) {
+	            	AddressComponent zero2 = address_components[0];
+	                String long_name = zero2.longName;//getString("long_name");
+	                AddressComponentType[] mtypes = zero2.types;
+	                AddressComponentType type = mtypes[0];
+	                
+	                if (TextUtils.isEmpty(long_name) == false || !long_name.equals(null) || long_name.length() > 0 || long_name != "") {
+	                    if (AddressComponentType.LOCALITY.equals(type)) {
+	                        // Address2 = Address2 + long_name + ", ";
+	                        address.setCity(long_name);
+	                    } else if (AddressComponentType.ADMINISTRATIVE_AREA_LEVEL_2.equals(type)) {
+	                        address.setCounty(long_name);
+	                    } else if (AddressComponentType.ADMINISTRATIVE_AREA_LEVEL_1.equals(type)) {
+	                    	address.setProvince(long_name);
+	                    } else if (AddressComponentType.COUNTRY.equals(type)) {
+	                    	address.setCountry(long_name);
+	                    }
+	                }
+	                	
+	                // JSONArray mtypes = zero2.getJSONArray("types");
+	                // String Type = mtypes.getString(0);
+	                // Log.e(Type,long_name);
+	            	}
+	            	System.out.println(address.toString());
+				}
+            
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
         return address;
     }
-	  
+	  /*
     public static GeoDTO getJSONfromURL(String url) {
 
         // initialize
@@ -125,5 +114,5 @@ public class ParserJsonUtil {
         }
 
         return geo;
-    }
+    }*/
 }
