@@ -7,8 +7,19 @@ public class ShakeInDTO extends CommonInput{
 	//private String userid;
 	private double latitude;
 	private double longitude;
+	private int shakeType;
 
 	
+
+	public int getShakeType() {
+		return shakeType;
+	}
+
+
+	public void setShakeType(int shakeType) {
+		this.shakeType = shakeType;
+	}
+
 
 	public ShakeInDTO() {
 		//super();

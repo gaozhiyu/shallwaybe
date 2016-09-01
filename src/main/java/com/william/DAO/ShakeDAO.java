@@ -66,5 +66,43 @@ public class ShakeDAO {
 		}
 		return shakeDTOArray;
 	}
+	
+	public ShakeDTO[] shakeForUnknownList(ShakeInDTO shakeInDTO, String country, String province, String city) {
+		// TODO Auto-generated method stub
+		System.out.println("Maven + Hibernate + MySQL");
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction tx = null;
+		ShakeDTO[] shakeDTOArray = null;
+		try {
+			tx = (Transaction) session.beginTransaction();
+			String sql = "select b.distance as distance, p.userintid as userIntID,  p.nickname as nickname,p.PROFILEPHOTO as photoFlag, p.signature as signature, DATE_FORMAT(b.lastshaketime,'%b %d %Y %h:%i %p') as shakeTime from (select calculateDistance(?,?,a.longitude,a.latitude) as distance, a.userintid, a.lastshaketime from latestcoordinate a where a.userintid != ?) b inner join profile p on b.userintid = p.userintid where p.GoogleCountry = ? and GoogleProvince= ? and GoogleCity= ? ;";
+			SQLQuery query = session.createSQLQuery(sql);
+			query.setString(0, ""+shakeInDTO.getLatitude());
+			query.setString(1, ""+shakeInDTO.getLongitude());
+			query.setString(2, shakeInDTO.getUserIntID());
+			query.setString(3, country);
+			query.setString(4, province);
+			query.setString(5, city);
+			query.setResultTransformer(Transformers.aliasToBean(ShakeDTO.class));
+			List<ShakeDTO> shakeDTOList = query.list();
+
+			if (shakeDTOList != null) {
+				shakeDTOArray = new ShakeDTO[shakeDTOList.size()];
+				for (int i = 0; i < shakeDTOList.size(); i++) {
+					shakeDTOArray[i] = shakeDTOList.get(i);
+				}
+			}
+
+			tx.commit();
+
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return shakeDTOArray;
+	}
 
 }

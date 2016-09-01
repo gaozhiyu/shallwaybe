@@ -1,6 +1,8 @@
 package com.william.service.authenticate;
 
+import com.william.DAO.ProfileDAO;
 import com.william.DAO.ShakeDAO;
+import com.william.entity.ProfileEntity;
 import com.william.to.ShakeDTO;
 import com.william.to.ShakeInDTO;
 import com.william.to.ShakeOutDTO;
@@ -13,7 +15,12 @@ public class ShakeService {
 		ShakeDTO[] shakeList = null;
 		ShakeDAO dao = ShakeDAO.getInstance();
 		ShakeOutDTO shakeDTO = new ShakeOutDTO();
-		shakeList = dao.shakeForList(shakeInDTO);
+		if(shakeInDTO.getShakeType()==0){
+			ProfileEntity profileEnity =ProfileDAO.getInstance().readProfileByID(shakeInDTO.getUserIntID());
+			shakeList = dao.shakeForUnknownList(shakeInDTO,profileEnity.getCountry(),profileEnity.getProvince(),profileEnity.getCity());
+		} else {
+			shakeList = dao.shakeForList(shakeInDTO);
+		}
 		if(shakeList!=null){
 			shakeDTO.setShakeArray(shakeList);
 			shakeDTO.setStatus("Y");
