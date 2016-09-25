@@ -1,5 +1,9 @@
 package com.william.to;
 
+import java.util.regex.Pattern;
+
+import com.william.util.FieldPassFilterUtil;
+
 public class RegisterInDTO {
 	private String email;
 	private String password;
@@ -130,5 +134,40 @@ public class RegisterInDTO {
 		this.latitude = latitude;
 	}
 
-
+	public ValidationResult isValid(){
+		ValidationResult validationResult = new ValidationResult();
+		StringBuilder sb = new StringBuilder();
+		boolean inputValid = true;
+		
+		
+		if(!FieldPassFilterUtil.validEmailAdreess(email)){
+			inputValid = false;
+			sb.append("\n email is not valid!");
+		}
+		
+		if(!FieldPassFilterUtil.validPasswordLength(password)){
+			inputValid = false;
+			sb.append("\n password is not valid!");
+		}
+		
+		if(!FieldPassFilterUtil.validAlphOnly(city)){
+			inputValid = false;
+			sb.append("\n city is not valid!");
+		}
+		
+		if(!FieldPassFilterUtil.validAlphOnly(country)){
+			inputValid = false;
+			sb.append("\n country is not valid!");
+		}
+		
+		if(!FieldPassFilterUtil.validAlphOnly(province)){
+			inputValid = false;
+			sb.append("\n province is not valid!");
+		}
+		
+    	
+    	validationResult.setResultString(sb.toString());
+    	validationResult.setResultValid(inputValid);
+		return validationResult;
+	}
 }

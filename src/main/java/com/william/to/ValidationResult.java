@@ -1,14 +1,14 @@
 package com.william.to;
 
-public class ShallWayValidation {
+public class ValidationResult {
 	private String resultString;
 	private boolean resultValid;
 	
-	public ShallWayValidation() {
+	public ValidationResult() {
 		super();
 	}
 
-	public ShallWayValidation(String resultString, boolean result) {
+	public ValidationResult(String resultString, boolean result) {
 		super();
 		this.resultString = resultString;
 		this.resultValid = result;

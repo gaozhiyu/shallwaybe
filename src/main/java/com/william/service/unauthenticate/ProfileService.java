@@ -7,6 +7,7 @@ import com.william.to.CoordinateDTO;
 import com.william.to.GISDTO;
 import com.william.to.RegisterInDTO;
 import com.william.to.RegisterOutDTO;
+import com.william.to.ValidationResult;
 import com.william.util.ParserJsonUtil;
 
 public class ProfileService {
@@ -28,7 +29,10 @@ public class ProfileService {
 			inDTO.setGoogleProvince(tmp.getProvince());
 			inDTO.setGoogleCity(tmp.getCity());
 		}
-		RegisterOutDTO outDTO = mgDAO.addProfile(inDTO);
+		RegisterOutDTO outDTO = null;
+		ValidationResult result = inDTO.isValid();
+		if(result != null && result.isResultValid())
+			outDTO = mgDAO.addProfile(inDTO);
 		//TODO add the mapcall
 		if(outDTO!= null)
 			outDTO.setStatus("Y");

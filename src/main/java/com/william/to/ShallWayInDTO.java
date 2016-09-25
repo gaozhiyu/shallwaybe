@@ -146,8 +146,8 @@ public class ShallWayInDTO {
 		this.description = description;
 	}
 	
-	public ShallWayValidation isValid(){
-		ShallWayValidation shallWayInValidationResult = new ShallWayValidation();
+	public ValidationResult isValid(){
+		ValidationResult shallWayInValidationResult = new ValidationResult();
 		StringBuilder sb = new StringBuilder();
 		boolean inputValid = true;
 		

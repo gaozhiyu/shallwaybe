@@ -17,7 +17,7 @@ import com.william.to.ShallWayInDTO;
 import com.william.to.ShallWayOutDTO;
 import com.william.to.ShallWaySearchDTO;
 import com.william.to.ShallWayUpdateDTO;
-import com.william.to.ShallWayValidation;
+import com.william.to.ValidationResult;
 import com.william.vo.CommonVO;
 import com.william.vo.CreateDateOutVO;
 import com.william.vo.DateDetailVO;
@@ -95,7 +95,7 @@ public class DateService {
 		CreateDateOutVO output = new CreateDateOutVO();
 		//inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
 		ShallWayDAO msw= ShallWayDAO.getInstance();
-		ShallWayValidation shallWayValidation= null;
+		ValidationResult shallWayValidation= null;
 		
 		try {
 		/*
@@ -153,7 +153,7 @@ public class DateService {
 	public CommonVO updateDate (ShallWayUpdateDTO shallWayUpdateDTO){
 		ShallWayDAO msw= ShallWayDAO.getInstance();	
 		CommonVO output =new CommonVO();
-		ShallWayValidation shallWayValidation= null;
+		ValidationResult shallWayValidation= null;
 		try {
 			
 			shallWayValidation = shallWayUpdateDTO.isValid();

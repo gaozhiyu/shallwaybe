@@ -8,6 +8,7 @@ import com.google.maps.model.AddressComponent;
 import com.google.maps.model.AddressComponentType;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
+import com.mysql.jdbc.StringUtils;
 import com.william.to.AddressDTO;
 
 
@@ -59,7 +60,9 @@ public class ParserJsonUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		if(address!=null && StringUtils.isEmptyOrWhitespaceOnly(address.getProvince())){
+			address.setProvince(address.getCity());
+		}
         return address;
     }
 	  /*
