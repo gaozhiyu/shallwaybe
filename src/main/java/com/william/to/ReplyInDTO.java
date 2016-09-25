@@ -1,6 +1,7 @@
 package com.william.to;
 
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class ReplyInDTO {
 	
@@ -43,4 +44,25 @@ public class ReplyInDTO {
 		this.replyContents = replyContents;
 	}
 		
+	
+	public boolean isValid(){
+
+		StringBuilder sb = new StringBuilder();
+		boolean inputValid = true;
+		
+		String userIntIDString ="^[0-9a-zA-Z]+$";
+    	boolean dateIDMatch = Pattern.matches(userIntIDString, dateID);
+    	if (dateIDMatch == false){
+    		sb.append("\ndateID is not valid!");
+    		inputValid =false;
+    	}
+    	
+    	boolean userIntIDMatch = Pattern.matches(userIntIDString, replierIntID);
+    	if (userIntIDMatch == false){
+    		sb.append("\nreplierIntID is not valid!");
+    		inputValid =false;
+    	}
+    	
+    	return inputValid;
+	}
 }

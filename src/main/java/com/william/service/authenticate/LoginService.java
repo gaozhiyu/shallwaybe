@@ -1,5 +1,5 @@
 package com.william.service.authenticate;
-
+//Date Validation is Done
 import java.text.ParseException;
 
 import org.apache.log4j.Logger;
@@ -8,6 +8,7 @@ import com.william.DAO.ProfileDAO;
 import com.william.to.CredentailInDTO;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.ProfileInDTO;
+import com.william.util.FieldPassFilterUtil;
 import com.william.util.JedisUtil;
 import com.william.vo.CommonInput;
 import com.william.vo.CommonVO;
@@ -32,6 +33,11 @@ public class LoginService {
 	public CommonVO changePassword(CredentailInDTO credential){
 		ProfileDAO mgDAO = new ProfileDAO();
 		CommonVO output = new CommonVO();
+		if(!FieldPassFilterUtil.validPasswordLength(credential.getPassword0())){
+			output.setStatus("N");
+			return output;
+		}
+		
 		LoginResultOutDTO result = mgDAO.authenticateCredential(credential.getUsername(), credential.getOldPassword());
 		if(result!=null && "Y".equals(result.getStatus())){
 			ProfileInDTO profileTo = new ProfileInDTO();

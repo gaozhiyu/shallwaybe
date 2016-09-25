@@ -1,5 +1,5 @@
 package com.william.service.unauthenticate;
-
+//InputValidation is done 
 import com.william.DAO.ProfileDAO;
 import com.william.DAO.WorldCitiesDAO;
 import com.william.to.AddressDTO;
@@ -14,7 +14,7 @@ public class ProfileService {
 	
 	public RegisterOutDTO register(RegisterInDTO inDTO){
 		ProfileDAO mgDAO = new ProfileDAO();
-		WorldCitiesDAO wcDAO = WorldCitiesDAO.getInstance();;
+		WorldCitiesDAO wcDAO = WorldCitiesDAO.getInstance();
 		AddressDTO addressDTO = new AddressDTO();
 		addressDTO.setCountry(inDTO.getCountry());
 		addressDTO.setProvince(inDTO.getProvince());

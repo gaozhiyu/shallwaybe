@@ -1,5 +1,7 @@
 package com.william.service.authenticate;
 
+//Date Validation is Done
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,6 +33,10 @@ public class DateService {
 		
 		DateOutDTO outDto = new DateOutDTO();
 		ShallWayDAO msw= ShallWayDAO.getInstance();
+		if(!dateInDTO.isValid()){
+			outDto.setStatus("N");
+			return outDto;
+		}
 		ShallWayEntity[] shallwayArray = msw.readShallWay(dateInDTO.getUserIntID(),Integer.parseInt(dateInDTO.getPage()));
 		DateDTO[] dateArray = null;
 		if(shallwayArray!= null && shallwayArray.length>0){
@@ -179,8 +185,13 @@ public class DateService {
 	
 	public CommonVO addDateReply(ReplyInDTO inDTO){
 		ReplyDAO replyDAO = ReplyDAO.getInstance();
-		replyDAO.addReply(inDTO);
 		CommonVO cvo = new CommonVO();
+		if(!inDTO.isValid()){
+			cvo.setStatus("N");
+			return cvo;
+		}
+		replyDAO.addReply(inDTO);
+		
 		cvo.setStatus("Y");
 		return cvo;
 	}

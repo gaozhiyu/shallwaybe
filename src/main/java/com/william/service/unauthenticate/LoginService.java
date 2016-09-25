@@ -14,6 +14,7 @@ import com.william.to.ProfileUpdateResultDTO;
 import com.william.to.ResetPwdInDTO;
 import com.william.util.CryptWithMD5Util;
 import com.william.util.ERRORCode;
+import com.william.util.FieldPassFilterUtil;
 import com.william.vo.CommonVO;
 
 public class LoginService {
@@ -66,14 +67,20 @@ public class LoginService {
 		return result;
 	}
 	
+//TODO	
 	public CommonVO resetPassword(ResetPwdInDTO input){
 		ProfileDAO mgDAO = ProfileDAO.getInstance();
 		ProfileEntity profileEnity = mgDAO.readProfile(input.getUsername());
 		CommonVO cvo = new CommonVO();
+		if(!FieldPassFilterUtil.validPasswordLength(input.getNewPassword())){
+			cvo.setStatus("N");
+			return cvo;
+		}
+		
 		if(profileEnity.getWrongTryOTP()<5 && profileEnity.getOTP().equals(CryptWithMD5Util.cryptWithMD5Util(input.getOtp())) && profileEnity.getOTPExpiryTime().after(new Date())){
 			ProfileInDTO profileTo = new ProfileInDTO();
 			if(profileEnity.getWrongTryOTP()!=0){
-				profileTo.setWrongTryOTP("5");
+				profileTo.setWrongTryOTP("0");
 			}
 			if(profileEnity.getWrongTryPWD()!=0){
 				profileTo.setWrongTryPWD("0");

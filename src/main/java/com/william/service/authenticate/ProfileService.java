@@ -1,5 +1,5 @@
 package com.william.service.authenticate;
-
+//Date Validation is Done
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -18,6 +18,7 @@ import com.william.to.PhotoOutDTO;
 import com.william.to.ProfileInDTO;
 import com.william.to.ProfileOutDTO;
 import com.william.to.ProfileUpdateResultDTO;
+import com.william.to.ValidationResult;
 import com.william.util.FileUtil;
 import com.william.util.JedisUtil;
 import com.william.util.ParserJsonUtil;
@@ -38,6 +39,14 @@ public class ProfileService {
 
 		ProfileDAO pDAO = ProfileDAO.getInstance();
 		UpdateProfileVO cvo = new UpdateProfileVO();
+		
+		ValidationResult shallWayValidation = inDTO.isValid();
+		if(!shallWayValidation.isResultValid()){
+			cvo.setStatus("N");
+			cvo.setReason(shallWayValidation.getResultString());
+			return cvo;
+		}
+		
 		WorldCitiesDAO wcDAO = WorldCitiesDAO.getInstance();
 		ProfileUpdateResultDTO resultDTO = new ProfileUpdateResultDTO();
 		if (("" + sessionid).equals(inDTO.getSessionID())) {
