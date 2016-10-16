@@ -1,16 +1,13 @@
 package com.william.listener;
 
-import java.sql.SQLException;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
-import org.junit.Test;
 
 import com.william.DAO.AddressHistoryDAO;
 import com.william.DAO.LatestCoordinateDAO;
 import com.william.DAO.MessageDAO;
 import com.william.filter.LogFile;
+import com.william.service.ClassLoaderService;
 import com.william.to.AddressDTO;
 import com.william.to.AddressHistoryInDTO;
 import com.william.to.LatestCoordinateInDTO;
@@ -18,6 +15,7 @@ import com.william.to.MessageInDTO;
 import com.william.to.ShakeInDTO;
 import com.william.util.ChatMessageQueue;
 import com.william.util.MessageQueue;
+import com.william.util.MethodHashMap;
 import com.william.util.ParserJsonUtil;
 
 
@@ -34,8 +32,9 @@ public class ContextListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
 		System.out.println("Current Thread initialized");
-		
-
+		ClassLoaderService.getFolder("/newWebApp","authenticate");
+		ClassLoaderService.getFolder("/newWebApp","unauthenticate");
+		System.out.println(MethodHashMap.getInstance().size());
 		MessageQueue.getInstance().setListener(
 				new MessageQueue.MessageListener() {
 					

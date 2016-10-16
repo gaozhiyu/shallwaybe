@@ -38,6 +38,7 @@ import com.william.to.LoginResultOutDTO;
 import com.william.to.MessageOutDTO;
 import com.william.util.ChatMessageQueue;
 import com.william.util.JedisUtil;
+import com.william.util.MethodHashMap;
 import com.william.util.XssShieldUtil;
 import com.william.vo.CommonInput;
 
@@ -135,8 +136,6 @@ public class CoreServlet extends HttpServlet {
 	public Object invokeService(String uri, String utilJson, String sessionID) {
 		System.out.println(uri);
 		ObjectMapper objectMapper = new ObjectMapper();
-		// objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,
-		// false);
 		String[] uriArray = uri.split("/");
 		Object returnvalue = "";
 		StringBuffer servicString = new StringBuffer("com.william.service.");// FIXME
@@ -147,13 +146,19 @@ public class CoreServlet extends HttpServlet {
 		}
 		try {
 			System.out.println(servicString.toString());
-			Class serviceProvider = Class.forName(servicString.toString());
-			Method service[] = serviceProvider.getMethods();
 			Method method = null;
-			for (int i = 0; i < service.length; i++) {
-				if (service[i].getName().equalsIgnoreCase(uriArray[uriArray.length - 1])) {
-					method = service[i];
-					break;
+			//add the hashmap
+			if(MethodHashMap.getInstance().containsKey(uri)){
+				method = MethodHashMap.getInstance().get(uri);
+				System.out.println("Method found in the map");
+			} else{
+				Class serviceProvider = Class.forName(servicString.toString());
+				Method service[] = serviceProvider.getMethods();
+				for (int i = 0; i < service.length; i++) {
+					if (service[i].getName().equalsIgnoreCase(uriArray[uriArray.length - 1])) {
+						method = service[i];
+						break;
+					}
 				}
 			}
 			Class<?>[] types = method.getParameterTypes();
@@ -190,9 +195,9 @@ public class CoreServlet extends HttpServlet {
 					}
 				}
 				// Method c=cls.getMethod("print", new Class[]{String.class});
-				returnvalue = method.invoke(serviceProvider.newInstance(), params);
+				returnvalue = method.invoke(method.getDeclaringClass().newInstance(), params);
 			} else {
-				returnvalue = method.invoke(serviceProvider.newInstance());
+				returnvalue = method.invoke(method.getDeclaringClass().newInstance());
 			}
 
 		} catch (Exception e) {
@@ -205,7 +210,7 @@ public class CoreServlet extends HttpServlet {
 	public void init() {
 
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-		config.setHostname("localhost");
+		config.setHostname("172.23.47.187");
 		config.setPort(9092);
 		SocketConfig sockConfig = new SocketConfig();
 		sockConfig.setReuseAddress(true);
