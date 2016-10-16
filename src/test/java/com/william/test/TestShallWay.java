@@ -10,7 +10,7 @@ import org.junit.Test;
 import com.william.DAO.ShallWayDAO;
 import com.william.entity.ShallWayEntity;
 import com.william.to.ShallWayInDTO;
-import com.william.to.ShallWayValidation;
+import com.william.to.ValidationResult;
 import com.william.to.ShallWayOutDTO;
 import com.william.to.ShallWaySearchDTO;
 import com.william.to.ShallWayUpdateDTO;
@@ -27,7 +27,7 @@ public class TestShallWay {
 	ShallWayUpdateDTO shallWayUpdate = new ShallWayUpdateDTO ("0ec2979b4417496088fcb0124cc9a057","3f46187fd7904aedb59537d6288e052f","Singapore","Tuas", "CMR FE", "S 17", startTimeString, endTimeString, "false", "false", "false", "false", "ONE DAY TREK", "HP: 554163030", "Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어");
 	ShallWaySearchDTO shallWaySearch = new ShallWaySearchDTO("userintidtest1","1","新加坡","勿洛","芬兰花园","", startTimeString, endTimeString, "true", "false", "false", "false");
 //  Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어	
-	ShallWayValidation shallWayValidation=null;
+	ValidationResult shallWayValidation=null;
 	
 	ShallWayDAO MSW= new ShallWayDAO();
 	ShallWayOutDTO[] shallWayArray =null;

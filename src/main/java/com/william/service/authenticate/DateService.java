@@ -33,10 +33,6 @@ public class DateService {
 		
 		DateOutDTO outDto = new DateOutDTO();
 		ShallWayDAO msw= ShallWayDAO.getInstance();
-		if(!dateInDTO.isValid()){
-			outDto.setStatus("N");
-			return outDto;
-		}
 		ShallWayEntity[] shallwayArray = msw.readShallWay(dateInDTO.getUserIntID(),Integer.parseInt(dateInDTO.getPage()));
 		DateDTO[] dateArray = null;
 		if(shallwayArray!= null && shallwayArray.length>0){

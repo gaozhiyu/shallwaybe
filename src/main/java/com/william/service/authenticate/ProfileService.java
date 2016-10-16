@@ -17,6 +17,7 @@ import com.william.to.CoordinateDTO;
 import com.william.to.PhotoOutDTO;
 import com.william.to.ProfileInDTO;
 import com.william.to.ProfileOutDTO;
+import com.william.to.ProfileUpdateDTO;
 import com.william.to.ProfileUpdateResultDTO;
 import com.william.to.ValidationResult;
 import com.william.util.FileUtil;
@@ -31,7 +32,7 @@ public class ProfileService {
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-	public UpdateProfileVO updateProfile(ProfileInDTO inDTO) {
+	public UpdateProfileVO updateProfile(ProfileUpdateDTO inDTO) {
 
 		String sessionid = "";
 		if (!"".equals("" + inDTO.getUserIntID()))

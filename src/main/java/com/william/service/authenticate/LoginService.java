@@ -8,6 +8,7 @@ import com.william.DAO.ProfileDAO;
 import com.william.to.CredentailInDTO;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.ProfileInDTO;
+import com.william.to.ProfileUpdateDTO;
 import com.william.util.FieldPassFilterUtil;
 import com.william.util.JedisUtil;
 import com.william.vo.CommonInput;
@@ -40,7 +41,7 @@ public class LoginService {
 		
 		LoginResultOutDTO result = mgDAO.authenticateCredential(credential.getUsername(), credential.getOldPassword());
 		if(result!=null && "Y".equals(result.getStatus())){
-			ProfileInDTO profileTo = new ProfileInDTO();
+			ProfileUpdateDTO profileTo = new ProfileUpdateDTO();
 			try {
 				profileTo.setUserIntID(result.getUserid());
 				profileTo.setPassword(credential.getPassword0());

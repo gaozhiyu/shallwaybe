@@ -24,7 +24,7 @@ public class ShallWayUpdateDTO {
 	
 	private String title;
 	private String contact;
-	private String description;
+	private String descriptionStr;
 	
 	public ShallWayUpdateDTO() {
 		super();
@@ -49,7 +49,7 @@ public class ShallWayUpdateDTO {
 		this.freeGuide = freeGuide;
 		this.title = title;
 		this.contact = contact;
-		this.description = description;
+		this.descriptionStr = description;
 	}
 
 	public String getUserIntID() {
@@ -164,12 +164,12 @@ public class ShallWayUpdateDTO {
 		this.contact = contact;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDescriptionStr() {
+		return descriptionStr;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescriptionStr(String description) {
+		this.descriptionStr = description;
 	}	
 	
 	public ValidationResult isValid(){
@@ -186,14 +186,14 @@ public class ShallWayUpdateDTO {
     	
     	String countryString ="^[\u4e00-\u9fa5a-zA-Z]+$";
     	boolean countryMatch = Pattern.matches(countryString, this.getCountry());
-    	if (countryMatch == false){
+    	if (StringUtils.isNotBlank(country) && countryMatch == false){
     		sb.append("\nCountry is not valid!");
     		inputValid =false;
     	}
     	
     	String provinceString ="^[\u4e00-\u9fa5a-zA-Z]+$";
     	boolean provinceMatch = Pattern.matches(provinceString, this.getProvince());
-    	if (provinceMatch == false){
+    	if (StringUtils.isNotBlank(province) && provinceMatch == false){
     		sb.append("\nProvince is not valid!");
     		inputValid =false;
     	}
@@ -201,12 +201,12 @@ public class ShallWayUpdateDTO {
     	
     	String cityString ="^[\u4e00-\u9fa5 a-zA-Z]+$";
     	boolean cityMatch = Pattern.matches(cityString, this.getCity());
-    	if (cityMatch == false){
+    	if (StringUtils.isNotBlank(city) && cityMatch == false){
     		sb.append("\nCity is not valid!");
     		inputValid =false;
     	}
     	
-    	if(!StringUtils.isEmpty(startTime)){
+    	if(StringUtils.isNotBlank(startTime) ){
 	    	String startTimeString ="^(\\d{1,2}/\\d{1,2}/\\d{4})$";
 	    	boolean startTimeMatch = Pattern.matches(startTimeString, this.getStartTime());
 	    	if (startTimeMatch == false){
@@ -215,7 +215,7 @@ public class ShallWayUpdateDTO {
 	    	}
     	}
     	
-    	if(!StringUtils.isEmpty(endTime)){
+    	if(StringUtils.isNotBlank(endTime)){
 	    	String endTimeString ="^(\\d{1,2}/\\d{1,2}/\\d{4})$";
 	    	boolean endTimeMatch = Pattern.matches(endTimeString, this.getEndTime());
 	    	if (endTimeMatch == false){
@@ -226,7 +226,7 @@ public class ShallWayUpdateDTO {
     	
     	
     	String booleanString ="true|false";
-    	if(!StringUtils.isEmpty(carPool)){
+    	if(StringUtils.isNotBlank(carPool)){
 	    	boolean carPoolMatch = Pattern.matches(booleanString, this.getCarPool());
 	    	if (carPoolMatch == false){
 	    		sb.append("\nCarPool is not valid!");
@@ -234,22 +234,22 @@ public class ShallWayUpdateDTO {
 	    	}
     	}
     	
-    	if(!StringUtils.isEmpty(freeTour)){
+    	if(StringUtils.isNotBlank(freeTour)){
     	boolean freeTourMatch = Pattern.matches(booleanString, this.getFreeTour());
     	if (freeTourMatch == false){
     		sb.append("\nFreeTour is not valid!");
     		inputValid =false;
     	}
     	}
-    	if(!StringUtils.isEmpty(hotelShare)){
+    	if(StringUtils.isNotBlank(hotelShare)){
     		boolean hotelShareMatch = Pattern.matches(booleanString, this.getHotelShare());
-	    	if (hotelShareMatch == false){
+	    	if ( hotelShareMatch == false){
 	    		sb.append("\nHotelShare is not valid!");
 	    		inputValid =false;
 	    	}
     	}
 
-    	if(!StringUtils.isEmpty(freeGuide)){
+    	if(StringUtils.isNotBlank(freeGuide)){
 	    	boolean freeGuideMatch = Pattern.matches(booleanString, this.getFreeGuide());
 	    	if (freeGuideMatch == false){
 	    		sb.append("\nFreeGuide is not valid!");

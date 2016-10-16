@@ -6,14 +6,14 @@ public class FieldPassFilterUtil {
 	
 	// for country, province, city
 	public static boolean validAlphOnly(String str){
-    	String patternString ="^[a-zA-Z]+$";
+    	String patternString ="^[a-zA-Z ]+$";
     	boolean isMatch = Pattern.matches(patternString, str);
  		return isMatch;
 	}
 	
 	// for UserIntID
 	public static boolean validAlphDigOnly(String str){
-    	String patternString ="^[0-9a-zA-Z]+$";
+    	String patternString ="^[0-9a-zA-Z ]+$";
     	boolean isMatch = Pattern.matches(patternString, str);
  		return isMatch;
 	}

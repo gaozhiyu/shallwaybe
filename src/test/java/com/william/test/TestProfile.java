@@ -12,6 +12,7 @@ import com.william.DAO.ProfileDAO;
 import com.william.entity.ProfileEntity;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.ProfileInDTO;
+import com.william.to.ProfileUpdateDTO;
 import com.william.to.ProfileUpdateResultDTO;
 import com.william.to.RegisterInDTO;
 import com.william.to.RegisterOutDTO;
@@ -41,6 +42,7 @@ public class TestProfile {
 	public void testUpdateProfile() throws ParseException{
 		profileEntity = MP.readProfile(registerInDTO.getEmail());
 		profileInDTO.setUserIntID(profileEntity.getUserIntID());
+		ProfileUpdateDTO profileInDTO = new ProfileUpdateDTO("8a0e4da44b904eb3887e7ae5354ce12d","hu-zong@gmail.com", "MyPassword","胡总","男","04/09/1987",currentTime,"1","123456","0","北","上","广","深","庆","都","179.12345","9.9","For test only");
 		profileUpdateResultDTO = MP.updateProfile(profileInDTO);
 		System.out.println("profile updated:"+profileUpdateResultDTO.isProfileUpdate());
 				

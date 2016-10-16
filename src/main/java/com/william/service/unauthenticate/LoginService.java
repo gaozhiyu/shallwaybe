@@ -10,6 +10,7 @@ import com.william.entity.ProfileEntity;
 import com.william.to.LoginResultInDTO;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.ProfileInDTO;
+import com.william.to.ProfileUpdateDTO;
 import com.william.to.ProfileUpdateResultDTO;
 import com.william.to.ResetPwdInDTO;
 import com.william.util.CryptWithMD5Util;
@@ -42,7 +43,7 @@ public class LoginService {
 				result.setStatus("Y");
 				if(profileEntity.getWrongTryPWD()!=0){
 					try {
-						ProfileInDTO profileTo = new ProfileInDTO();
+						ProfileUpdateDTO profileTo = new ProfileUpdateDTO();
 						profileTo.setUserIntID(profileEntity.getUserIntID());
 						profileTo.setWrongTryPWD("0");
 						mgDAO.updateProfile(profileTo);
@@ -52,7 +53,7 @@ public class LoginService {
 					}
 				}
 			} else {
-				ProfileInDTO profileTo = new ProfileInDTO();
+				ProfileUpdateDTO profileTo = new ProfileUpdateDTO();
 				profileTo.setUserIntID(profileEntity.getUserIntID());
 				profileTo.setWrongTryPWD(profileEntity.getWrongTryPWD()+1+"");
 				result.setStatus("N");
@@ -78,7 +79,7 @@ public class LoginService {
 		}
 		
 		if(profileEnity.getWrongTryOTP()<5 && profileEnity.getOTP().equals(CryptWithMD5Util.cryptWithMD5Util(input.getOtp())) && profileEnity.getOTPExpiryTime().after(new Date())){
-			ProfileInDTO profileTo = new ProfileInDTO();
+			ProfileUpdateDTO profileTo = new ProfileUpdateDTO();
 			if(profileEnity.getWrongTryOTP()!=0){
 				profileTo.setWrongTryOTP("0");
 			}
@@ -96,7 +97,7 @@ public class LoginService {
 			}
 		} else if(profileEnity.getWrongTryOTP() > 4){
 			try {
-					ProfileInDTO profileTo = new ProfileInDTO();
+				 	ProfileUpdateDTO profileTo = new ProfileUpdateDTO();
 					profileTo.setWrongTryOTP(profileEnity.getWrongTryOTP()+1+"");
 					profileTo.setUserIntID(profileEnity.getUserIntID());
 					cvo.setStatus("F");
@@ -121,7 +122,7 @@ public class LoginService {
 			//Add otp validation
 			ProfileEntity profileEnity = mgDAO.readProfile(email);
 			if(profileEnity.getOTPExpiryTime().getTime()-new Date().getTime() > 86100*1000 || profileEnity.getWrongTryOTP()<5 ){//TODO
-				ProfileInDTO profileTo = new ProfileInDTO();
+				ProfileUpdateDTO profileTo = new ProfileUpdateDTO();
 				profileTo.setUserIntID(profileEnity.getUserIntID());
 				String oTP =CryptWithMD5Util.testRandomNumber(6);//"111111";//TODO later
 				profileTo.setOTP(oTP);

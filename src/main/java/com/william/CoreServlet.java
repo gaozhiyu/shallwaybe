@@ -12,10 +12,10 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletInputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -31,12 +31,14 @@ import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.corundumstudio.socketio.protocol.Packet;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.william.DAO.MessageDAO;
 import com.william.filter.LogFile;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.MessageOutDTO;
 import com.william.util.ChatMessageQueue;
 import com.william.util.JedisUtil;
+import com.william.util.XssShieldUtil;
 import com.william.vo.CommonInput;
 
 public class CoreServlet extends HttpServlet {
@@ -60,11 +62,19 @@ public class CoreServlet extends HttpServlet {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			IOUtils.copy(is, baos);
 			String utilJson = new String(baos.toByteArray(), "UTF-8");
-			HttpSession session = request.getSession(true);
+			//HttpSession session = request.getSession(true);
 
 			logger.info(utilJson + "Baby I know you are here" + request.getRequestURI());
-
-			Object returnValue = invokeService(request.getRequestURI(), utilJson, session.getId());
+			
+			Cookie[] cookies = request.getCookies();
+			Cookie cookie = null;
+			if (cookies != null) {
+				for (int i = 0; i < cookies.length; i++) {
+					if("sesionCookie".equals(cookies[i].getName()))
+						cookie = cookies[i];
+				}
+			}
+			Object returnValue = invokeService(request.getRequestURI(), utilJson, cookie==null?null:cookie.getValue());
 
 			ObjectMapper mapper = new ObjectMapper();
 			String str = "";
@@ -76,14 +86,15 @@ public class CoreServlet extends HttpServlet {
 					LoginResultOutDTO tmp = (LoginResultOutDTO) returnValue;
 					if ("Y".equalsIgnoreCase(tmp.getStatus())) {
 						logger.info("Userid\t" + tmp.getUserid());
-						// Fixme update the logic
-						// HttpSession session = request.getSession(true);
-						session.setAttribute("userid", tmp.getUserid());
-						// String tmpid = (String)
-						// session.getAttribute("userid");
-						session.setMaxInactiveInterval(-1);
-
-						String sessionId = request.getSession().getId();
+						String sessionId = UUID.randomUUID().toString();
+						Cookie sidcookie = new Cookie("sesionCookie", sessionId);
+						Cookie useridCookie = new Cookie("userCookie", tmp.getUserid());
+						sidcookie.setMaxAge(60 * 60 * 24 * 365 * 10);
+						useridCookie.setMaxAge(60 * 60 * 24 * 365 * 10);
+						sidcookie.setPath("/");
+						useridCookie.setPath("/");
+						response.addCookie(sidcookie);
+						response.addCookie(useridCookie);
 						logger.info("Sessionid\t" + sessionId);
 						JedisUtil.set(tmp.getUserid(), sessionId);
 						// JedisUtil.set(sessionId, tmp.getUserid());//fixme
@@ -94,12 +105,21 @@ public class CoreServlet extends HttpServlet {
 					}
 				}
 				// TODO make it more specific
-				if (request.getRequestURI().contains("/LoginService/logout")) {
-					request.getSession().removeAttribute("userid");
-				}
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				logger.error(e.getMessage());
+			} finally{
+				if (request.getRequestURI().contains("/LoginService/logout")) {
+					Cookie sidcookie = new Cookie("sesionCookie", null);
+					Cookie useridCookie = new Cookie("userCookie", null);
+					sidcookie.setMaxAge(0);
+					useridCookie.setMaxAge(0);
+					sidcookie.setPath("/");
+					useridCookie.setPath("/");
+					response.addCookie(sidcookie);
+					response.addCookie(useridCookie);
+				}
 			}
 			System.out.println("Parse from java to Json\t" + str);
 
@@ -113,7 +133,10 @@ public class CoreServlet extends HttpServlet {
 	}
 
 	public Object invokeService(String uri, String utilJson, String sessionID) {
+		System.out.println(uri);
 		ObjectMapper objectMapper = new ObjectMapper();
+		// objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,
+		// false);
 		String[] uriArray = uri.split("/");
 		Object returnvalue = "";
 		StringBuffer servicString = new StringBuffer("com.william.service.");// FIXME
@@ -136,6 +159,7 @@ public class CoreServlet extends HttpServlet {
 			Class<?>[] types = method.getParameterTypes();
 			if (types.length > 0) {
 				Object[] params = new Object[types.length];
+				// utilJson = XssShieldUtil.stripXss(utilJson);
 				JsonNode tree = objectMapper.readTree(utilJson);
 				if (!tree.isArray()) {
 					System.out.println("Parameters must in array!");
@@ -151,8 +175,8 @@ public class CoreServlet extends HttpServlet {
 					try {
 						if (uriArray.length > 3 && "authenticate".equals(uriArray[2])) {
 							System.out.println("set seseeion id into DTO");
-							if(params[i] instanceof  CommonInput){
-								Method d = type.getMethod("setSessionID",String.class);
+							if (params[i] instanceof CommonInput) {
+								Method d = type.getMethod("setSessionID", String.class);
 								d.invoke(params[i], sessionID);
 							}
 						}
@@ -181,11 +205,11 @@ public class CoreServlet extends HttpServlet {
 	public void init() {
 
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-		config.setHostname("192.168.1.239");
+		config.setHostname("localhost");
 		config.setPort(9092);
-		SocketConfig sockConfig =  new SocketConfig();
-	    sockConfig.setReuseAddress(true);
-	    config.setSocketConfig(sockConfig);
+		SocketConfig sockConfig = new SocketConfig();
+		sockConfig.setReuseAddress(true);
+		config.setSocketConfig(sockConfig);
 
 		final SocketIOServer server = new SocketIOServer(config);
 		// server.addNamespace("/chat");

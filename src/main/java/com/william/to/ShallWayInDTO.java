@@ -2,6 +2,8 @@ package com.william.to;
 
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 public class ShallWayInDTO {
 
 	private String userIntID;
@@ -194,28 +196,35 @@ public class ShallWayInDTO {
     	}
     	
     	String booleanString ="true|false";
-    	boolean carPoolMatch = Pattern.matches(booleanString, this.getCarPool());
-    	if (carPoolMatch == false){
-    		sb.append("\nCarPool is not valid!");
-    		inputValid =false;
+    	if(StringUtils.isNotBlank(carPool)){
+	    	boolean carPoolMatch = Pattern.matches(booleanString, this.getCarPool());
+	    	if (carPoolMatch == false){
+	    		sb.append("\nCarPool is not valid!");
+	    		inputValid =false;
+	    	}
     	}
     	
+    	if(StringUtils.isNotBlank(freeTour)){
     	boolean freeTourMatch = Pattern.matches(booleanString, this.getFreeTour());
     	if (freeTourMatch == false){
     		sb.append("\nFreeTour is not valid!");
     		inputValid =false;
     	}
-    	
-    	boolean hotelShareMatch = Pattern.matches(booleanString, this.getHotelShare());
-    	if (hotelShareMatch == false){
-    		sb.append("\nHotelShare is not valid!");
-    		inputValid =false;
+    	}
+    	if(StringUtils.isNotBlank(hotelShare)){
+    		boolean hotelShareMatch = Pattern.matches(booleanString, this.getHotelShare());
+	    	if ( hotelShareMatch == false){
+	    		sb.append("\nHotelShare is not valid!");
+	    		inputValid =false;
+	    	}
     	}
 
-    	boolean freeGuideMatch = Pattern.matches(booleanString, this.getFreeGuide());
-    	if (freeGuideMatch == false){
-    		sb.append("\nFreeGuide is not valid!");
-    		inputValid =false;
+    	if(StringUtils.isNotBlank(freeGuide)){
+	    	boolean freeGuideMatch = Pattern.matches(booleanString, this.getFreeGuide());
+	    	if (freeGuideMatch == false){
+	    		sb.append("\nFreeGuide is not valid!");
+	    		inputValid =false;
+	    	}
     	}
     	
     	shallWayInValidationResult.setResultString(sb.toString());

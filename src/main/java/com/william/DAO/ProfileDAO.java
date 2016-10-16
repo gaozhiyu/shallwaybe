@@ -15,6 +15,7 @@ import org.hibernate.Transaction;
 import com.william.entity.ProfileEntity;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.ProfileInDTO;
+import com.william.to.ProfileUpdateDTO;
 import com.william.to.ProfileUpdateResultDTO;
 import com.william.to.RegisterInDTO;
 import com.william.to.RegisterOutDTO;
@@ -86,7 +87,7 @@ public class ProfileDAO {
 	}
 	
 	/* to update a profile record*/
-	public ProfileUpdateResultDTO updateProfile(ProfileInDTO profileTo) throws ParseException
+	public ProfileUpdateResultDTO updateProfile(ProfileUpdateDTO profileTo) throws ParseException
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;

@@ -9,12 +9,11 @@ import java.util.Date;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
 import com.william.DAO.ProfileDAO;
-import com.william.to.ProfileInDTO;
+import com.william.to.ProfileUpdateDTO;
 import com.william.util.Position;
 
 public class FileUploadServlet extends HttpServlet {
@@ -46,7 +45,7 @@ public class FileUploadServlet extends HttpServlet {
 	        writeTo(userid+".jpg", body, p);
 	        
 	        ProfileDAO pDAO = ProfileDAO.getInstance();
-	        ProfileInDTO profileTo = new ProfileInDTO();
+	        ProfileUpdateDTO profileTo = new ProfileUpdateDTO();
 	        profileTo.setUserIntID(userid);
 //	        profileTo.setProfilePhoto("TRUE");
 	        profileTo.setProfilePhoto(currentTime);

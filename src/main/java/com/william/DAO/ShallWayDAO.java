@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
@@ -80,10 +81,11 @@ public class ShallWayDAO {
 	         shallWayEntity.setTitle(title);
 	         String contact = XssShieldUtil.stripXss(shallWayInDTO.getContact());
 	         shallWayEntity.setContact(contact);
-	         
-	         String descriptionString = XssShieldUtil.stripXss(shallWayInDTO.getDescription());
-	         Blob description = Hibernate.getLobCreator(session).createBlob(descriptionString.getBytes());
-	         shallWayEntity.setDescription(description);
+	         if(StringUtils.isNotBlank(shallWayInDTO.getDescription())){
+		         String descriptionString = XssShieldUtil.stripXss(shallWayInDTO.getDescription());
+		         Blob description = Hibernate.getLobCreator(session).createBlob(descriptionString.getBytes());
+		         shallWayEntity.setDescription(description);
+	         }
 	         
 	         shallWayEntity.setDeleteStatus(false);
 	         
@@ -378,8 +380,8 @@ public class ShallWayDAO {
 			    	  shallWayEntity.setPostTime(postTime);
 			      }
 			      
-			      if (shallWayUpdateDTO.getDescription()!=null && !"".equals(shallWayUpdateDTO.getDescription().trim())){
-			    	  String descriptionString = XssShieldUtil.stripXss(shallWayUpdateDTO.getDescription());
+			      if (shallWayUpdateDTO.getDescriptionStr()!=null && !"".equals(shallWayUpdateDTO.getDescriptionStr().trim())){
+			    	  String descriptionString = XssShieldUtil.stripXss(shallWayUpdateDTO.getDescriptionStr());
 			    	  Blob description = Hibernate.getLobCreator(session).createBlob(descriptionString.getBytes());		         
 			    	  shallWayEntity.setDescription(description);
 			    	  shallWayEntity.setPostTime(postTime);
