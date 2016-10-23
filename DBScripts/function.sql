@@ -24,3 +24,19 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `shallway`.`calculateCorrelation`$$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `calculateCorrelation`(distance double, shaketime text) RETURNS text CHARSET latin1
+BEGIN
+ DECLARE a double;
+ DECLARE b double;
+  set a = TIME_TO_SEC(TIMEDIFF(shaketime, now()))/60;
+  set b = 0.7 * pow(distance/100,2) + 0.3 * pow(a/1440,2);
+  return b;
+END$$
+
+DELIMITER ;
