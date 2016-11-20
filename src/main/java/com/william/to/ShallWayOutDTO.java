@@ -1,5 +1,6 @@
 package com.william.to;
 
+import java.math.BigInteger;
 import java.sql.Blob;
 import java.util.Date;
 
@@ -7,7 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.william.vo.CommonVO;
 
 public class ShallWayOutDTO extends GISDTO {
-
+	
+	private BigInteger sequenceID;
 	private String nickname;
 	private String dateID;
 	private String userIntID;
@@ -37,11 +39,12 @@ public class ShallWayOutDTO extends GISDTO {
 		super();
 	}
 
-	public ShallWayOutDTO(String nickname, String dateID, String userIntID, String country, String province,
+	public ShallWayOutDTO(BigInteger sequenceID, String nickname, String dateID, String userIntID, String country, String province,
 			String city, String place, Date startTime, Date endTime, Date postTime, String endTimeStr,
 			String startTimeStr, Boolean carPool, Boolean freeTour, Boolean hotelShare, Boolean freeGuide, String title,
 			String contact, String descriptionStr, Boolean deleteStatus) {
 		super();
+		this.sequenceID=sequenceID;
 		this.nickname = nickname;
 		this.dateID = dateID;
 		this.userIntID = userIntID;
@@ -62,6 +65,16 @@ public class ShallWayOutDTO extends GISDTO {
 		this.contact = contact;
 		this.descriptionStr = descriptionStr;
 		this.deleteStatus = deleteStatus;
+	}
+	
+	
+
+	public BigInteger getSequenceID() {
+		return sequenceID;
+	}
+
+	public void setSequenceID(BigInteger sequenceID) {
+		this.sequenceID = sequenceID;
 	}
 
 	public String getNickname() {

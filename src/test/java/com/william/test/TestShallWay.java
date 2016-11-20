@@ -23,9 +23,9 @@ public class TestShallWay {
     SimpleDateFormat sdfd1 =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     SimpleDateFormat sdfd2 =new SimpleDateFormat("yyyy-MM-dd");
     
-	ShallWayInDTO shallWayIn = new ShallWayInDTO ("1234","singapore","大士", "CMR P", "风水宝地", startTimeString, endTimeString, "true", "false", "true", "false", "投标开放", "Tel: 62688311", "欢迎来竞标，价格越低越好");
-	ShallWayUpdateDTO shallWayUpdate = new ShallWayUpdateDTO ("0ec2979b4417496088fcb0124cc9a057","3f46187fd7904aedb59537d6288e052f","Singapore","Tuas", "CMR FE", "S 17", startTimeString, endTimeString, "false", "false", "false", "false", "ONE DAY TREK", "HP: 554163030", "Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어");
-	ShallWaySearchDTO shallWaySearch = new ShallWaySearchDTO("userintidtest1","1","新加坡","勿洛","芬兰花园","", startTimeString, endTimeString, "true", "false", "false", "false");
+	ShallWayInDTO shallWayIn = new ShallWayInDTO ("57b05f0d282744b383c4a3b1bee11ad2","singapore","大士", "CMR P", "风水宝地", startTimeString, endTimeString, "true", "false", "true", "false", "投标开放", "Tel: 62688311", "欢迎来竞标，价格越低越好");
+	ShallWayUpdateDTO shallWayUpdate = new ShallWayUpdateDTO ("94ab4fbd272b43d2beed7688345f5fa3","b53a45037c244371baaeb5e7af75aa90","Singapore","Tuas", "CMR FE", "S 17", startTimeString, endTimeString, "true", "false", "false", "false", "ONE DAY TREK", "HP: 554163030", "Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어");
+	ShallWaySearchDTO shallWaySearch = new ShallWaySearchDTO("57b05f0d282744b383c4a3b1bee11ad2","1","Singapore","Tuas","CMR FE","", startTimeString, endTimeString, "true", "false", "false", "false");
 //  Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어	
 	ValidationResult shallWayValidation=null;
 	
@@ -50,7 +50,7 @@ public class TestShallWay {
     
     @Test
     public void testRetrieveDateByDateID() throws SQLException{
-    	shallWayOutDTO = MSW.retrieveDateByDateID("58c44952a4494d64b8d11605c8189972");
+    	shallWayOutDTO = MSW.retrieveDateByDateID("3dfe6a8c2596466dbb8a2f1f95207b02");
     	
 		System.out.println();
 		System.out.println("Nickname: "+shallWayOutDTO.getNickname());
@@ -75,7 +75,7 @@ public class TestShallWay {
     
     @Test //read personal record
     public void testReadShallWay1(){
-    	shallWayEntity = MSW.readShallWay("9d39464ce8ce43a597acfe5e43c1c523", 1); 
+    	shallWayEntity = MSW.readShallWay("b53a45037c244371baaeb5e7af75aa90", 1); 
 
 		for (int i=0; i < shallWayEntity.length; i++){
 			System.out.println();
@@ -137,7 +137,7 @@ public class TestShallWay {
     
     @Test
     public void testDeleteShallWay(){
-		MSW.deleteShallWay("15e6c1511aeb477eb1fe4509d0ba778f", "9d39464ce8ce43a597acfe5e43c1c523");    	   	
+		MSW.deleteShallWay("2dbeed669ebf466a9a9614ecd17e9728", "1234");    	   	
     }
     
     @Test // test input validation for AddShallWay ShallWayInDTO

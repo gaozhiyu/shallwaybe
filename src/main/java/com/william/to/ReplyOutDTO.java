@@ -1,5 +1,6 @@
 package com.william.to;
 
+import java.math.BigInteger;
 import java.sql.Blob;
 import java.util.Date;
 
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class ReplyOutDTO{
 	
+	private BigInteger sequenceID;
 	private String id;
 	private String dateID;
     private String replierIntID;
@@ -20,9 +22,10 @@ public class ReplyOutDTO{
 		super();
 	}
 
-	public ReplyOutDTO(String id, String dateID, String replierIntID, String replierNickname, Date replyTime,
+	public ReplyOutDTO(BigInteger sequenceID, String id, String dateID, String replierIntID, String replierNickname, Date replyTime,
 			String replyContentsStr, Boolean deleteStatus) {
 		super();
+		this.sequenceID=sequenceID;
 		this.id = id;
 		this.dateID = dateID;
 		this.replierIntID = replierIntID;
@@ -30,6 +33,14 @@ public class ReplyOutDTO{
 		this.replyTime = replyTime;
 		this.replyContentsStr = replyContentsStr;
 		this.deleteStatus = deleteStatus;
+	}
+	
+	public BigInteger getSequenceID() {
+		return sequenceID;
+	}
+
+	public void setSequenceID(BigInteger sequenceID) {
+		this.sequenceID = sequenceID;
 	}
 
 	public String getId() {

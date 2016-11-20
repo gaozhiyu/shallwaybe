@@ -1,5 +1,6 @@
 package com.william.entity;
 
+import java.math.BigInteger;
 import java.sql.Blob;
 import java.util.Date;
 
@@ -10,6 +11,7 @@ public class ShallWayEntity implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private BigInteger sequenceID;
 	private String dateID;
 	private String userIntID;
 	private String country;
@@ -58,6 +60,13 @@ public class ShallWayEntity implements java.io.Serializable {
 	}
 
 
+	public BigInteger getSequenceID() {
+		return sequenceID;
+	}
+
+	public void setSequenceID(BigInteger sequenceID) {
+		this.sequenceID = sequenceID;
+	}
 
 	public String getDateID() {
 		return dateID;

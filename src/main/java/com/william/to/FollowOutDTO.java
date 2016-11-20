@@ -1,9 +1,11 @@
 package com.william.to;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 public class FollowOutDTO{
 	
+	private BigInteger sequenceID;
 	private String id;
 	private String dateID;
     private String followerIntID;
@@ -15,15 +17,25 @@ public class FollowOutDTO{
 		super();
 	}
 
-	public FollowOutDTO(String id, String dateID, String followerIntID, String followerNickname, Date followTime,
+	public FollowOutDTO(BigInteger sequenceID, String id, String dateID, String followerIntID, String followerNickname, Date followTime,
 			Boolean deleteStatus) {
 		super();
+		
+		this.sequenceID = sequenceID;
 		this.id = id;
 		this.dateID = dateID;
 		this.followerIntID = followerIntID;
 		this.followerNickname = followerNickname;
 		this.followTime = followTime;
 		this.deleteStatus = deleteStatus;
+	}
+
+	public BigInteger getSequenceID() {
+		return sequenceID;
+	}
+
+	public void setSequenceID(BigInteger sequenceID) {
+		this.sequenceID = sequenceID;
 	}
 
 	public String getId() {

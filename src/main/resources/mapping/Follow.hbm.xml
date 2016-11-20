@@ -4,9 +4,14 @@
 
 <hibernate-mapping>
     <class name="com.william.entity.FollowEntity" table="follow" catalog="shallway">
-        <id name="id" type="string" >
+    
+        <id name="sequenceID" type="java.math.BigInteger" column="SequenceID">
+         <generator class="native"/>
+      	</id>
+      	    
+        <property name="id" type="string" >
             <column name="ID" length="64" not-null="true" unique="true" />
-        </id>
+        </property>
         
         <property name="dateID" type="string">
             <column name="DateID" length="64" />

@@ -4,9 +4,13 @@
 
 <hibernate-mapping>
     <class name="com.william.to.ShallWayOutDTO" table="shallwayview" catalog="shallway">
-        <id name="dateID" type="string" >
+    
+        <id name="sequenceID" type="java.math.BigInteger" column="SequenceID">
+      	</id>
+      	
+        <property name="dateID" type="string" >
             <column name="DateID" length="64" not-null="true" unique="true" />
-        </id>
+        </property>
         
         <property name="nickname" type="string">
             <column name="Nickname" length="32" />

@@ -41,6 +41,7 @@ create table AddressHistory (
 
 DROP TABLE IF EXISTS ShallWay;
 create table ShallWay (
+   SequenceID BIGINT UNSIGNED NOT NULL auto_increment,
    DateID VARCHAR(64) NOT NULL,	
    UserIntID VARCHAR(64) NOT NULL,
    Country VARCHAR(128) default NULL,
@@ -58,7 +59,8 @@ create table ShallWay (
    Contact VARCHAR(128) default NULL,
    Description BLOB default NULL,
    DeleteStatus BOOLEAN default false,
-   PRIMARY KEY (DateID)
+   PRIMARY KEY (SequenceID),
+   UNIQUE (DateID)
 )character set = utf8;
 
 DROP TABLE IF EXISTS LatestCoordinate;
@@ -78,23 +80,27 @@ CREATE OR REPLACE VIEW ShallWayView AS select b.Nickname, a.* from shallway a jo
 
 DROP TABLE IF EXISTS Follow;
 create table Follow (
+   SequenceID BIGINT UNSIGNED NOT NULL auto_increment,
    ID VARCHAR(64) NOT NULL,
    DateID VARCHAR(64) NOT NULL,
    FollowerIntID VARCHAR(64) NOT NULL,
    FollowTime TIMESTAMP default CURRENT_TIMESTAMP,
    DeleteStatus BOOLEAN default false,
-   PRIMARY KEY (ID)
+   PRIMARY KEY (SequenceID),
+   UNIQUE (ID)
 )character set = utf8;
 
 DROP TABLE IF EXISTS Reply;
 create table Reply (
+   SequenceID BIGINT UNSIGNED NOT NULL auto_increment,
    ID VARCHAR(64) NOT NULL,
    DateID VARCHAR(64) NOT NULL,
    ReplierIntID VARCHAR(64) NOT NULL,
    ReplyTime TIMESTAMP default CURRENT_TIMESTAMP,
    ReplyContents BLOB NOT NULL,
    DeleteStatus BOOLEAN default false,
-   PRIMARY KEY (ID)
+   PRIMARY KEY (SequenceID),
+   UNIQUE (ID)
 )character set = utf8;
 
 DROP TABLE IF EXISTS Message;

@@ -1,10 +1,12 @@
 package com.william.entity;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 public class FollowEntity implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	private BigInteger sequenceID;
 	private String id;
 	private String dateID;
     private String followerIntID;
@@ -22,6 +24,14 @@ public class FollowEntity implements java.io.Serializable {
 		this.followerIntID = followerIntID;
 		this.followTime = followTime;
 		this.deleteStatus = deleteStatus;
+	}
+
+	public BigInteger getSequenceID() {
+		return sequenceID;
+	}
+
+	public void setSequenceID(BigInteger sequenceID) {
+		this.sequenceID = sequenceID;
 	}
 
 	public String getId() {

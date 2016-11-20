@@ -1,11 +1,13 @@
 package com.william.entity;
 
+import java.math.BigInteger;
 import java.sql.Blob;
 import java.util.Date;
 
 public class ReplyEntity implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	private BigInteger sequenceID;
 	private String id;
 	private String dateID;
     private String replierIntID;
@@ -26,6 +28,14 @@ public class ReplyEntity implements java.io.Serializable {
 		this.replyTime = replyTime;
 		this.replyContents = replyContents;
 		this.deleteStatus = deleteStatus;
+	}
+	
+	public BigInteger getSequenceID() {
+		return sequenceID;
+	}
+
+	public void setSequenceID(BigInteger sequenceID) {
+		this.sequenceID = sequenceID;
 	}
 
 	public String getId() {

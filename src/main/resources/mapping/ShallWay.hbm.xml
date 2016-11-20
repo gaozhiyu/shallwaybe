@@ -4,9 +4,14 @@
 
 <hibernate-mapping>
     <class name="com.william.entity.ShallWayEntity" table="shallway" catalog="shallway">
-        <id name="dateID" type="string" >
+    
+        <id name="sequenceID" type="java.math.BigInteger" column="SequenceID">
+         <generator class="native"/>
+      	</id>
+      	
+        <property name="dateID" type="string" >
             <column name="DateID" length="64" not-null="true" unique="true" />
-        </id>
+        </property>
         
         <property name="userIntID" type="string">
             <column name="UserIntID" length="64"/>

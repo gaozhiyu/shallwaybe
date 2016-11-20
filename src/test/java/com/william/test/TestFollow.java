@@ -10,7 +10,7 @@ public class TestFollow {
 	
 	FollowDAO followDAO = new FollowDAO();
 	FollowOutDTO[] followArray = null;
-	FollowInDTO followInDTO = new FollowInDTO("9d1472c02617443fa558a0e5b90c4007","3f46187fd7904aedb59537d6288e052f");
+	FollowInDTO followInDTO = new FollowInDTO("94ab4fbd272b43d2beed7688345f5fa3","b53a45037c244371baaeb5e7af75aa90");
 	
 	@Test
 	public void testAddFollow(){
@@ -19,7 +19,7 @@ public class TestFollow {
 
 	@Test
 	public void testReadFollow(){
-		followArray = followDAO.readFollow("9d1472c02617443fa558a0e5b90c4007");
+		followArray = followDAO.readFollow("94ab4fbd272b43d2beed7688345f5fa3");
 		
 		for(int i=0; i<followArray.length;i++){
 			System.out.println();

@@ -13,7 +13,7 @@ public class TestReply {
 	ReplyDAO replyDAO = new ReplyDAO();
 	ReplyOutDTO[] replyArray= null;
 
-	ReplyInDTO replyInDTO = new ReplyInDTO("05488c398929403ca5b019c0629075de","9d39464ce8ce43a597acfe5e43c1c523","我勒去，可以吗!");
+	ReplyInDTO replyInDTO = new ReplyInDTO("94ab4fbd272b43d2beed7688345f5fa3","b53a45037c244371baaeb5e7af75aa90","我勒去，可以吗!");
 	
 	@Test
 	public void testAddReply(){
@@ -23,7 +23,7 @@ public class TestReply {
 	@Test
 	public void testReadReply() throws SQLException{
 		
-		replyArray = replyDAO.readReply("05488c398929403ca5b019c0629075de");
+		replyArray = replyDAO.readReply("94ab4fbd272b43d2beed7688345f5fa3");
 		
 		for(int i=0; i<replyArray.length;i++){
 			System.out.println();
@@ -39,7 +39,7 @@ public class TestReply {
 	
 	@Test
 	public void testDeleteReply(){
-		replyDAO.deleteReply("02ce7612d94e459f976fe2e64712e685");		
+		replyDAO.deleteReply("fe99d5d1b3ce4efb8ab3c425bf86a806");		
 	}
 	
 }
