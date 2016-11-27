@@ -23,9 +23,9 @@ public class TestShallWay {
     SimpleDateFormat sdfd1 =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     SimpleDateFormat sdfd2 =new SimpleDateFormat("yyyy-MM-dd");
     
-	ShallWayInDTO shallWayIn = new ShallWayInDTO ("57b05f0d282744b383c4a3b1bee11ad2","singapore","大士", "CMR P", "风水宝地", startTimeString, endTimeString, "true", "false", "true", "false", "投标开放", "Tel: 62688311", "欢迎来竞标，价格越低越好");
+	ShallWayInDTO shallWayIn = new ShallWayInDTO ("103d3022a8064fb699904c7dd4e0b8be","singapore","Bedok", "Shopping Mall", "Fairprice Finest", startTimeString, endTimeString, "true", "false", "true", "false", "买什么呢", "Tel: 62688311", "Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어");
 	ShallWayUpdateDTO shallWayUpdate = new ShallWayUpdateDTO ("94ab4fbd272b43d2beed7688345f5fa3","b53a45037c244371baaeb5e7af75aa90","Singapore","Tuas", "CMR FE", "S 17", startTimeString, endTimeString, "true", "false", "false", "false", "ONE DAY TREK", "HP: 554163030", "Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어");
-	ShallWaySearchDTO shallWaySearch = new ShallWaySearchDTO("57b05f0d282744b383c4a3b1bee11ad2","1","Singapore","Tuas","CMR FE","", startTimeString, endTimeString, "true", "false", "false", "false");
+	ShallWaySearchDTO shallWaySearch = new ShallWaySearchDTO("103d3022a8064fb699904c7dd4e0b8be","14","Singapore","Bedok","Shopping Mall","Fairprice Finest", startTimeString, endTimeString, "true", "false", "true", "false");
 //  Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어	
 	ValidationResult shallWayValidation=null;
 	
@@ -107,8 +107,9 @@ public class TestShallWay {
 		
 		for (int i=0; i < shallWayArray.length; i++){
 			System.out.println();
+			System.out.println("SequenceID: "+shallWayArray[i].getSequenceID());
 			System.out.println("Nickname: "+shallWayArray[i].getNickname());
-			System.out.println("DateID: "+shallWayArray[i].getDateID());
+			System.out.println("\tDateID: "+shallWayArray[i].getDateID());
 			System.out.println("\tUserIntID: "+shallWayArray[i].getUserIntID());
 			System.out.println("\tCountry: "+shallWayArray[i].getCountry());
 			System.out.println("\tProvince: "+shallWayArray[i].getProvince());

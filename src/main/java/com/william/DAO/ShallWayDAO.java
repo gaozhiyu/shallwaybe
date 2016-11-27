@@ -1,5 +1,6 @@
 package com.william.DAO;
 
+import java.math.BigInteger;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -192,7 +193,7 @@ public class ShallWayDAO {
 	      Transaction tx = null;
 	      ShallWayOutDTO[] shallWayArray =null;
 	      SimpleDateFormat sdfd =new SimpleDateFormat("dd/MM/yyyy");
-	      int pageSize =10;
+	      int pageSize =5;
 	      byte[] bdata= null;
 	      Blob blob=null;
 	      
@@ -200,9 +201,15 @@ public class ShallWayDAO {
 	         tx = session.beginTransaction();
 	        	         
 	         Criteria crit = session.createCriteria(ShallWayOutDTO.class);
-	         crit.setFirstResult((Integer.parseInt(shallWaySearchDTO.getPageNumber()) - 1) * pageSize);
+//	         crit.setFirstResult((Integer.parseInt(shallWaySearchDTO.getPageNumber()) - 1) * pageSize); //removed on 27.11.2016 in order to add sequenceNo.
+	         crit.setFirstResult(0);
 	         crit.setMaxResults(pageSize);
 	         
+//	         added on 27.11.2016 to check sequenceNo.
+	         if (shallWaySearchDTO.getSequenceNo()!= null){
+	        	 BigInteger seqID = new BigInteger(shallWaySearchDTO.getSequenceNo());
+	        	 crit.add(Restrictions.lt("sequenceID",seqID));
+	         }
 //	         @SuppressWarnings("unchecked")
 //	         List<ShallWayOutDTO> shallWayList = crit.add(Restrictions.eq("country",shallWaySearchDTO.getCountry()))
 //	        		 								 .add(Restrictions.eq("province",shallWaySearchDTO.getProvince()))		
