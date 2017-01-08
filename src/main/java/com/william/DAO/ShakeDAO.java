@@ -40,7 +40,7 @@ public class ShakeDAO {
 		ShakeDTO[] shakeDTOArray = null;
 		try {
 			tx = (Transaction) session.beginTransaction();
-			String sql = "select b.distance as distance, p.userintid as userIntID,  p.nickname as nickname,p.PROFILEPHOTO as photoFlag, p.signature as signature, DATE_FORMAT(b.lastshaketime,'%b %d %Y %h:%i %p') as shakeTime from (select calculateDistance(?,?,a.longitude,a.latitude) as distance, a.userintid, a.lastshaketime from latestcoordinate a where a.userintid != ?) b inner join profile p on b.userintid = p.userintid;";
+			String sql = "select TIME_TO_SEC(timediff(CURRENT_TIMESTAMP,c.lastshaketimeraw))*1.5*0.3/1000 + 0.7* c.distance  as weight,c.* from (select b.distance as distance, p.userintid as userIntID,  p.nickname as nickname,p.PROFILEPHOTO as photoFlag, p.signature as signature, DATE_FORMAT(b.lastshaketime,'%b %d %Y %h:%i %p') as shakeTime, b.lastshaketime as lastshaketimeraw from (select calculateDistance(?,?,a.longitude,a.latitude) as distance, a.userintid, a.lastshaketime from latestcoordinate a where a.userintid != ?) b inner join profile p on b.userintid = p.userintid) c order by weight asc limit 10;";
 			SQLQuery query = session.createSQLQuery(sql);
 			query.setString(0, ""+shakeInDTO.getLatitude());
 			query.setString(1, ""+shakeInDTO.getLongitude());
@@ -75,7 +75,8 @@ public class ShakeDAO {
 		ShakeDTO[] shakeDTOArray = null;
 		try {
 			tx = (Transaction) session.beginTransaction();
-			String sql = "select b.distance as distance, p.userintid as userIntID,  p.nickname as nickname,p.PROFILEPHOTO as photoFlag, p.signature as signature, DATE_FORMAT(b.lastshaketime,'%b %d %Y %h:%i %p') as shakeTime from (select calculateDistance(?,?,a.longitude,a.latitude) as distance, a.userintid, a.lastshaketime from latestcoordinate a where a.userintid != ?) b inner join profile p on b.userintid = p.userintid where p.GoogleCountry != ? or GoogleProvince != ? or GoogleCity != ? ;";
+			String sql = "select TIME_TO_SEC(timediff(CURRENT_TIMESTAMP,c.lastshaketimeraw))*1.5*0.3/1000 + 0.7* c.distance  as weight,c.* from (select b.distance as distance, p.userintid as userIntID,  p.nickname as nickname,p.PROFILEPHOTO as photoFlag, p.signature as signature, DATE_FORMAT(b.lastshaketime,'%b %d %Y %h:%i %p') as shakeTime, b.lastshaketime as lastshaketimeraw from (select calculateDistance(?,?,a.longitude,a.latitude) as distance, a.userintid, a.lastshaketime from latestcoordinate a where a.userintid != ?) b inner join profile p on b.userintid = p.userintid where p.GoogleCountry != ? or GoogleProvince != ? or GoogleCity != ?) c order by weight asc limit 10;";
+			//String sql = "select b.distance as distance, p.userintid as userIntID,  p.nickname as nickname,p.PROFILEPHOTO as photoFlag, p.signature as signature, DATE_FORMAT(b.lastshaketime,'%b %d %Y %h:%i %p') as shakeTime from (select calculateDistance(?,?,a.longitude,a.latitude) as distance, a.userintid, a.lastshaketime from latestcoordinate a where a.userintid != ?) b inner join profile p on b.userintid = p.userintid where p.GoogleCountry != ? or GoogleProvince != ? or GoogleCity != ? ;";
 			SQLQuery query = session.createSQLQuery(sql);
 			query.setString(0, ""+shakeInDTO.getLatitude());
 			query.setString(1, ""+shakeInDTO.getLongitude());

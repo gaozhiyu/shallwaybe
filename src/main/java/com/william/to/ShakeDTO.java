@@ -13,6 +13,8 @@ public class ShakeDTO extends CommonInput{
 	private String nickname;
 	private String signature;
 	private Date photoFlag;
+	private double weight;
+	private Date lastshaketimeraw;
 
 
 
@@ -88,6 +90,30 @@ public class ShakeDTO extends CommonInput{
 
 	public void setShakeTime(String shakeTime) {
 		this.shakeTime = shakeTime;
+	}
+
+
+
+	public double getWeight() {
+		return weight;
+	}
+
+
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+
+
+	public Date getLastshaketimeraw() {
+		return lastshaketimeraw;
+	}
+
+
+
+	public void setLastshaketimeraw(Date lastshaketimeraw) {
+		this.lastshaketimeraw = lastshaketimeraw;
 	}
 
 	

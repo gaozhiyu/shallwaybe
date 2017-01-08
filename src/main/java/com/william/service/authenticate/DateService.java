@@ -80,6 +80,7 @@ public class DateService {
 					dateArray[i].setPlace(shallwayArray[i].getPlace());
 					dateArray[i].setProvince(shallwayArray[i].getProvince());
 					dateArray[i].setTitle(shallwayArray[i].getTitle());
+					dateArray[i].setSequenceID(String.valueOf(shallwayArray[i].getSequenceID()));
 				}
 				outDto.setDateArray(dateArray);
 				outDto.setStatus("Y");

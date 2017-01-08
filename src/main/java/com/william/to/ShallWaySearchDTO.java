@@ -4,7 +4,7 @@ public class ShallWaySearchDTO {
 
 	private String userIntID;
 //	private String pageNumber;
-	private String sequenceNo;
+	private String sequenceID;
 	private String country;
 	private String province;
 	private String city;
@@ -21,12 +21,12 @@ public class ShallWaySearchDTO {
 		super();
 	}
 
-	public ShallWaySearchDTO(String userIntID, String sequenceNo, String country, String province, String city,
+	public ShallWaySearchDTO(String userIntID, String sequenceID, String country, String province, String city,
 			String place, String startTime, String endTime, String carPool, String freeTour, String hotelShare,
 			String freeGuide) {
 		super();
 		this.userIntID = userIntID;
-		this.sequenceNo =  sequenceNo;
+		this.sequenceID =  sequenceID;
 		this.country = country;
 		this.province = province;
 		this.city = city;
@@ -109,14 +109,15 @@ public class ShallWaySearchDTO {
 		this.freeGuide = freeGuide;
 	}
 
-	public String getSequenceNo() {
-		return sequenceNo;
+	public String getSequenceID() {
+		return sequenceID;
 	}
 
-	public void setSequenceNo(String sequenceNo) {
-		this.sequenceNo = sequenceNo;
+	public void setSequenceID(String sequenceID) {
+		this.sequenceID = sequenceID;
 	}
-	
+
+
 	
 	
 }

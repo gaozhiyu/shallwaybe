@@ -15,9 +15,16 @@ public class DateDTO extends CommonInput{
 	private String country;
 	private String province;
 	private String city;
+	private String sequenceID;
 
 
 
+	public String getSequenceID() {
+		return sequenceID;
+	}
+	public void setSequenceID(String sequenceID) {
+		this.sequenceID = sequenceID;
+	}
 	public String getDateid() {
 		return dateid;
 	}

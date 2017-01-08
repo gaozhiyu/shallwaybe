@@ -152,7 +152,7 @@ public class ShallWayDAO {
 			  Session session = HibernateUtil.getSessionFactory().openSession();
 		      Transaction tx = null;
 		      ShallWayEntity[] shallWayArray =null;
-		      int pageSize =10;
+		      int pageSize =1;
 		      
 		      try{
 		         tx = session.beginTransaction();
@@ -193,7 +193,7 @@ public class ShallWayDAO {
 	      Transaction tx = null;
 	      ShallWayOutDTO[] shallWayArray =null;
 	      SimpleDateFormat sdfd =new SimpleDateFormat("dd/MM/yyyy");
-	      int pageSize =5;
+	      int pageSize =1;
 	      byte[] bdata= null;
 	      Blob blob=null;
 	      
@@ -206,8 +206,8 @@ public class ShallWayDAO {
 	         crit.setMaxResults(pageSize);
 	         
 //	         added on 27.11.2016 to check sequenceNo.
-	         if (shallWaySearchDTO.getSequenceNo()!= null){
-	        	 BigInteger seqID = new BigInteger(shallWaySearchDTO.getSequenceNo());
+	         if (shallWaySearchDTO.getSequenceID()!= null){
+	        	 BigInteger seqID = new BigInteger(shallWaySearchDTO.getSequenceID());
 	        	 crit.add(Restrictions.lt("sequenceID",seqID));
 	         }
 //	         @SuppressWarnings("unchecked")
@@ -267,7 +267,7 @@ public class ShallWayDAO {
 	        }
 	        
 			crit.add(dj);
-			crit.addOrder(Order.desc("postTime"));
+			crit.addOrder(Order.desc("sequenceID"));
 			
 			List<ShallWayOutDTO> shallWayList = crit.list();  	         
 	         
