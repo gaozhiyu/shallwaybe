@@ -210,7 +210,7 @@ public class CoreServlet extends HttpServlet {
 	public void init() {
 
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-		config.setHostname("172.23.47.187");
+		config.setHostname("172.23.40.242");
 		config.setPort(9092);
 		SocketConfig sockConfig = new SocketConfig();
 		sockConfig.setReuseAddress(true);
@@ -222,14 +222,20 @@ public class CoreServlet extends HttpServlet {
 		server.addEventListener("chatevent", LogFile.class, new DataListener<LogFile>() {
 			public void onData(SocketIOClient client, LogFile data, AckRequest ackSender) {
 				String uuid = JedisUtil.get(data.getToID(), "chat");
-				if (uuid == null || "".equals(uuid)) {
-					ChatMessageQueue.getInstance().postMessage(data);
-				} else {
-					UUID to = UUID.fromString(uuid);
-					SocketIOClient toClient = client.getNamespace().getClient(to);
-
-					if (toClient != null)
-						toClient.sendEvent("chatevent", data);
+				String fromId = data.getFromID();
+				if((""+client.getSessionId().toString()).equals(JedisUtil.get(data.getFromID(), "chat"))){
+					//System.out.println("ID is valid");
+				
+				//TODO　blacklist check
+					if (uuid == null || "".equals(uuid)) {
+						ChatMessageQueue.getInstance().postMessage(data);
+					} else {
+						UUID to = UUID.fromString(uuid);
+						SocketIOClient toClient = client.getNamespace().getClient(to);
+						
+						if (toClient != null)
+							toClient.sendEvent("chatevent", data);
+					}
 				}
 			}
 		});
@@ -248,12 +254,18 @@ public class CoreServlet extends HttpServlet {
 		server.addConnectListener(new ConnectListener() {
 			public void onConnect(SocketIOClient client) {
 				// TODO this id must be authenicate
-				if (1 == 1) {
-					HandshakeData data = client.getHandshakeData();
-					Map<String, List<String>> map = data.getUrlParams();
-					List<String> strList = map.get("foo");
-					if (strList != null && strList.size() > 0) {
-						String userid = strList.get(0);
+				//if (1 == 1) {
+				HandshakeData data = client.getHandshakeData();
+				Map<String, List<String>> map = data.getUrlParams();
+				List<String> strList = map.get("userid");
+				List<String> sessList = map.get("httpSessionID");
+				if (sessList != null && sessList.size() > 0) {
+					System.out.println("PrintedByWilliam httpSessionID="+ sessList.get(0));
+				}
+				if (strList != null && strList.size() > 0 && sessList != null && sessList.size() > 0) {
+					String userid = strList.get(0);
+					String httpSessionID = sessList.get(0);
+					if((""+httpSessionID).equals(JedisUtil.get(userid))){
 						client.set("id", strList.get(0));
 						JedisUtil.set(strList.get(0), "chat", client.getSessionId().toString());
 						MessageDAO messageDAO = MessageDAO.getInstance();
