@@ -210,7 +210,7 @@ public class CoreServlet extends HttpServlet {
 	public void init() {
 
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-		config.setHostname("172.23.40.242");
+		config.setHostname("172.23.44.166");
 		config.setPort(9092);
 		SocketConfig sockConfig = new SocketConfig();
 		sockConfig.setReuseAddress(true);
@@ -223,7 +223,7 @@ public class CoreServlet extends HttpServlet {
 			public void onData(SocketIOClient client, LogFile data, AckRequest ackSender) {
 				String uuid = JedisUtil.get(data.getToID(), "chat");
 				String fromId = data.getFromID();
-				if((""+client.getSessionId().toString()).equals(JedisUtil.get(data.getFromID(), "chat"))){
+				//if((""+client.getSessionId().toString()).equals(JedisUtil.get(data.getFromID(), "chat"))){
 					//System.out.println("ID is valid");
 				
 				//TODO　blacklist check
@@ -235,7 +235,7 @@ public class CoreServlet extends HttpServlet {
 						
 						if (toClient != null)
 							toClient.sendEvent("chatevent", data);
-					}
+					//}
 				}
 			}
 		});
