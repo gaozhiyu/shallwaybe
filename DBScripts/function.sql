@@ -2,7 +2,7 @@ DELIMITER $$
 
 DROP FUNCTION IF EXISTS `calculateDistance`$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `calculateDistance`(lat1 double, lon1 double, lat2 double, lon2 double) RETURNS text CHARSET latin1
+CREATE  FUNCTION `calculateDistance`(lat1 double, lon1 double, lat2 double, lon2 double) RETURNS text CHARSET latin1
 BEGIN
   DECLARE dLat double;
  DECLARE dLon double;
@@ -30,7 +30,7 @@ DELIMITER $$
 
 DROP FUNCTION IF EXISTS `shallway`.`calculateCorrelation`$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `calculateCorrelation`(distance double, shaketime text) RETURNS text CHARSET latin1
+CREATE FUNCTION `calculateCorrelation`(distance double, shaketime text) RETURNS text CHARSET latin1
 BEGIN
  DECLARE a double;
  DECLARE b double;
