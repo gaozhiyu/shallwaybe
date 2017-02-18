@@ -5,29 +5,29 @@
 <hibernate-mapping>
     <class name="com.william.entity.LatestCoordinateEntity" table="latestcoordinate" catalog="shallway">
         <id name="userIntID" type="string" >
-            <column name="UserIntID" length="64" not-null="true" unique="true" />
+            <column name="userintid" length="64" not-null="true" unique="true" />
         </id>
               
         <property name="longitude" type="java.lang.Double">
-            <column name="Longitude" />
+            <column name="longitude" />
         </property>        
         <property name="latitude" type="java.lang.Double">
-            <column name="Latitude" />
+            <column name="latitude" />
         </property>
         <property name="lastShakeTime" type="java.util.Date">
-            <column name="LastShakeTime" />
+            <column name="lastshaketime" />
         </property>
         <property name="country" type="string">
-            <column name="Country" length="128" />
+            <column name="country" length="128" />
         </property> 
         <property name="province" type="string">
-            <column name="Province" length="128" />
+            <column name="province" length="128" />
         </property>        
         <property name="city" type="string">
-            <column name="City" length="128" />
+            <column name="city" length="128" />
         </property>
          <property name="lastAddressUpdate" type="java.util.Date">
-            <column name="LastAddressUpdate" />
+            <column name="lastaddressupdate" />
         </property>         
 
     </class>

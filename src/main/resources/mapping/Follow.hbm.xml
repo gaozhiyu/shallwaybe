@@ -5,25 +5,25 @@
 <hibernate-mapping>
     <class name="com.william.entity.FollowEntity" table="follow" catalog="shallway">
     
-        <id name="sequenceID" type="java.math.BigInteger" column="SequenceID">
+        <id name="sequenceID" type="java.math.BigInteger" column="sequenceid">
          <generator class="native"/>
       	</id>
       	    
         <property name="id" type="string" >
-            <column name="ID" length="64" not-null="true" unique="true" />
+            <column name="id" length="64" not-null="true" unique="true" />
         </property>
         
         <property name="dateID" type="string">
-            <column name="DateID" length="64" />
+            <column name="dateid" length="64" />
         </property>
         <property name="followerIntID" type="string">
-            <column name="FollowerIntID" length="64" />
+            <column name="followerintid" length="64" />
         </property>                      
         <property name="followTime" type="java.util.Date">
-            <column name="FollowTime" />
+            <column name="followtime" />
         </property>               
         <property name="deleteStatus" type="boolean">
-            <column name="DeleteStatus"/>
+            <column name="deletestatus"/>
         </property> 
         
     </class>

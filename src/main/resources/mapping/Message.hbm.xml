@@ -5,26 +5,26 @@
 <hibernate-mapping>
     <class name="com.william.entity.MessageEntity" table="message" catalog="shallway">
         <id name="messageID" type="string" >
-            <column name="MessageID" length="64" not-null="true" unique="true" />
+            <column name="messageid" length="64" not-null="true" unique="true" />
         </id>
         
         <property name="messageContents" type="blob">
-            <column name="MessageContents"/>
+            <column name="messagecontents"/>
         </property>               
         <property name="senderIntID" type="string">
-            <column name="SenderIntID" length="64" />
+            <column name="senderintid" length="64" />
         </property>
         <property name="senderNickname" type="string">
-            <column name="SenderNickname" length="32" />
+            <column name="sendernickname" length="32" />
         </property>        
         <property name="receiverIntID" type="string">
-            <column name="ReceiverIntID" length="64" />
+            <column name="receiverintid" length="64" />
         </property>                      
         <property name="sendTime" type="java.util.Date">
-            <column name="SendTime" />
+            <column name="sendtime" />
         </property> 
         <property name="sendStatus" type="boolean">
-            <column name="SendStatus" />
+            <column name="sendstatus" />
         </property> 
     </class>
 </hibernate-mapping>

@@ -5,28 +5,28 @@
 <hibernate-mapping>
     <class name="com.william.entity.ReplyEntity" table="reply" catalog="shallway">
     
-        <id name="sequenceID" type="java.math.BigInteger" column="SequenceID">
+        <id name="sequenceID" type="java.math.BigInteger" column="sequenceid">
          <generator class="native"/>
       	</id>
       	
         <property name="id" type="string" >
-            <column name="ID" length="64" not-null="true" unique="true" />
+            <column name="id" length="64" not-null="true" unique="true" />
         </property>
         
         <property name="dateID" type="string">
-            <column name="DateID" length="64" />
+            <column name="dateid" length="64" />
         </property>
         <property name="replierIntID" type="string">
-            <column name="ReplierIntID" length="64" />
+            <column name="replierintid" length="64" />
         </property>                      
         <property name="replyTime" type="java.util.Date">
-            <column name="ReplyTime" />
+            <column name="replytime" />
         </property> 
         <property name="replyContents" type="blob">
-            <column name="ReplyContents"/>
+            <column name="replycontents"/>
         </property>    
         <property name="deleteStatus" type="boolean">
-            <column name="DeleteStatus"/>
+            <column name="deletestatus"/>
         </property>          
                    
 

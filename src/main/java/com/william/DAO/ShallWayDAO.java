@@ -116,7 +116,7 @@ public class ShallWayDAO {
 		      try{
 		         tx = session.beginTransaction();
 		         
-			      String sql = "select * from ShallWayView where dateID = ? and deletestatus = false";
+			      String sql = "select * from shallwayview where dateID = ? and deletestatus = false";
 			      SQLQuery query = session.createSQLQuery(sql);
 			      query.setString(0, dateID);
 			      query.addEntity(ShallWayOutDTO.class);
@@ -157,7 +157,7 @@ public class ShallWayDAO {
 		      try{
 		         tx = session.beginTransaction();
 		         
-			      String sql = "select * from ShallWay where UserIntID = ? and deletestatus = false order by posttime DESC";
+			      String sql = "select * from shallway where UserIntID = ? and deletestatus = false order by posttime DESC";
 			      SQLQuery query = session.createSQLQuery(sql);
 			      query.setString(0, userIntID);
 			      query.addEntity(ShallWayEntity.class);

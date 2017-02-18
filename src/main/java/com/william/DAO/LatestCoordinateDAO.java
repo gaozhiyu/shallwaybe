@@ -133,7 +133,7 @@ public class LatestCoordinateDAO {
 	      try{
 	         tx = session.beginTransaction();
 	         
-		      String sql = "select b.Nickname, a.* from latestcoordinate a join profile b on a.userintid = b.userintid where a.UserIntID = ?";
+		      String sql = "select b.nickname as nickname,a.userintid as userIntID,a.longitude as longitude,a.latitude as latitude,a.lastshaketime as lastShakeTime,a.country as country,a.province as province,a.city as city,a.lastaddressupdate as lastAddressUpdate from latestcoordinate a join profile b on a.userintid = b.userintid where a.userintid = ?";
 		      SQLQuery query = session.createSQLQuery(sql);
 		      query.setString(0, userIntID);
 		      query.setResultTransformer(Transformers.aliasToBean(LatestCoordinateOutDTO.class));

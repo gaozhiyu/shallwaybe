@@ -5,26 +5,26 @@
 <hibernate-mapping>
     <class name="com.william.entity.AddressHistoryEntity" table="addresshistory" catalog="shallway">
         <id name="addressSequenceID" type="string" >
-            <column name="AddressSequenceID" length="64" not-null="true" unique="true" />
+            <column name="addresssequenceid" length="64" not-null="true" unique="true" />
         </id>
         
         <property name="userIntID" type="string">
-            <column name="UserIntID" length="64" />
+            <column name="userintid" length="64" />
         </property>      
         <property name="country" type="string">
-            <column name="Country" length="128" />
+            <column name="country" length="128" />
         </property> 
         <property name="province" type="string">
-            <column name="Province" length="128" />
+            <column name="province" length="128" />
         </property>        
         <property name="city" type="string">
-            <column name="City" length="128" />
+            <column name="city" length="128" />
         </property>
         <property name="updateTime" type="java.util.Date">
-            <column name="UpdateTime" />
+            <column name="updatetime" />
         </property> 
         <property name="placeType" type="string">
-            <column name="PlaceType" length="1" />
+            <column name="placetype" length="1" />
         </property>               
 
     </class>

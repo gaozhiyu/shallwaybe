@@ -5,76 +5,76 @@
 <hibernate-mapping>
     <class name="com.william.entity.ProfileEntity" table="profile" catalog="shallway">
         <id name="userIntID" type="string" >
-            <column name="UserIntID" length="64" not-null="true" unique="true" />
+            <column name="userintid" length="64" not-null="true" unique="true" />
         </id>
         
         <property name="email" type="string">
-            <column name="Email" length="128" not-null="true" unique="true" />
+            <column name="email" length="128" not-null="true" unique="true" />
         </property>        
         <property name="password" type="string">
-            <column name="Password" length="128" />
+            <column name="password" length="128" />
         </property>
         <property name="nickname" type="string">
-            <column name="Nickname" length="32" />
+            <column name="nickname" length="32" />
         </property>
          <property name="gender" type="string">
-            <column name="Gender" length="4" />
+            <column name="gender" length="4" />
         </property>
         <property name="dateOfBirth" type="java.util.Date">
-            <column name="DateOfBirth" />
+            <column name="dateofbirth" />
         </property>
         <property name="profilePhoto" type="java.util.Date">
-            <column name="ProfilePhoto" />
+            <column name="profilephoto" />
         </property>
         
         <property name="wrongTryPWD" type="integer">
-            <column name="WrongTryPWD" />
+            <column name="wrongtrypwd" />
         </property>
         <property name="OTP" type="string">
-            <column name="OTP" length="128"/>
+            <column name="otp" length="128"/>
         </property>
         <property name="OTPExpiryTime" type="java.util.Date">
-            <column name="OTPExpiryTime" />
+            <column name="otpexpirytime" />
         </property>
         <property name="wrongTryOTP" type="integer">
-            <column name="WrongTryOTP" />
+            <column name="wrongtryotp" />
         </property>                        
         
         <property name="country" type="string">
-            <column name="Country" length="128" />
+            <column name="country" length="128" />
         </property> 
         <property name="province" type="string">
-            <column name="Province" length="128" />
+            <column name="province" length="128" />
         </property> 
         <property name="city" type="string">
-            <column name="City" length="128" />
+            <column name="city" length="128" />
         </property>
         <property name="googleCountry" type="string">
-            <column name="GoogleCountry" length="128" />
+            <column name="googlecountry" length="128" />
         </property> 
         <property name="googleProvince" type="string">
-            <column name="GoogleProvince" length="128" />
+            <column name="googleprovince" length="128" />
         </property> 
         <property name="googleCity" type="string">
-            <column name="GoogleCity" length="128" />
+            <column name="googlecity" length="128" />
         </property>              
         <property name="longitude" type="java.lang.Double">
-            <column name="Longitude" />
+            <column name="longitude" />
         </property>        
         <property name="latitude" type="java.lang.Double">
-            <column name="Latitude" />
+            <column name="latitude" />
         </property>                      
         <property name="lastUpdate" type="java.util.Date">
-            <column name="LastUpdate" />
+            <column name="lastupdate" />
         </property> 
         <property name="createTime" type="java.util.Date">
-            <column name="CreateTime" />
+            <column name="createtime" />
         </property>
          <property name="lastAddressUpdate" type="java.util.Date">
-            <column name="LastAddressUpdate" />
+            <column name="lastaddressupdate" />
         </property> 
         <property name="signature" type="string">
-            <column name="Signature" length="1024" />
+            <column name="signature" length="1024" />
         </property> 
                 
     </class>

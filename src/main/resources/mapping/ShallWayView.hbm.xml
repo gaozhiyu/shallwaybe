@@ -5,63 +5,63 @@
 <hibernate-mapping>
     <class name="com.william.to.ShallWayOutDTO" table="shallwayview" catalog="shallway">
     
-        <id name="sequenceID" type="java.math.BigInteger" column="SequenceID">
+        <id name="sequenceID" type="java.math.BigInteger" column="sequenceid">
       	</id>
       	
         <property name="dateID" type="string" >
-            <column name="DateID" length="64" not-null="true" unique="true" />
+            <column name="dateid" length="64" not-null="true" unique="true" />
         </property>
         
         <property name="nickname" type="string">
-            <column name="Nickname" length="32" />
+            <column name="nickname" length="32" />
         </property>
         <property name="userIntID" type="string">
-            <column name="UserIntID" length="64"/>
+            <column name="userintid" length="64"/>
         </property>               
         <property name="country" type="string">
-            <column name="Country" length="128" />
+            <column name="country" length="128" />
         </property>
         <property name="province" type="string">
-            <column name="Province" length="128" />
+            <column name="province" length="128" />
         </property>
         <property name="city" type="string">
-            <column name="City" length="128" />
+            <column name="city" length="128" />
         </property>
          <property name="place" type="string">
-            <column name="Place" length="128" />
+            <column name="place" length="128" />
         </property>
         <property name="startTime" type="java.util.Date">
-            <column name="StartTime" />
+            <column name="starttime" />
         </property>
         <property name="endTime" type="java.util.Date">
-            <column name="EndTime" />
+            <column name="endtime" />
         </property> 
         <property name="postTime" type="java.util.Date">
-            <column name="PostTime" />
+            <column name="posttime" />
         </property>
          <property name="carPool" type="boolean">
-            <column name="CarPool" />
+            <column name="carpool" />
         </property> 
         <property name="freeTour" type="boolean">
-            <column name="FreeTour" />
+            <column name="freetour" />
         </property>
         <property name="hotelShare" type="boolean">
-            <column name="HotelShare" />
+            <column name="hotelshare" />
         </property>         
         <property name="freeGuide" type="boolean">
-            <column name="FreeGuide" />
+            <column name="freeguide" />
         </property>
          <property name="title" type="string">
-            <column name="Title" length="512" />
+            <column name="title" length="512" />
         </property>         
          <property name="contact" type="string">
-            <column name="Contact" length="128" />
+            <column name="contact" length="128" />
         </property>  
          <property name="descriptionBlob" type="blob">
-            <column name="Description" />
+            <column name="description" />
         </property> 
         <property name="deleteStatus" type="boolean">
-            <column name="DeleteStatus"/>
+            <column name="deletestatus"/>
         </property> 
                 
     </class>
