@@ -158,6 +158,7 @@ public class ProfileService {
 			profileOutDTO.setProvince(profile.getProvince());
 			profileOutDTO.setCountry(profile.getCountry());
 			profileOutDTO.setStatus("Y");
+			profileOutDTO.setSignature(profile.getSignature());
 			AddressHistoryDAO addressDAO = AddressHistoryDAO.getInstance();
 			AddressHistoryOutDTO[] visitArray = addressDAO.readAddressHistory(input.getUserIntID(), "B");
 			if (visitArray != null && visitArray.length > 0) {
@@ -166,13 +167,15 @@ public class ProfileService {
 					sb.append(dto.toString1() + "\n");
 				profileOutDTO.setVisitedCities(sb.toString());
 			}
+			profileOutDTO.setVisitedArray(visitArray);
 			AddressHistoryOutDTO[] regArray = addressDAO.readAddressHistory(input.getUserIntID(), "R");
 			if (regArray != null && regArray.length > 0) {
 				StringBuilder sb = new StringBuilder();
 				for (AddressHistoryOutDTO dto : regArray)
 					sb.append(dto.toString() + "\n");
-				profileOutDTO.setVisitedCities(sb.toString());
+				profileOutDTO.setRegisterCities(sb.toString());
 			}
+			profileOutDTO.setRegistedArray(regArray);
 			profileOutDTO.setProfilePhoto(profile.getProfilePhoto());
 
 			

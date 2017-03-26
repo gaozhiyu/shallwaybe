@@ -15,9 +15,33 @@ public class ProfileOutDTO extends CommonVO{
 	private String dateOfBirth;
 	private String visitedCities;
 	private String registerCities;
+	private String signature;
+	private AddressHistoryOutDTO[] visitedArray;
+	private AddressHistoryOutDTO[] registedArray;
 	
 	
 	
+	
+	
+	
+	public AddressHistoryOutDTO[] getVisitedArray() {
+		return visitedArray;
+	}
+	public void setVisitedArray(AddressHistoryOutDTO[] visitedArray) {
+		this.visitedArray = visitedArray;
+	}
+	public AddressHistoryOutDTO[] getRegistedArray() {
+		return registedArray;
+	}
+	public void setRegistedArray(AddressHistoryOutDTO[] registedArray) {
+		this.registedArray = registedArray;
+	}
+	public String getSignature() {
+		return signature;
+	}
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
 	public String getNickname() {
 		return nickname;
 	}
