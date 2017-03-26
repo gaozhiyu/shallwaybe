@@ -210,7 +210,7 @@ public class CoreServlet extends HttpServlet {
 	public void init() {
 
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-		config.setHostname("172.23.44.166");
+		config.setHostname("172.31.10.178");// For AWS, use the Private IPs like NUS like NUS
 		config.setPort(9092);
 		SocketConfig sockConfig = new SocketConfig();
 		sockConfig.setReuseAddress(true);
