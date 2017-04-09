@@ -3,13 +3,14 @@ package com.william;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+
+import com.william.util.FileUtil;
 
 public class FileDownloadServlet extends HttpServlet {
 	
@@ -29,7 +30,9 @@ public class FileDownloadServlet extends HttpServlet {
 		try {
 			OutputStream out = response.getOutputStream();
 			String userid= (String)request.getParameter("id");
-			FileInputStream in = new FileInputStream("d:/shallwayprofilephoto/"+userid+".jpg");
+			String path = FileUtil.getProperties().getProperty("profilePhotoDir");
+			FileInputStream in = new FileInputStream(path+userid+".jpg");
+			//FileInputStream in = new FileInputStream("d:/shallwayprofilephoto/"+userid+".jpg");
 			byte[] buffer = new byte[4096];
 			int length;
 			while ((length = in.read(buffer)) > 0){

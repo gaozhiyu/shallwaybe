@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import com.william.DAO.ProfileDAO;
 import com.william.to.ProfileUpdateDTO;
+import com.william.util.FileUtil;
 import com.william.util.Position;
 
 public class FileUploadServlet extends HttpServlet {
@@ -101,7 +102,8 @@ public class FileUploadServlet extends HttpServlet {
 	    }
 	 
 	    private void writeTo(String fileName, byte[] body, Position p) throws IOException {
-	        FileOutputStream fileOutputStream = new FileOutputStream("d:/shallwayprofilephoto/" + fileName);
+	    	String filePath = FileUtil.getProperties().getProperty("profilePhotoDir");
+	        FileOutputStream fileOutputStream = new FileOutputStream(filePath + fileName);
 	        fileOutputStream.write(body, p.begin, (p.end - p.begin));
 	        fileOutputStream.flush();
 	        fileOutputStream.close();
