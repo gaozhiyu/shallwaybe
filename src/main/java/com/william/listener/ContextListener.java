@@ -14,6 +14,7 @@ import com.william.to.LatestCoordinateInDTO;
 import com.william.to.MessageInDTO;
 import com.william.to.ShakeInDTO;
 import com.william.util.ChatMessageQueue;
+import com.william.util.FileUtil;
 import com.william.util.MessageQueue;
 import com.william.util.MethodHashMap;
 import com.william.util.ParserJsonUtil;
@@ -95,6 +96,8 @@ public class ContextListener implements ServletContextListener {
 						messageDAO.addMessage(messageInDTO);
 					}
 		});
+		
+		FileUtil.getProperties();
 		
 		
 	}

@@ -37,6 +37,7 @@ import com.william.filter.LogFile;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.MessageOutDTO;
 import com.william.util.ChatMessageQueue;
+import com.william.util.FileUtil;
 import com.william.util.JedisUtil;
 import com.william.util.MethodHashMap;
 import com.william.util.XssShieldUtil;
@@ -210,7 +211,10 @@ public class CoreServlet extends HttpServlet {
 	public void init() {
 
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-		config.setHostname("172.31.10.178");// For AWS, use the Private IPs like NUS like NUS
+		String hostip = FileUtil.getProperties().getProperty("chatServerIP");
+		// For AWS, use the Private IPs like NUS like NUS
+		config.setHostname(hostip);
+		//config.setHostname("172.31.10.178");
 		config.setPort(9092);
 		SocketConfig sockConfig = new SocketConfig();
 		sockConfig.setReuseAddress(true);
