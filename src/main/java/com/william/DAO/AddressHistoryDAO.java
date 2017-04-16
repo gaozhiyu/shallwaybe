@@ -71,9 +71,9 @@ public class AddressHistoryDAO {
 
 //		      String sql = "select a.*, b.Nickname from addresshistory a join profile b on a.userintid = b.userintid where a.userIntID = ? and a.PlaceType = ? order by updatetime desc;";
 		      if ("B".equalsIgnoreCase(placeType)){
-		    	  sql = "select distinct country, province, city from addresshistory where userIntID = ? and PlaceType = ? order by updatetime desc;";
+		    	  sql = "select distinct country, province, city from addresshistory where userintid = ? and placetype = ? order by updatetime desc;";
 		      }else if("R".equalsIgnoreCase(placeType)){
-		    	  sql = "select * from addresshistory where userIntID = ? and PlaceType = ? order by updatetime desc;";
+		    	  sql = "select userIntID, addressSequenceID,country,province,city, updateTime,placeType from addresshistory where userIntID = ? and PlaceType = ? order by updatetime desc;";
 		      };
 //		      String sql = "select * from addresshistory where userIntID = ? and PlaceType = ? order by updatetime desc;";
 		      SQLQuery query = session.createSQLQuery(sql);  

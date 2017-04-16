@@ -12,7 +12,7 @@ public class TestAddressHistory {
 	
 	AddressHistoryDAO addressHistoryDAO = AddressHistoryDAO.getInstance() ;
     AddressHistoryOutDTO[] AddressHistoryArray = null;
-    AddressHistoryInDTO addressHistory = new AddressHistoryInDTO("1234567","新加坡","Guang Dong Province","Shang Hai","R");
+    AddressHistoryInDTO addressHistory = new AddressHistoryInDTO("07d407cf02154d8f814c099cb0301c16","Singapore","Jurong West","NTU","B");
     
 	
 	@Test
@@ -22,7 +22,7 @@ public class TestAddressHistory {
 	
 	@Test
 	public void testReadAddressHistory(){
-        AddressHistoryArray=addressHistoryDAO.readAddressHistory("1234567","B");   
+        AddressHistoryArray=addressHistoryDAO.readAddressHistory("07d407cf02154d8f814c099cb0301c16","B");   
         
         for (int i=0; i<AddressHistoryArray.length;i++){
         	System.out.println("Record No." + (i+1));
