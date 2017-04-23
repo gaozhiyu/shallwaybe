@@ -81,6 +81,8 @@ public class DateService {
 					dateArray[i].setProvince(shallwayArray[i].getProvince());
 					dateArray[i].setTitle(shallwayArray[i].getTitle());
 					dateArray[i].setSequenceID(String.valueOf(shallwayArray[i].getSequenceID()));
+					dateArray[i].setNickname(shallwayArray[i].getNickname());
+					dateArray[i].setPosttime(df.format(shallwayArray[i].getPostTime()));
 				}
 				outDto.setDateArray(dateArray);
 				outDto.setStatus("Y");

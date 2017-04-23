@@ -16,6 +16,8 @@ public class DateDTO extends CommonInput{
 	private String province;
 	private String city;
 	private String sequenceID;
+	private String nickname;
+	private String posttime;
 
 
 
@@ -74,6 +76,18 @@ public class DateDTO extends CommonInput{
 	}
 	public void setCity(String city) {
 		this.city = city;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getPosttime() {
+		return posttime;
+	}
+	public void setPosttime(String posttime) {
+		this.posttime = posttime;
 	}
 	
 	
