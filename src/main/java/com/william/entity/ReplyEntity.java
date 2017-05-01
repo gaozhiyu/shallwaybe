@@ -10,6 +10,8 @@ public class ReplyEntity implements java.io.Serializable {
 	private BigInteger sequenceID;
 	private String id;
 	private String dateID;
+	private String srcReplyID;
+	private String sourceUserIntID;
     private String replierIntID;
 	private Date replyTime;
 	private Blob replyContents;
@@ -18,18 +20,21 @@ public class ReplyEntity implements java.io.Serializable {
 	public ReplyEntity() {
 		super();
 	}
-
-	public ReplyEntity(String id, String dateID, String replierIntID, Date replyTime, Blob replyContents,
-			Boolean deleteStatus) {
+	
+	public ReplyEntity(BigInteger sequenceID, String id, String dateID, String srcReplyID, String sourceUserIntID,
+			String replierIntID, Date replyTime, Blob replyContents, Boolean deleteStatus) {
 		super();
+		this.sequenceID = sequenceID;
 		this.id = id;
 		this.dateID = dateID;
+		this.srcReplyID = srcReplyID;
+		this.sourceUserIntID = sourceUserIntID;
 		this.replierIntID = replierIntID;
 		this.replyTime = replyTime;
 		this.replyContents = replyContents;
 		this.deleteStatus = deleteStatus;
 	}
-	
+
 	public BigInteger getSequenceID() {
 		return sequenceID;
 	}
@@ -52,6 +57,22 @@ public class ReplyEntity implements java.io.Serializable {
 
 	public void setDateID(String dateID) {
 		this.dateID = dateID;
+	}
+
+	public String getSrcReplyID() {
+		return srcReplyID;
+	}
+
+	public void setSrcReplyID(String srcReplyID) {
+		this.srcReplyID = srcReplyID;
+	}
+	
+	public String getSourceUserIntID() {
+		return sourceUserIntID;
+	}
+
+	public void setSourceUserIntID(String sourceUserIntID) {
+		this.sourceUserIntID = sourceUserIntID;
 	}
 
 	public String getReplierIntID() {

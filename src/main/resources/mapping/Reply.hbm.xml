@@ -16,6 +16,13 @@
         <property name="dateID" type="string">
             <column name="dateid" length="64" />
         </property>
+        
+        <property name="srcReplyID" type="string">
+            <column name="srcreplyid" length="64" />
+        </property>        
+        <property name="sourceUserIntID" type="string">
+            <column name="sourceuserintid" length="64" />
+        </property>         
         <property name="replierIntID" type="string">
             <column name="replierintid" length="64" />
         </property>                      

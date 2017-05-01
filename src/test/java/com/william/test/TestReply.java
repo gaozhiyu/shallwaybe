@@ -13,7 +13,7 @@ public class TestReply {
 	ReplyDAO replyDAO = new ReplyDAO();
 	ReplyOutDTO[] replyArray= null;
 
-	ReplyInDTO replyInDTO = new ReplyInDTO("94ab4fbd272b43d2beed7688345f5fa3","b53a45037c244371baaeb5e7af75aa90","我勒去，可以吗!");
+	ReplyInDTO replyInDTO = new ReplyInDTO("807d4160db5c4822990d1047753515d2","ee9c58b1915d46f5a00b193e7d425542","dab4dbe204294a368fc3c30cb7f479a3","c83c744d00e64d459ad56b5894b6a646","还真的可以啊！！");
 	
 	@Test
 	public void testAddReply(){
@@ -23,12 +23,15 @@ public class TestReply {
 	@Test
 	public void testReadReply() throws SQLException{
 		
-		replyArray = replyDAO.readReply("94ab4fbd272b43d2beed7688345f5fa3");
+		replyArray = replyDAO.readReply("807d4160db5c4822990d1047753515d2");
 		
 		for(int i=0; i<replyArray.length;i++){
 			System.out.println();
 			System.out.println("ID: "+replyArray[i].getId());
 			System.out.println("\tDateID: "+replyArray[i].getDateID());
+			System.out.println("\tSrcReplyID: "+replyArray[i].getSrcReplyID());
+			System.out.println("\tSourceUserIntID: "+replyArray[i].getSourceUserIntID());
+			System.out.println("\tSourceUserNickname: "+replyArray[i].getSourceUserNickname());
 			System.out.println("\tReplierIntID: "+replyArray[i].getReplierIntID());
 			System.out.println("\tReplierNickname: " + replyArray[i].getReplierNickname());
 			System.out.println("\tReplyTime: "+replyArray[i].getReplyTime());
@@ -39,7 +42,7 @@ public class TestReply {
 	
 	@Test
 	public void testDeleteReply(){
-		replyDAO.deleteReply("fe99d5d1b3ce4efb8ab3c425bf86a806");		
+		replyDAO.deleteReply("ee9c58b1915d46f5a00b193e7d425542");		
 	}
 	
 }

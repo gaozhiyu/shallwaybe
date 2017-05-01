@@ -47,6 +47,8 @@ public class ReplyDAO {
 
 		         replyEntity.setId(id);
 		         replyEntity.setDateID(replyInDTO.getDateID());
+		         replyEntity.setSrcReplyID(replyInDTO.getSrcReplyID());
+		         replyEntity.setSourceUserIntID(replyInDTO.getSourceUserIntID());
 		         replyEntity.setReplierIntID(replyInDTO.getReplierIntID());
 		         replyEntity.setReplyTime(replyTime);
 		         
@@ -79,16 +81,21 @@ public class ReplyDAO {
 		      tx = session.beginTransaction();
 
 //		      String sql = "select a.ID as id,a.DateID,a.ReplierIntID,a.ReplyTime,a.ReplyContents, b.Nickname as replierNickname from reply a join profile b on a.replierintid = b.userintid where a.dateID = ? order by replytime desc;";
-		      String sql = "select a.*, b.Nickname as replierNickname from reply a join profile b on a.replierintid = b.userintid where a.dateID = ? and a.deletestatus = false order by replytime asc;";
+//		      String sql = "select a.*, b.Nickname as replierNickname from reply a join profile b on a.replierintid = b.userintid where a.dateID = ? and a.deletestatus = false order by replytime asc;";
+		      String sql = "select a.*, getNickname(a.sourceUserIntID) as sourceUserNickname, getNickname(a.replierintid) as replierNickname from reply a where a.dateID = ? and a.deletestatus = false order by replytime asc;";
 		      SQLQuery query = session.createSQLQuery(sql);  
 		      query.setString(0, dateID);
 		      query.addScalar("id", new StringType());
 		      query.addScalar("DateID", new StringType());
+		      query.addScalar("SrcReplyID", new StringType());
+		      query.addScalar("SourceUserIntID", new StringType());		      
+		      query.addScalar("SourceUserNickname", new StringType());
 		      query.addScalar("ReplierIntID", new StringType());
 		      query.addScalar("ReplyTime", new TimestampType());
 		      query.addScalar("replierNickname", new StringType());
 		      query.addScalar("ReplyContents", new BlobType());
 		      query.addScalar("DeleteStatus", new BooleanType());
+		      
 		      query.setResultTransformer(Transformers.aliasToBean(ReplyOutDTO.class));
 		      List<ReplyOutDTO> replyList = query.list();	
 		      replyArray = new ReplyOutDTO[replyList.size()];
@@ -101,7 +108,7 @@ public class ReplyDAO {
 		    		  bdata = blob.getBytes(1, (int) blob.length());
 					  String replyContents = new String(bdata);
 					  replyArray[i].setReplyContentsStr(replyContents);
-
+					  
 		    	  }
 		      }
 	

@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 public class ReplyInDTO {
 	
 	private String dateID;
+	private String srcReplyID;
+	private String sourceUserIntID;
     private String replierIntID;
 	private String replyContents;
 	
@@ -13,9 +15,12 @@ public class ReplyInDTO {
 		super();
 	}
 
-	public ReplyInDTO(String dateID, String replierIntID, String replyContents) {
+	public ReplyInDTO(String dateID, String srcReplyID, String sourceUserIntID, String replierIntID,
+			String replyContents) {
 		super();
 		this.dateID = dateID;
+		this.srcReplyID = srcReplyID;
+		this.sourceUserIntID = sourceUserIntID;
 		this.replierIntID = replierIntID;
 		this.replyContents = replyContents;
 	}
@@ -26,6 +31,22 @@ public class ReplyInDTO {
 
 	public void setDateID(String dateID) {
 		this.dateID = dateID;
+	}
+
+	public String getSrcReplyID() {
+		return srcReplyID;
+	}
+
+	public void setSrcReplyID(String srcReplyID) {
+		this.srcReplyID = srcReplyID;
+	}
+	
+	public String getSourceUserIntID() {
+		return sourceUserIntID;
+	}
+
+	public void setSourceUserIntID(String sourceUserIntID) {
+		this.sourceUserIntID = sourceUserIntID;
 	}
 
 	public String getReplierIntID() {
@@ -51,8 +72,15 @@ public class ReplyInDTO {
 		boolean inputValid = true;
 		
 		String userIntIDString ="^[0-9a-zA-Z]+$";
+		
     	boolean dateIDMatch = Pattern.matches(userIntIDString, dateID);
     	if (dateIDMatch == false){
+    		sb.append("\ndateID is not valid!");
+    		inputValid =false;
+    	}
+    	
+    	boolean srcReplyIDMatch = Pattern.matches(userIntIDString, srcReplyID);
+    	if (srcReplyIDMatch == false){
     		sb.append("\ndateID is not valid!");
     		inputValid =false;
     	}
