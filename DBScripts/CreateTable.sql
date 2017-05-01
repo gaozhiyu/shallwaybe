@@ -95,6 +95,7 @@ create table reply (
    sequenceid bigint unsigned not null auto_increment,
    id varchar(64) not null,
    dateid varchar(64) not null,
+   srcreplyid varchar(64) not null,
    replierintid varchar(64) not null,
    replytime timestamp default current_timestamp,
    replycontents blob not null,
@@ -113,4 +114,15 @@ create table message (
    sendtime timestamp default current_timestamp,
    sendstatus boolean default false,
    primary key (messageid)
+)character set = utf8;
+
+drop table if exists blacklist;
+create table blacklist (
+   entryid varchar(64) not null,
+   userintid varchar(64) not null,
+   blockuserintid varchar(64) not null,
+   deletestatus boolean default false,
+   createtime timestamp default current_timestamp,
+   updatetime timestamp default current_timestamp,
+   primary key (entryid)
 )character set = utf8;
