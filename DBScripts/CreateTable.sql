@@ -96,6 +96,7 @@ create table reply (
    id varchar(64) not null,
    dateid varchar(64) not null,
    srcreplyid varchar(64) not null,
+   sourceuserintid varchar(64) not null,
    replierintid varchar(64) not null,
    replytime timestamp default current_timestamp,
    replycontents blob not null,
