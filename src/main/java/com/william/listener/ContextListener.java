@@ -15,6 +15,7 @@ import com.william.to.MessageInDTO;
 import com.william.to.ShakeInDTO;
 import com.william.util.ChatMessageQueue;
 import com.william.util.FileUtil;
+import com.william.util.JedisUtil;
 import com.william.util.MessageQueue;
 import com.william.util.MethodHashMap;
 import com.william.util.ParserJsonUtil;
@@ -27,7 +28,7 @@ public class ContextListener implements ServletContextListener {
 	@SuppressWarnings("deprecation")
 	public void contextDestroyed(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
-
+		JedisUtil.getinstance().destroy();
 	}
 
 	public void contextInitialized(ServletContextEvent arg0) {
@@ -35,6 +36,7 @@ public class ContextListener implements ServletContextListener {
 		System.out.println("Current Thread initialized");
 		ClassLoaderService.getFolder("/newWebApp","authenticate");
 		ClassLoaderService.getFolder("/newWebApp","unauthenticate");
+		JedisUtil.getinstance();
 		System.out.println(MethodHashMap.getInstance().size());
 		MessageQueue.getInstance().setListener(
 				new MessageQueue.MessageListener() {

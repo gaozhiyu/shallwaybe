@@ -1,17 +1,19 @@
 package com.william.util;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 public class JedisUtil {
-	private static Jedis jedis;
+	private static JedisPool pool;
 	
-	public static Jedis getinstance()
+	public static JedisPool getinstance()
 	{
-		if(jedis == null){
-			jedis = new Jedis("localhost");
+		if(pool == null){
+			pool = new JedisPool(new JedisPoolConfig(), "localhost");
 		    System.out.println("Connection to server sucessfully");
 		} 
-		return jedis;
+		return pool;
 	}
 	
 	public static void set(String key, String value){
@@ -22,16 +24,29 @@ public class JedisUtil {
 	
 	
 	public static String get(String key){
-		//return getinstance().get(key);
-		return getinstance().hget(key, "APP");
-		
-//		getinstance().expire(key, 15*60);
+		return get(key, "APP");
 	}
 	
 	
 	public static boolean del(String key){
-		Long result = getinstance().del(key);
-		if(result>0)
+		
+		Jedis jedis = null;
+		Long result = -1L;
+		try {
+		    jedis = pool.getResource();
+		    /// ... 运行相关的Redis操作
+			// TODO Auto-generated method stub
+		    result = jedis.del(key);
+		} finally {
+		    if (jedis != null) {
+		        jedis.close();
+		    }
+		}
+		return result > 0;
+		//Long result = getinstance().del(key);
+		
+		
+		/*if(result>0)
 			return true;
 		else{
 			String str = get(key);
@@ -39,9 +54,8 @@ public class JedisUtil {
 				return false;
 			else 
 				return true;
-		}
-			
-//		getinstance().expire(key, 15*60);
+		}*/
+
 	}
 	
 	public static void main(String[] args){
@@ -54,18 +68,62 @@ public class JedisUtil {
 
 	public static void set(String key, String field, String value) {
 		// TODO Auto-generated method stub
-		getinstance().hset(key, field, value);
-		getinstance().expire(key,60*60*24);
+		Jedis jedis = null;
+		try {
+		    jedis = pool.getResource();
+		    /// ... 运行相关的Redis操作
+		    jedis.hset(key, field, value);
+		    jedis.expire(key,60*60*24);
+		} finally {
+		    if (jedis != null) {
+		    	//pool.returnResource(jedis);
+		        jedis.close();
+		        //jedisPool.returnResource(jedis);
+		    }
+		}
+		
+
+		
 		
 	}
 
 	public static String get(String key, String field) {
-		// TODO Auto-generated method stub
-		return getinstance().hget(key, field);
+
+		Jedis jedis = null;
+		String result = null;
+		try {
+		    jedis = pool.getResource();
+		    /// ... 运行相关的Redis操作
+			// TODO Auto-generated method stub
+			result =  jedis.hget(key, field);
+		} finally {
+		    if (jedis != null) {
+		    	//pool.returnResource(jedis);
+		        jedis.close();
+		    }
+		}
+		return result;
 	}
 	
-	public static void hdel(String key, String field) {
+	public static long hdel(String key, String field) {
 		// TODO Auto-generated method stub
-		 getinstance().hdel(key, field);
+		Long result = -1L;
+		
+		Jedis jedis = null;
+		try {
+		    jedis = pool.getResource();
+		    /// ... 运行相关的Redis操作
+			// TODO Auto-generated method stub
+			result= jedis.hdel(key, field);
+		} finally {
+		    if (jedis != null) {
+		    	//pool.returnResource(jedis);
+		        jedis.close();
+		    }
+		}
+		 return result ;
 	}
+	
+	
+	
 }
