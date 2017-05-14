@@ -37,6 +37,7 @@ import com.william.to.ShallWayUpdateDTO;
 public class ShallWayDAO {
 	
 	private static ShallWayDAO instance;
+	private final int pageSize =2;
 	
 	public static ShallWayDAO getInstance() {
 		if (instance == null) {
@@ -152,7 +153,7 @@ public class ShallWayDAO {
 			  Session session = HibernateUtil.getSessionFactory().openSession();
 		      Transaction tx = null;
 		      ShallWayEntity[] shallWayArray =null;
-		      int pageSize =1;
+		      
 		      
 		      try{
 		         tx = session.beginTransaction();
@@ -193,7 +194,7 @@ public class ShallWayDAO {
 	      Transaction tx = null;
 	      ShallWayOutDTO[] shallWayArray =null;
 	      SimpleDateFormat sdfd =new SimpleDateFormat("dd/MM/yyyy");
-	      int pageSize =1;
+	      
 	      byte[] bdata= null;
 	      Blob blob=null;
 	      
