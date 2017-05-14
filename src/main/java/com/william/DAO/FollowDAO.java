@@ -26,13 +26,14 @@ public class FollowDAO {
 		return instance;
 	}
 	
-	public void addFollow(FollowInDTO followInDTO){
+	public String addFollow(FollowInDTO followInDTO){
 		
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
 	      String id = UUID.randomUUID().toString().replaceAll("-", "");
 	      FollowEntity followEntity = new FollowEntity();
 	      Date followTime = new Date();	
+	      String followID =null;
 	      
 	      try{
 		         tx = session.beginTransaction();
@@ -45,6 +46,7 @@ public class FollowDAO {
 		         
 		         session.save(followEntity);
 		         tx.commit();
+		         followID = id;
 		         
 		      }catch (HibernateException e) {
 		         if (tx!=null) tx.rollback();
@@ -52,6 +54,8 @@ public class FollowDAO {
 		      }finally {
 		         session.close(); 
 		      }
+	      
+	      return followID;
 	}
 	
 	public FollowOutDTO[] readFollow(String dateID){
@@ -63,7 +67,7 @@ public class FollowDAO {
 	    try{
 		      tx = session.beginTransaction();
 
-		      String sql = "select a.ID as id,a.DateID,a.FollowerIntID,a.FollowTime,a.DeleteStatus, b.Nickname as followerNickname from follow a join profile b on a.followerintid = b.userintid where a.dateID = ? and a.deletestatus =false order by followtime desc;";
+		      String sql = "select a.id as id,a.dateid,a.followerintid,a.followtime,a.deletestatus, b.nickname as followerNickname from follow a join profile b on a.followerintid = b.userintid where a.dateid = ? and a.deletestatus =false order by followtime desc;";
 		      SQLQuery query = session.createSQLQuery(sql);  
 		      query.setString(0, dateID);
 		      query.setResultTransformer(Transformers.aliasToBean(FollowOutDTO.class));
@@ -87,7 +91,7 @@ public class FollowDAO {
 		
 	}
 	
-	public void deleteFollow(String id){
+	public void deleteFollow(FollowInDTO followInDTO){
 		
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
@@ -96,10 +100,11 @@ public class FollowDAO {
 	      try{
 	         tx = session.beginTransaction();
 	         
-		      String sql = "select * from follow where ID = ?";
+//		      String sql = "select * from follow where id = ?";
+		      String sql = "select * from follow where dateid = ? and followerintid =?";
 		      SQLQuery query = session.createSQLQuery(sql);
-		      query.setString(0, id);
-//		      query.setString(1, userIntID);
+		      query.setString(0, followInDTO.getDateID());
+		      query.setString(1, followInDTO.getFollowerIntID());
 		      query.addEntity(FollowEntity.class);
 		      
 		      @SuppressWarnings("unchecked")
