@@ -57,7 +57,7 @@ public class MyFollowDAO {
 		      }
 	}
 	
-//	to DO 15.01.2017
+
 	// return a list of my followed shallway
 	public ShallWayOutDTO[] readMyFollowList(String userIntID) throws SQLException{
 		
@@ -144,6 +144,42 @@ public class MyFollowDAO {
 	      return flag;
 	}
 	
+	// Re-follow on shallway record	
+		public void updateFollow(FollowInDTO followInDTO){
+			
+			  Session session = HibernateUtil.getSessionFactory().openSession();
+		      Transaction tx = null;
+		      FollowEntity followEntity = new FollowEntity();
+		      Date followTime = new Date();	
+
+		      try{
+		         tx = session.beginTransaction();
+		         
+
+			      String sql = "select * from follow where dateid = ? and followerintid =?";
+			      SQLQuery query = session.createSQLQuery(sql);
+			      query.setString(0, followInDTO.getDateID());
+			      query.setString(1, followInDTO.getFollowerIntID());
+			      query.addEntity(FollowEntity.class);
+			      
+			      @SuppressWarnings("unchecked")
+			      List<FollowEntity> followList = query.list();	
+			      
+			      if (followList!=null && followList.size()>0 ){
+			    	  followEntity = followList.get(0);
+			    	  followEntity.setDeleteStatus(false);
+			    	  followEntity.setFollowTime(followTime);
+			      }
+		         session.update(followEntity);
+		         tx.commit();
+		      }catch (HibernateException e) {
+		         if (tx!=null) tx.rollback();
+		         e.printStackTrace(); 
+		      }finally {
+		         session.close(); 
+		      }		
+			
+		}	
 	
 	public void deleteMyFollow(FollowInDTO followInDTO){
 		

@@ -90,6 +90,83 @@ public class FollowDAO {
 	    return followArray;
 		
 	}
+
+// Check if I followed this Shallway Record and then un-followed before. If yes, go to UpdateFollow to follow it again, otherwise go to AddFollow to follow it, 14/5/2017
+	public boolean readFollow(FollowInDTO followInDTO){
+		
+		  Session session = HibernateUtil.getSessionFactory().openSession();
+	      Transaction tx = null;
+	      FollowEntity followEntity = new FollowEntity();
+	      boolean flag =false;
+	      
+	      try{
+	         tx = session.beginTransaction();
+	         
+
+		      String sql = "select * from follow where dateid = ? and followerintid =?";
+		      SQLQuery query = session.createSQLQuery(sql);
+		      query.setString(0, followInDTO.getDateID());
+		      query.setString(1, followInDTO.getFollowerIntID());
+		      query.addEntity(FollowEntity.class);
+		      
+		      @SuppressWarnings("unchecked")
+		      List<FollowEntity> followList = query.list();	
+		      
+		      if (followList!=null && followList.size()>0 ){
+		    	  followEntity = followList.get(0);
+		    	  flag = true;
+
+		      }
+	         session.update(followEntity);
+	         tx.commit();
+	      }catch (HibernateException e) {
+	         if (tx!=null) tx.rollback();
+	         e.printStackTrace(); 
+	      }finally {
+	         session.close(); 
+	      }		
+	      
+	      return flag;
+		
+	}
+	
+// Re-follow on shallway record	
+	public void updateFollow(FollowInDTO followInDTO){
+		
+		  Session session = HibernateUtil.getSessionFactory().openSession();
+	      Transaction tx = null;
+	      FollowEntity followEntity = new FollowEntity();
+	      Date followTime = new Date();	
+
+	      try{
+	         tx = session.beginTransaction();
+	         
+
+		      String sql = "select * from follow where dateid = ? and followerintid =?";
+		      SQLQuery query = session.createSQLQuery(sql);
+		      query.setString(0, followInDTO.getDateID());
+		      query.setString(1, followInDTO.getFollowerIntID());
+		      query.addEntity(FollowEntity.class);
+		      
+		      @SuppressWarnings("unchecked")
+		      List<FollowEntity> followList = query.list();	
+		      
+		      if (followList!=null && followList.size()>0 ){
+		    	  followEntity = followList.get(0);
+		    	  followEntity.setDeleteStatus(false);
+		    	  followEntity.setFollowTime(followTime);
+		      }
+	         session.update(followEntity);
+	         tx.commit();
+	      }catch (HibernateException e) {
+	         if (tx!=null) tx.rollback();
+	         e.printStackTrace(); 
+	      }finally {
+	         session.close(); 
+	      }		
+		
+	}	
+	
 	
 	public void deleteFollow(FollowInDTO followInDTO){
 		
