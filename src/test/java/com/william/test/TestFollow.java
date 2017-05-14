@@ -3,23 +3,28 @@ package com.william.test;
 import org.junit.Test;
 
 import com.william.DAO.FollowDAO;
+import com.william.entity.FollowEntity;
 import com.william.to.FollowInDTO;
 import com.william.to.FollowOutDTO;
 
 public class TestFollow {
 	
+	FollowEntity followEntity = null;
 	FollowDAO followDAO = new FollowDAO();
 	FollowOutDTO[] followArray = null;
-	FollowInDTO followInDTO = new FollowInDTO("94ab4fbd272b43d2beed7688345f5fa3","b53a45037c244371baaeb5e7af75aa90");
+	FollowInDTO followInDTO = new FollowInDTO("807d4160db5c4822990d1047753515d2","dab4dbe204294a368fc3c30cb7f479a3");
+	boolean flag= false;
+	String followID;
 	
 	@Test
 	public void testAddFollow(){
-		followDAO.addFollow(followInDTO);
+		followID = followDAO.addFollow(followInDTO);
+		System.out.println("Follow"+followID);
 	}
 
 	@Test
 	public void testReadFollow(){
-		followArray = followDAO.readFollow("94ab4fbd272b43d2beed7688345f5fa3");
+		followArray = followDAO.readFollow("807d4160db5c4822990d1047753515d2");
 		
 		for(int i=0; i<followArray.length;i++){
 			System.out.println();
@@ -33,7 +38,16 @@ public class TestFollow {
 	}
 	
 	@Test
-	public void testDeleteFollow(){
-		followDAO.deleteFollow("3b3a38d89c564428a47d75c33f79dcb0");
+	public void testReadIfFollow(){
+		followEntity =followDAO.readFollow(followInDTO);
+		System.out.println("Verify the dateID: "+followEntity.getDateID());
+//		System.out.println("Check if I followed this ShallWay record before: "+followEntity.getDeleteStatus());
+		
+	}
+	
+	
+	@Test
+	public void testUpdateOrDeleteFollow(){
+		followDAO.updateFollow(followInDTO, false);
 	}
 }

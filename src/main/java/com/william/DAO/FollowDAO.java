@@ -67,7 +67,7 @@ public class FollowDAO {
 	    try{
 		      tx = session.beginTransaction();
 
-		      String sql = "select a.id as id,a.dateid,a.followerintid,a.followtime,a.deletestatus, b.nickname as followerNickname from follow a join profile b on a.followerintid = b.userintid where a.dateid = ? and a.deletestatus =false order by followtime desc;";
+		      String sql = "select a.id as id,a.dateid as dateID,a.followerintid as followerIntID,a.followtime as followTime,a.deletestatus as deleteStatus, b.nickname as followerNickname from follow a join profile b on a.followerintid = b.userintid where a.dateid = ? and a.deletestatus =false order by followtime desc;";
 		      SQLQuery query = session.createSQLQuery(sql);  
 		      query.setString(0, dateID);
 		      query.setResultTransformer(Transformers.aliasToBean(FollowOutDTO.class));
@@ -92,12 +92,11 @@ public class FollowDAO {
 	}
 
 // Check if I followed this Shallway Record and then un-followed before. If yes, go to UpdateFollow to follow it again, otherwise go to AddFollow to follow it, 14/5/2017
-	public boolean readFollow(FollowInDTO followInDTO){
+	public FollowEntity readFollow(FollowInDTO followInDTO){
 		
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
-	      FollowEntity followEntity = new FollowEntity();
-	      boolean flag =false;
+	      FollowEntity followEntity = null;
 	      
 	      try{
 	         tx = session.beginTransaction();
@@ -114,7 +113,6 @@ public class FollowDAO {
 		      
 		      if (followList!=null && followList.size()>0 ){
 		    	  followEntity = followList.get(0);
-		    	  flag = true;
 
 		      }
 	         session.update(followEntity);
@@ -126,12 +124,12 @@ public class FollowDAO {
 	         session.close(); 
 	      }		
 	      
-	      return flag;
+	      return followEntity;
 		
 	}
 	
-// Re-follow on shallway record	
-	public void updateFollow(FollowInDTO followInDTO){
+	// Re-follow or Delete, flag= flase to re-follow, flag= true to delete
+	public void updateFollow(FollowInDTO followInDTO, boolean flag){
 		
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
@@ -153,43 +151,11 @@ public class FollowDAO {
 		      
 		      if (followList!=null && followList.size()>0 ){
 		    	  followEntity = followList.get(0);
-		    	  followEntity.setDeleteStatus(false);
-		    	  followEntity.setFollowTime(followTime);
-		      }
-	         session.update(followEntity);
-	         tx.commit();
-	      }catch (HibernateException e) {
-	         if (tx!=null) tx.rollback();
-	         e.printStackTrace(); 
-	      }finally {
-	         session.close(); 
-	      }		
-		
-	}	
-	
-	
-	public void deleteFollow(FollowInDTO followInDTO){
-		
-		  Session session = HibernateUtil.getSessionFactory().openSession();
-	      Transaction tx = null;
-	      FollowEntity followEntity = new FollowEntity();
-
-	      try{
-	         tx = session.beginTransaction();
-	         
-//		      String sql = "select * from follow where id = ?";
-		      String sql = "select * from follow where dateid = ? and followerintid =?";
-		      SQLQuery query = session.createSQLQuery(sql);
-		      query.setString(0, followInDTO.getDateID());
-		      query.setString(1, followInDTO.getFollowerIntID());
-		      query.addEntity(FollowEntity.class);
-		      
-		      @SuppressWarnings("unchecked")
-		      List<FollowEntity> followList = query.list();	
-		      
-		      if (followList!=null && followList.size()>0 ){
-		    	  followEntity = followList.get(0);
-		    	  followEntity.setDeleteStatus(true);
+		    	  followEntity.setDeleteStatus(flag);
+		    	  
+		    	  if (flag==false){
+		    		  followEntity.setFollowTime(followTime);
+		    	  }
 		      }
 	         session.update(followEntity);
 	         tx.commit();

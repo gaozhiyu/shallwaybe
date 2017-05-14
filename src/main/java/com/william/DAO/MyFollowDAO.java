@@ -29,13 +29,14 @@ public class MyFollowDAO {
 		return instance;
 	}
 	
-	public void addMyFollow(FollowInDTO followInDTO){
+	public String addMyFollow(FollowInDTO followInDTO){
 		
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
 	      String id = UUID.randomUUID().toString().replaceAll("-", "");
 	      FollowEntity followEntity = new FollowEntity();
 	      Date followTime = new Date();	
+	      String followID =null;
 	      
 	      try{
 		         tx = session.beginTransaction();
@@ -48,6 +49,7 @@ public class MyFollowDAO {
 		         
 		         session.save(followEntity);
 		         tx.commit();
+		         followID = id;
 		         
 		      }catch (HibernateException e) {
 		         if (tx!=null) tx.rollback();
@@ -55,6 +57,7 @@ public class MyFollowDAO {
 		      }finally {
 		         session.close(); 
 		      }
+	      return followID;
 	}
 	
 
@@ -101,14 +104,14 @@ public class MyFollowDAO {
 	}
 	
 	// return whether this shallway is followed by me, 15.01.2017
-	public boolean readMyFollowStatus(FollowInDTO followInDTO){
+	public FollowEntity readMyFollowStatus(FollowInDTO followInDTO){
 
 		  Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
-	      FollowEntity followEntity = new FollowEntity();
+	      FollowEntity followEntity = null;
 	      String dateID = followInDTO.getDateID();
 	      String userIntID = followInDTO.getFollowerIntID();
-	      boolean flag = false;
+//	      boolean flag = false;
 	      
 	      try{
 	         tx = session.beginTransaction();
@@ -124,14 +127,9 @@ public class MyFollowDAO {
 		      
 		      if (followList!=null && followList.size()>0 ){
 		    	  followEntity = followList.get(0);
-		    	  if (followEntity.getDeleteStatus() == false){
-		    		  flag = true;
-		    	  }
+
 		      }
-		      else {
-		    	  flag = false;
-		      }
-		    	  
+  
 	         session.update(followEntity);
 	         tx.commit();
 	      }catch (HibernateException e) {
@@ -141,11 +139,11 @@ public class MyFollowDAO {
 	         session.close(); 
 	      }		
 	      
-	      return flag;
+	      return followEntity;
 	}
 	
-	// Re-follow on shallway record	
-		public void updateFollow(FollowInDTO followInDTO){
+	// Re-follow or Delete, flag= flase to re-follow, flag= true to delete
+		public void updateFollow(FollowInDTO followInDTO, boolean flag){
 			
 			  Session session = HibernateUtil.getSessionFactory().openSession();
 		      Transaction tx = null;
@@ -167,8 +165,11 @@ public class MyFollowDAO {
 			      
 			      if (followList!=null && followList.size()>0 ){
 			    	  followEntity = followList.get(0);
-			    	  followEntity.setDeleteStatus(false);
-			    	  followEntity.setFollowTime(followTime);
+			    	  followEntity.setDeleteStatus(flag);
+			    	  
+			    	  if (flag==false){
+			    		  followEntity.setFollowTime(followTime);
+			    	  }
 			      }
 		         session.update(followEntity);
 		         tx.commit();
@@ -180,39 +181,5 @@ public class MyFollowDAO {
 		      }		
 			
 		}	
-	
-	public void deleteMyFollow(FollowInDTO followInDTO){
-		
-		  Session session = HibernateUtil.getSessionFactory().openSession();
-	      Transaction tx = null;
-	      FollowEntity followEntity = new FollowEntity();
-	      String dateID = followInDTO.getDateID();
-	      String userIntID = followInDTO.getFollowerIntID();
-	      try{
-	         tx = session.beginTransaction();
-	         
-		      String sql = "select * from follow where DateID = ? and FollowerIntID = ?";
-		      SQLQuery query = session.createSQLQuery(sql);
-		      query.setString(0, dateID);
-		      query.setString(1, userIntID);
-		      query.addEntity(FollowEntity.class);
-		      
-		      @SuppressWarnings("unchecked")
-		      List<FollowEntity> followList = query.list();	
-		      
-		      if (followList!=null && followList.size()>0 ){
-		    	  followEntity = followList.get(0);
-		    	  followEntity.setDeleteStatus(true);
-		      }
-	         session.update(followEntity);
-	         tx.commit();
-	      }catch (HibernateException e) {
-	         if (tx!=null) tx.rollback();
-	         e.printStackTrace(); 
-	      }finally {
-	         session.close(); 
-	      }		
-		
-	}
 
 }
