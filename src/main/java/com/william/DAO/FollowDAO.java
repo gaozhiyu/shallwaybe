@@ -115,7 +115,7 @@ public class FollowDAO {
 		    	  followEntity = followList.get(0);
 
 		      }
-	         session.update(followEntity);
+
 	         tx.commit();
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();

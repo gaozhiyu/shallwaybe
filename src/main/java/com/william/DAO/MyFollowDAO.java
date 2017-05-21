@@ -22,6 +22,8 @@ public class MyFollowDAO {
 	
 	private static MyFollowDAO instance;
 	
+	private final int pageSize = 1;
+	
 	public static MyFollowDAO getInstance() {
 		if (instance == null) {
 			instance = new MyFollowDAO();
@@ -62,7 +64,7 @@ public class MyFollowDAO {
 	
 
 	// return a list of my followed shallway
-	public ShallWayOutDTO[] readMyFollowList(String userIntID) throws SQLException{
+	public ShallWayOutDTO[] readMyFollowList(String userIntID, int pageNumber) throws SQLException{
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    Transaction tx = null;
@@ -73,12 +75,18 @@ public class MyFollowDAO {
 	    try{
 		      tx = session.beginTransaction();
 
-		      String sql = "select b.* from follow a join shallwayview b on a.dateID = b.dateID where a.followerintid = ? and a.deletestatus = false order by followtime desc;";
+		      String sql = "select b.* from follow a join shallwayview b on a.dateID = b.dateID where a.followerintid = ? and a.deletestatus = false order by followtime desc";
 		      SQLQuery query = session.createSQLQuery(sql);  
 		      query.setString(0, userIntID);
 		      query.addEntity(ShallWayOutDTO.class);
+		      
+		      query.setFirstResult((pageNumber-1) * pageSize);
+		      query.setMaxResults(pageSize);
+		      
 //		      query.setResultTransformer(Transformers.aliasToBean(ShallWayOutDTO.class));
+		     
 		      List<ShallWayOutDTO> followList = query.list();	
+		      
 		      followArray = new ShallWayOutDTO[followList.size()];
 	    	  
 		      if (followList!=null && followList.size()>0 ){
@@ -130,7 +138,7 @@ public class MyFollowDAO {
 
 		      }
   
-	         session.update(followEntity);
+
 	         tx.commit();
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();
