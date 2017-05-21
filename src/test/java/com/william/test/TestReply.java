@@ -13,7 +13,7 @@ public class TestReply {
 	ReplyDAO replyDAO = new ReplyDAO();
 	ReplyOutDTO[] replyArray= null;
 
-	ReplyInDTO replyInDTO = new ReplyInDTO("807d4160db5c4822990d1047753515d2","ee9c58b1915d46f5a00b193e7d425542","dab4dbe204294a368fc3c30cb7f479a3","c83c744d00e64d459ad56b5894b6a646","还真的可以啊！！");
+	ReplyInDTO replyInDTO = new ReplyInDTO("807d4160db5c4822990d1047753515d2","1ec66787b52542b29fbc7b6beef16926","dab4dbe204294a368fc3c30cb7f479a3","07d407cf02154d8f814c099cb0301c16","我是Tester1，我在回复 测试员4");
 	
 	@Test
 	public void testAddReply(){
@@ -44,5 +44,7 @@ public class TestReply {
 	public void testDeleteReply(){
 		replyDAO.deleteReply("ee9c58b1915d46f5a00b193e7d425542");		
 	}
+	
+
 	
 }

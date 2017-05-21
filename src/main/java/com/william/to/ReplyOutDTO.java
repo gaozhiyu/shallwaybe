@@ -20,7 +20,21 @@ public class ReplyOutDTO{
 	private String replyContentsStr;
 	private transient Blob replyContents;
 	private Boolean deleteStatus;
+	private ReplyOutDTO[] sbsqReplyArray;
 	
+	
+	public ReplyOutDTO[] getSbsqReplyArray() {
+		return sbsqReplyArray;
+	}
+
+
+
+	public void setSbsqReplyArray(ReplyOutDTO[] sbsqReplyArray) {
+		this.sbsqReplyArray = sbsqReplyArray;
+	}
+
+
+
 	public ReplyOutDTO() {
 		super();
 	}

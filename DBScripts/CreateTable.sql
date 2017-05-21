@@ -95,7 +95,7 @@ create table reply (
    sequenceid bigint unsigned not null auto_increment,
    id varchar(64) not null,
    dateid varchar(64) not null,
-   srcreplyid varchar(64) not null,
+   srcreplyid varchar(64),
    sourceuserintid varchar(64) not null,
    replierintid varchar(64) not null,
    replytime timestamp default current_timestamp,

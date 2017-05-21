@@ -22,9 +22,9 @@ public class TestProfile {
 	Date currentTime = new Date();
 	ProfileEntity profileEntity = new ProfileEntity();
 	ProfileDAO MP = ProfileDAO.getInstance();
-	RegisterInDTO registerInDTO = new RegisterInDTO("100@gmail.com","MYPasswordMYPasswordMYPasswordMYPassword","Test100","中国","河南","郑州","新加坡","马林百列","东海岸","1.1","1.2");
+	RegisterInDTO registerInDTO = new RegisterInDTO("4@gmail.com","MYPassword","测试员4","中国","河南","郑州","新加坡","马林百列","东海岸","1.1","1.2");
 	RegisterOutDTO registerOutDTO = new RegisterOutDTO();
-	ProfileInDTO profileInDTO = new ProfileInDTO("8a0e4da44b904eb3887e7ae5354ce12d","hu-zong@gmail.com", "MyPassword","胡总","男","04/09/1987",currentTime,"1","123456","0","北","上","广","深","庆","都","179.12345","9.9","For test only");
+	ProfileInDTO profileInDTO = new ProfileInDTO("dab4dbe204294a368fc3c30cb7f479a3","4@gmail.com", "MyPassword","胡总","男","04/09/1987",currentTime,"1","123456","0","北","上","广","深","庆","都","179.12345","9.9","For test only");
 //	"约吗？Yes！我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어!"
 	boolean updateStatus=false;
 	LoginResultOutDTO loginResultOutDTO = new LoginResultOutDTO();
@@ -42,7 +42,7 @@ public class TestProfile {
 	public void testUpdateProfile() throws ParseException{
 //		profileEntity = MP.readProfile(registerInDTO.getEmail());
 //		profileInDTO.setUserIntID(profileEntity.getUserIntID());
-		ProfileUpdateDTO profileUpdateDTO = new ProfileUpdateDTO("1b3a88c1cc34441d88f7d4f90713fcab","3@gmail.com", "MyPassword","Test3","男","04/09/1987",currentTime,"0","123456","0","北","上","广","深","庆","都","179.12345","9.9","For test only");
+		ProfileUpdateDTO profileUpdateDTO = new ProfileUpdateDTO("dab4dbe204294a368fc3c30cb7f479a3","4@gmail.com", "MyPassword","测试员4","男","05/09/1987",currentTime,"0","123456","0","北","上","广","深","庆","都","179.12345","9.9","For test only");
 		profileUpdateResultDTO = MP.updateProfile(profileUpdateDTO);
 		System.out.println("profile updated:"+profileUpdateResultDTO.isProfileUpdate());
 				
@@ -51,14 +51,14 @@ public class TestProfile {
 
 	@Test
 	public void testAuthenticateCredential(){
-		loginResultOutDTO = MP.authenticateCredential("1@gmail.com","MyPassword");
+		loginResultOutDTO = MP.authenticateCredential("hz21157@gmail.com","MyPassword");
 		System.out.println(loginResultOutDTO.getStatus());	
 	}
 	
 
 	@Test
 	public void testReadProfile(){
-		profileEntity = MP.readProfile("1@gmail.com");
+		profileEntity = MP.readProfile("hz21157@gmail.com");
 		System.out.println(profileEntity.getNickname());	
 		System.out.println(profileEntity.getGender());
 		System.out.println(profileEntity.getOTPExpiryTime());
