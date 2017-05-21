@@ -15,8 +15,10 @@ import com.william.to.ProfileUpdateResultDTO;
 import com.william.to.ResetPwdInDTO;
 import com.william.util.CryptWithMD5Util;
 import com.william.util.ERRORCode;
+import com.william.util.EmailServiceUtil;
 import com.william.util.FieldPassFilterUtil;
 import com.william.vo.CommonVO;
+import com.william.vo.EmailVO;
 
 public class LoginService {
 	
@@ -121,16 +123,19 @@ public class LoginService {
 		try {
 			//Add otp validation
 			ProfileEntity profileEnity = mgDAO.readProfile(email);
-			if(profileEnity.getOTPExpiryTime().getTime()-new Date().getTime() > 86100*1000 || profileEnity.getWrongTryOTP()<5 ){//TODO
+			if(profileEnity.getWrongTryOTP()<5 || new Date().getTime() - profileEnity.getOTPExpiryTime().getTime()> 86100*1000  ){//TODO
 				ProfileUpdateDTO profileTo = new ProfileUpdateDTO();
 				profileTo.setUserIntID(profileEnity.getUserIntID());
 				String oTP =CryptWithMD5Util.testRandomNumber(6);//"111111";//TODO later
-				profileTo.setOTP(oTP);
-				resultDTO = mgDAO.updateProfile(profileTo);
+				EmailVO emailVO = new EmailVO("gaozhiyu301@gmail.com","Please check with OTP from shall-way",oTP);
+		    	if(EmailServiceUtil.sendEmail(emailVO)){
+					profileTo.setOTP(oTP);
+					resultDTO = mgDAO.updateProfile(profileTo);
+		    	}
 			} else {
 				cvo.setReason("Please do so after 24 hours");
 			}
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

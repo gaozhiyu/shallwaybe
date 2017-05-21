@@ -7,6 +7,7 @@ public class DateInDTO extends CommonInput{
 	//private String userid;
 	private String page;
 	private String dateid;
+	private String replyFlag;
 
 	public String getPage() {
 		return page;
@@ -24,6 +25,16 @@ public class DateInDTO extends CommonInput{
 		this.dateid = dateid;
 	}
 	
+	
+	
+	public String getReplyFlag() {
+		return replyFlag;
+	}
+
+	public void setReplyFlag(String replyFlag) {
+		this.replyFlag = replyFlag;
+	}
+
 	public boolean isValid(){
 		boolean flag = true;
 		if(StringUtils.isEmptyOrWhitespaceOnly(dateid)){

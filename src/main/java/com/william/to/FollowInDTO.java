@@ -6,7 +6,7 @@ public class FollowInDTO{
 	
 	private String dateID;
     private String followerIntID;
-	
+	private boolean targetStatus;
 	public FollowInDTO() {
 		super();
 	}
@@ -31,6 +31,19 @@ public class FollowInDTO{
 
 	public void setFollowerIntID(String followerIntID) {
 		this.followerIntID = followerIntID;
-	}	
+	}
+
+	public boolean isTargetStatus() {
+		return targetStatus;
+	}
+
+	public void setTargetStatus(boolean targetStatus) {
+		this.targetStatus = targetStatus;
+	}
+
+
+
+
+	
 	
 }

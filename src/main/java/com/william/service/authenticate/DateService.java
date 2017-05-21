@@ -6,13 +6,17 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import com.william.DAO.FollowDAO;
+import com.william.DAO.MyFollowDAO;
 import com.william.DAO.ReplyDAO;
 import com.william.DAO.ShallWayDAO;
 import com.william.DAO.WorldCitiesDAO;
+import com.william.entity.FollowEntity;
 import com.william.entity.ShallWayEntity;
 import com.william.to.DateDTO;
 import com.william.to.DateInDTO;
 import com.william.to.DateOutDTO;
+import com.william.to.FollowInDTO;
 import com.william.to.ReplyInDTO;
 import com.william.to.ReplyOutDTO;
 import com.william.to.ShallWayInDTO;
@@ -59,6 +63,45 @@ public class DateService {
 
 		return outDto;
 	}
+	
+	
+public DateOutDTO retriveMyFollow(DateInDTO dateInDTO) throws SQLException{
+		
+		
+		DateOutDTO outDto = new DateOutDTO();
+		MyFollowDAO fsw= MyFollowDAO.getInstance();
+		ShallWayDAO msw= ShallWayDAO.getInstance();
+		int page = Integer.parseInt(dateInDTO.getPage());
+		
+		
+		ShallWayOutDTO[] shallwayArray = fsw.readMyFollowList(dateInDTO.getUserIntID(),page);
+		DateDTO[] dateArray = null;
+		if(shallwayArray!= null && shallwayArray.length>0){
+			dateArray = new DateDTO[shallwayArray.length];
+			for(int i = 0;i < shallwayArray.length; i++ ){
+				dateArray[i]= new DateDTO();
+				dateArray[i]= new DateDTO();
+				dateArray[i].setUserIntID(shallwayArray[i].getUserIntID());
+				dateArray[i].setCity(shallwayArray[i].getCity());
+				dateArray[i].setCountry(shallwayArray[i].getCountry());
+				dateArray[i].setStarttime(df.format(shallwayArray[i].getStartTime()));
+				dateArray[i].setEndtime(df.format(shallwayArray[i].getEndTime()));
+				dateArray[i].setDateid(shallwayArray[i].getDateID());
+				dateArray[i].setPlace(shallwayArray[i].getPlace());
+				dateArray[i].setProvince(shallwayArray[i].getProvince());
+				dateArray[i].setTitle(shallwayArray[i].getTitle());
+			}
+			outDto.setDateArray(dateArray);
+			outDto.setStatus("Y");
+		} else{
+			outDto.setStatus("N");
+		}
+		
+		
+
+		return outDto;
+	}
+	
 	
 	public DateOutDTO searchDate(ShallWaySearchDTO inDTO) throws SQLException{
 		DateOutDTO outDto = new DateOutDTO();
@@ -124,7 +167,7 @@ public class DateService {
 		return output;
 	}
 	
-	
+	//INDTO
 	public DateDetailVO viewDate(DateInDTO inDTO) throws SQLException{
 		
 		//inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
@@ -140,14 +183,22 @@ public class DateService {
 		dateVO.setCityArray(cityArray);
 		dateVO.setStartTimeStr(df.format(dateVO.getStartTime()));
 		dateVO.setEndTimeStr(df.format(dateVO.getEndTime()));
-		ReplyDAO replyDAO = ReplyDAO.getInstance();
-		ReplyOutDTO[] replyList = replyDAO.readReply(inDTO.getDateid());
-		dvo.setReplyList(replyList);
 		dvo.setDateDetails(dateVO);
-		
-		
+		if("TRUE".equals(inDTO.getReplyFlag())){
+			ReplyDAO replyDAO = ReplyDAO.getInstance();
+			ReplyOutDTO[] replyList = replyDAO.readReply(inDTO.getDateid());
+			dvo.setReplyList(replyList);
+		}
 		if(dateVO != null){
 			dvo.setStatus("Y");
+			FollowInDTO followInDTO = new FollowInDTO(inDTO.getDateid(),inDTO.getUserIntID());
+			MyFollowDAO myFollowDAO = MyFollowDAO.getInstance();
+			FollowEntity followEntity = myFollowDAO.readMyFollowStatus(followInDTO);
+			if(followEntity!=null && !followEntity.getDeleteStatus())
+				dvo.setFollowFlag(true);
+			else 
+				dvo.setFollowFlag(false);
+			
 		}else{
 			dvo.setStatus("N");
 		}
@@ -182,16 +233,4 @@ public class DateService {
 	
 	}
 	
-	public CommonVO addDateReply(ReplyInDTO inDTO){
-		ReplyDAO replyDAO = ReplyDAO.getInstance();
-		CommonVO cvo = new CommonVO();
-		if(!inDTO.isValid()){
-			cvo.setStatus("N");
-			return cvo;
-		}
-		replyDAO.addReply(inDTO);
-		
-		cvo.setStatus("Y");
-		return cvo;
-	}
 }
