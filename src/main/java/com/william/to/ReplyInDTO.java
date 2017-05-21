@@ -79,9 +79,9 @@ public class ReplyInDTO {
     		inputValid =false;
     	}
     	
-    	boolean srcReplyIDMatch = Pattern.matches(userIntIDString, srcReplyID);
+    	boolean srcReplyIDMatch = Pattern.matches(userIntIDString, sourceUserIntID);
     	if (srcReplyIDMatch == false){
-    		sb.append("\ndateID is not valid!");
+    		sb.append("\nsourceUserIntID is not valid!");
     		inputValid =false;
     	}
     	

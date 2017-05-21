@@ -2,6 +2,7 @@ package com.william.service;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,9 +59,11 @@ public class ClassLoaderService {
 	    	for(Class clazz : classes){
 	    		Method service[] = clazz.getDeclaredMethods();
 	    		for(Method mtd : service){
-	    			String path = contextRoot+ "/" +serPkg+ "/" +clazz.getSimpleName()+"/" + mtd.getName();
-	    			System.out.println(path);
-	    			MethodHashMap.getInstance().put(path, mtd);
+	    			if (Modifier.isPublic(mtd.getModifiers())) {
+		    			String path = contextRoot+ "/" +serPkg+ "/" +clazz.getSimpleName()+"/" + mtd.getName();
+		    			System.out.println(path);
+		    			MethodHashMap.getInstance().put(path, mtd);
+	    			 }
 	    		}
 	    	}
 	    

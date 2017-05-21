@@ -184,11 +184,11 @@ public DateOutDTO retriveMyFollow(DateInDTO dateInDTO) throws SQLException{
 		dateVO.setStartTimeStr(df.format(dateVO.getStartTime()));
 		dateVO.setEndTimeStr(df.format(dateVO.getEndTime()));
 		dvo.setDateDetails(dateVO);
-		if("TRUE".equals(inDTO.getReplyFlag())){
+/*		if("TRUE".equals(inDTO.getReplyFlag())){
 			ReplyDAO replyDAO = ReplyDAO.getInstance();
 			ReplyOutDTO[] replyList = replyDAO.readReply(inDTO.getDateid());
 			dvo.setReplyList(replyList);
-		}
+		}*/
 		if(dateVO != null){
 			dvo.setStatus("Y");
 			FollowInDTO followInDTO = new FollowInDTO(inDTO.getDateid(),inDTO.getUserIntID());

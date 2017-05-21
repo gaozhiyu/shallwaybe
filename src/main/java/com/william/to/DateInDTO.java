@@ -7,7 +7,7 @@ public class DateInDTO extends CommonInput{
 	//private String userid;
 	private String page;
 	private String dateid;
-	private String replyFlag;
+//	private String replyFlag;
 
 	public String getPage() {
 		return page;
@@ -27,13 +27,13 @@ public class DateInDTO extends CommonInput{
 	
 	
 	
-	public String getReplyFlag() {
-		return replyFlag;
-	}
-
-	public void setReplyFlag(String replyFlag) {
-		this.replyFlag = replyFlag;
-	}
+//	public String getReplyFlag() {
+//		return replyFlag;
+//	}
+//
+//	public void setReplyFlag(String replyFlag) {
+//		this.replyFlag = replyFlag;
+//	}
 
 	public boolean isValid(){
 		boolean flag = true;

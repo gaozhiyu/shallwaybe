@@ -5,7 +5,7 @@ import com.william.to.ShallWayOutDTO;
 
 public class DateDetailVO extends CommonVO{
 	private ShallWayOutDTO dateDetails;
-	private ReplyOutDTO[] replyList;
+//	private ReplyOutDTO[] replyList;
 	private boolean followFlag;
 
 	public ShallWayOutDTO getDateDetails() {
@@ -14,12 +14,12 @@ public class DateDetailVO extends CommonVO{
 	public void setDateDetails(ShallWayOutDTO dateDetails) {
 		this.dateDetails = dateDetails;
 	}
-	public ReplyOutDTO[] getReplyList() {
-		return replyList;
-	}
-	public void setReplyList(ReplyOutDTO[] replyList) {
-		this.replyList = replyList;
-	}
+//	public ReplyOutDTO[] getReplyList() {
+//		return replyList;
+//	}
+//	public void setReplyList(ReplyOutDTO[] replyList) {
+//		this.replyList = replyList;
+//	}
 	public boolean isFollowFlag() {
 		return followFlag;
 	}
