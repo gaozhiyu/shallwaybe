@@ -30,7 +30,7 @@ public class FileDownloadServlet extends HttpServlet {
 		try {
 			OutputStream out = response.getOutputStream();
 			String userid= (String)request.getParameter("id");
-			String path = FileUtil.getProperties().getProperty("profilePhotoDir");
+			String path = FileUtil.getProperties().getProperty("profilePhotoDir","/media/shallwayProfilePhoto/");
 			FileInputStream in = new FileInputStream(path+userid+".jpg");
 			//FileInputStream in = new FileInputStream("d:/shallwayprofilephoto/"+userid+".jpg");
 			byte[] buffer = new byte[4096];

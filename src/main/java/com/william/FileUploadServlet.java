@@ -35,6 +35,7 @@ public class FileUploadServlet extends HttpServlet {
 		Date currentTime = new Date();
 		try {
 			//TODO imagesize restriction
+			System.out.println("Upload Photo Processing");
 			byte[] body = readBody(request);
 
 	        String textBody = new String(body, "ISO-8859-1");
@@ -44,17 +45,20 @@ public class FileUploadServlet extends HttpServlet {
 	        Position p = getFilePosition(request, textBody);
 
 	        writeTo(userid+".jpg", body, p);
-	        
+	        System.out.println("Write File to file system");
 	        ProfileDAO pDAO = ProfileDAO.getInstance();
 	        ProfileUpdateDTO profileTo = new ProfileUpdateDTO();
 	        profileTo.setUserIntID(userid);
 //	        profileTo.setProfilePhoto("TRUE");
 	        profileTo.setProfilePhoto(currentTime);
 			pDAO.updateProfile(profileTo);
+			System.out.println("Update the db profile");
+			
 	        
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -102,8 +106,11 @@ public class FileUploadServlet extends HttpServlet {
 	    }
 	 
 	    private void writeTo(String fileName, byte[] body, Position p) throws IOException {
-	    	String filePath = FileUtil.getProperties().getProperty("profilePhotoDir");
+	    	 
+	    	String filePath = FileUtil.getProperties().getProperty("profilePhotoDir","/media/shallwayProfilePhoto/");
+	    	System.out.println("Get the file " + filePath);
 	        FileOutputStream fileOutputStream = new FileOutputStream(filePath + fileName);
+	        System.out.println("Get the file binary");
 	        fileOutputStream.write(body, p.begin, (p.end - p.begin));
 	        fileOutputStream.flush();
 	        fileOutputStream.close();
