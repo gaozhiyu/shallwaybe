@@ -24,7 +24,7 @@ public class FileUtil {
 		Properties property = new Properties();
 		//if(property==null){
 			try{
-				InputStream is = FileUtil.class.getResourceAsStream("appconfig.property");
+				InputStream is = FileUtil.class.getResourceAsStream("appconfig.properties");
 				property.load(is);
 			} catch (Exception e ){
 				

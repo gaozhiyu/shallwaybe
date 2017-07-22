@@ -11,7 +11,7 @@ public class TestBlackList {
 	
 	BlackListDAO blackListDAO = new BlackListDAO();
 	BlackListOutDTO[] blackListArray = null;
-	BlackListInDTO blackListInDTO = new BlackListInDTO("07d407cf02154d8f814c099cb0301c16","c83c744d00e64d459ad56b5894b6a646");
+	BlackListInDTO blackListInDTO = new BlackListInDTO("29ec271d483b4930a28ceb5c2adce59a","0b2a583f6ff042168a2bc63f35c9b63b");
 	boolean flag =false;
 
 	@Test
