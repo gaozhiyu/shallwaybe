@@ -4,6 +4,7 @@
 
 <hibernate-mapping>
     <class name="com.william.entity.ProfileEntity" table="profile" catalog="shallway">
+    
         <id name="userIntID" type="string" >
             <column name="userintid" length="64" not-null="true" unique="true" />
         </id>

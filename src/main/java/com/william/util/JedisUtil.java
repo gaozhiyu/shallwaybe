@@ -23,7 +23,7 @@ public class JedisUtil {
 	}
 	
 	
-	public static String get(String key){
+	public static String get(String key){  
 		return get(key, "APP");
 	}
 	

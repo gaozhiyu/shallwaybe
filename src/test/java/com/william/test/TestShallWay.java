@@ -23,7 +23,7 @@ public class TestShallWay {
     SimpleDateFormat sdfd1 =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     SimpleDateFormat sdfd2 =new SimpleDateFormat("yyyy-MM-dd");
     
-	ShallWayInDTO shallWayIn = new ShallWayInDTO ("103d3022a8064fb699904c7dd4e0b8be","singapore","Bedok", "Shopping Mall", "Fairprice Finest", startTimeString, endTimeString, "true", "false", "true", "false", "买什么呢", "Tel: 62688311", "Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어");
+	ShallWayInDTO shallWayIn = new ShallWayInDTO ("07d407cf02154d8f814c099cb0301c16","中国","河南", "Shopping Mall", "Fairprice Finest", startTimeString, endTimeString, "true", "false", "true", "false", "买什么呢", "Tel: 62688311", "Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어");
 	ShallWayUpdateDTO shallWayUpdate = new ShallWayUpdateDTO ("94ab4fbd272b43d2beed7688345f5fa3","b53a45037c244371baaeb5e7af75aa90","Singapore","Tuas", "CMR FE", "S 17", startTimeString, endTimeString, "true", "false", "false", "false", "ONE DAY TREK", "HP: 554163030", "Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어");
 	ShallWaySearchDTO shallWaySearch = new ShallWaySearchDTO("103d3022a8064fb699904c7dd4e0b8be","14","Singapore","Bedok","Shopping Mall","Fairprice Finest", startTimeString, endTimeString, "true", "false", "true", "false");
 //  Hello,我嘞个去，தமிழ்,にほんご,हिन्दी或हिंदी,한국어	
@@ -75,7 +75,7 @@ public class TestShallWay {
     
     @Test //read personal record
     public void testReadShallWay1(){
-    	shallWayEntity = MSW.readShallWay("b53a45037c244371baaeb5e7af75aa90", 1); 
+    	shallWayEntity = MSW.readShallWay("07d407cf02154d8f814c099cb0301c16", 1); 
 
 		for (int i=0; i < shallWayEntity.length; i++){
 			System.out.println();

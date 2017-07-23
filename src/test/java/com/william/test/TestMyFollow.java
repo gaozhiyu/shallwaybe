@@ -16,7 +16,7 @@ public class TestMyFollow {
 	FollowEntity followEntity = null;
 	MyFollowDAO followDAO = new MyFollowDAO();
 	ShallWayOutDTO[] followArray = null;
-	FollowInDTO followInDTO = new FollowInDTO("807d4160db5c4822990d1047753515d2","dab4dbe204294a368fc3c30cb7f479a3");
+	FollowInDTO followInDTO = new FollowInDTO("83db2a21e4dd4ca68647bc6760d05357","dab4dbe204294a368fc3c30cb7f479a3");
 	boolean following =false;
 	
 	@Test
@@ -26,7 +26,7 @@ public class TestMyFollow {
 
 	@Test
 	public void testReadMyFollowList() throws SQLException{
-		followArray = followDAO.readMyFollowList("dab4dbe204294a368fc3c30cb7f479a3");
+		followArray = followDAO.readMyFollowList("dab4dbe204294a368fc3c30cb7f479a3", 3);
 		
 		for(int i=0; i<followArray.length;i++){
 			System.out.println();

@@ -12,7 +12,7 @@ public class TestLatestCoordinate {
 //  SimpleDateFormat sdfd1 =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //  Date lastShakeTime =sdfd1.parse(lastShakeTimeString);
   
-	LatestCoordinateInDTO latestCoordinateInDTO = new LatestCoordinateInDTO("9d39464ce8ce43a597acfe5e43c1c523","2.1", "2.2" ,"中国","南海省", "新加坡市");
+	LatestCoordinateInDTO latestCoordinateInDTO = new LatestCoordinateInDTO("07d407cf02154d8f814c099cb0301c16","2.1", "2.2" ,"中国","南海省", "新加坡市");
   
 	LatestCoordinateOutDTO latestCoordinateOutDTO= new LatestCoordinateOutDTO();
 	LatestCoordinateDAO MLC = new LatestCoordinateDAO();	
@@ -27,7 +27,7 @@ public class TestLatestCoordinate {
 	@Test
 	public void TestReadLatestCoordinate(){
 		
-        latestCoordinateOutDTO = MLC.readLatestCoordinate("9d39464ce8ce43a597acfe5e43c1c523");
+        latestCoordinateOutDTO = MLC.readLatestCoordinate("07d407cf02154d8f814c099cb0301c16");
         
 		System.out.println();
 		System.out.println("Nickname: "+latestCoordinateOutDTO.getNickname());
