@@ -1,5 +1,7 @@
 package com.william.service.authenticate;
 
+import java.io.IOException;
+
 import com.william.DAO.ProfileDAO;
 import com.william.DAO.ShakeDAO;
 import com.william.entity.ProfileEntity;
@@ -7,6 +9,7 @@ import com.william.to.AddressDTO;
 import com.william.to.ShakeDTO;
 import com.william.to.ShakeInDTO;
 import com.william.to.ShakeOutDTO;
+import com.william.util.FileUtil;
 import com.william.util.MessageQueue;
 import com.william.util.ParserJsonUtil;
 
@@ -26,6 +29,15 @@ public class ShakeService {
 			shakeList = dao.shakeForList(shakeInDTO);
 		}
 		if(shakeList!=null){
+			for(ShakeDTO dto: shakeList){
+				try {
+					//TODO william
+					dto.setProfilePhtot(FileUtil.getFileData(dto.getUserIntID()));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			shakeDTO.setShakeArray(shakeList);
 			shakeDTO.setStatus("Y");
 		} else {

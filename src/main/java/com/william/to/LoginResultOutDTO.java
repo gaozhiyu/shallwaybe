@@ -8,6 +8,7 @@ public class LoginResultOutDTO extends CommonVO{
 	String sessionID;
 	String username;
 	String nickname;
+	private byte[] profilePhoto;
 
 	public String getNickname() {
 		return nickname;
@@ -33,6 +34,14 @@ public class LoginResultOutDTO extends CommonVO{
 
 	public void setSessionID(String sessionID) {
 		this.sessionID = sessionID;
+	}
+
+	public byte[] getProfilePhoto() {
+		return profilePhoto;
+	}
+
+	public void setProfilePhoto(byte[] profilePhoto) {
+		this.profilePhoto = profilePhoto;
 	}
 		
 	

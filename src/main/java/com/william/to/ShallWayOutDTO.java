@@ -19,7 +19,8 @@ public class ShallWayOutDTO extends GISDTO {
 	private String place;
 	private Date startTime; 
 	private Date endTime;   
-	private Date postTime;   
+	private Date postTime; 
+	private String postTimeStr;   
 	private String endTimeStr;   
 	private String startTimeStr;   
 	
@@ -244,6 +245,14 @@ public class ShallWayOutDTO extends GISDTO {
 
 	public void setDeleteStatus(Boolean deleteStatus) {
 		this.deleteStatus = deleteStatus;
+	}
+
+	public String getPostTimeStr() {
+		return postTimeStr;
+	}
+
+	public void setPostTimeStr(String postTimeStr) {
+		this.postTimeStr = postTimeStr;
 	}
 	
 }

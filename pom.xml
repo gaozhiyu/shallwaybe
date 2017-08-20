@@ -274,5 +274,13 @@
 		    <version>1.11.122</version>
 		</dependency>
 		
+		
+		<!-- google gcs client -->
+		<dependency>
+		    <groupId>com.ganyo</groupId>
+		    <artifactId>gcm-server</artifactId>
+		    <version>1.0.2</version>
+		</dependency>
+		
 	</dependencies>
 </project>

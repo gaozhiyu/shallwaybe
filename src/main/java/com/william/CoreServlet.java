@@ -103,6 +103,7 @@ public class CoreServlet extends HttpServlet {
 						// remove this line
 						// Logic to logout previous login;
 						tmp.setSessionID(sessionId);
+						tmp.setProfilePhoto(FileUtil.getFileData(tmp.getUserid()));
 						str = mapper.writeValueAsString(tmp);
 					}
 				}

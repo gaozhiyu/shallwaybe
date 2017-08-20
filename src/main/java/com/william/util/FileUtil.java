@@ -21,15 +21,16 @@ public class FileUtil {
 	}
 	
 	public static Properties getProperties(){
+		
 		Properties property = new Properties();
 		//if(property==null){
 			try{
-				InputStream is = FileUtil.class.getResourceAsStream("appconfig.properties");
+				InputStream is = FileUtil.class.getResourceAsStream("/appconfig.properties");
 				property.load(is);
 			} catch (Exception e ){
 				
 			}
-			
+		//}	
 		
 		return property;
 	}
