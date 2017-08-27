@@ -4,13 +4,15 @@ import java.sql.SQLException;
 
 import org.junit.Test;
 
-import com.william.service.authenticate.ReplyService;
+import com.william.service.authenticate.ReplyAndFollowService;
+import com.william.to.DateInDTO;
 import com.william.to.ReplyOutDTO;
 import com.william.vo.ReplyVO;
 
 public class TestReplyService {
 	
-	ReplyService replyService = new ReplyService();
+	// to check ReplyService later, 20/08/2017
+	ReplyAndFollowService replyService = new ReplyAndFollowService();
 	ReplyVO replyVO =null;
 	ReplyOutDTO[] replyArray= null;
 	ReplyOutDTO[] replySubArray= null;
@@ -19,7 +21,10 @@ public class TestReplyService {
 	@Test 
 	public void testGetReplyService() throws SQLException{
 		
-		replyVO = replyService.getReply("807d4160db5c4822990d1047753515d2");
+		DateInDTO dateInDTO= new DateInDTO();
+		dateInDTO.setPage("0");
+		dateInDTO.setDateid("807d4160db5c4822990d1047753515d2");
+		replyVO = replyService.getDateAndReply(dateInDTO);
 		replyArray = replyVO.getReplyArray();
 		
 		System.out.println("Array Length: "+replyArray.length);

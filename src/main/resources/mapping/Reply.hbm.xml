@@ -16,7 +16,9 @@
         <property name="dateID" type="string">
             <column name="dateid" length="64" />
         </property>
-        
+        <property name="mainUserIntID" type="string">
+            <column name="mainuserintid" length="64" />
+        </property>
         <property name="srcReplyID" type="string">
             <column name="srcreplyid" length="64" />
         </property>        
@@ -35,7 +37,17 @@
         <property name="deleteStatus" type="boolean">
             <column name="deletestatus"/>
         </property>          
-                   
-
+        <property name="mainUserPushStatus" type="boolean">
+            <column name="mainuserpushstatus"/>
+        </property>
+        <property name="mainUserPushTime" type="java.util.Date">
+            <column name="mainuserpushtime" />
+        </property>                             
+        <property name="sourceUserPushStatus" type="boolean">
+            <column name="sourceuserpushstatus"/>
+        </property>
+        <property name="sourceUserPushTime" type="java.util.Date">
+            <column name="sourceuserpushtime" />
+        </property>  
     </class>
 </hibernate-mapping>

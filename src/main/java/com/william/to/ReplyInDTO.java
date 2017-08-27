@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 public class ReplyInDTO {
 	
 	private String dateID;
+	private String mainUserIntID;
 	private String srcReplyID;
 	private String sourceUserIntID;
     private String replierIntID;
@@ -15,15 +16,17 @@ public class ReplyInDTO {
 		super();
 	}
 
-	public ReplyInDTO(String dateID, String srcReplyID, String sourceUserIntID, String replierIntID,
-			String replyContents) {
+	public ReplyInDTO(String dateID, String mainUserIntID, String srcReplyID, String sourceUserIntID,
+			String replierIntID, String replyContents) {
 		super();
 		this.dateID = dateID;
+		this.mainUserIntID = mainUserIntID;
 		this.srcReplyID = srcReplyID;
 		this.sourceUserIntID = sourceUserIntID;
 		this.replierIntID = replierIntID;
 		this.replyContents = replyContents;
 	}
+
 
 	public String getDateID() {
 		return dateID;
@@ -31,6 +34,14 @@ public class ReplyInDTO {
 
 	public void setDateID(String dateID) {
 		this.dateID = dateID;
+	}
+
+	public String getMainUserIntID() {
+		return mainUserIntID;
+	}
+
+	public void setMainUserIntID(String mainUserIntID) {
+		this.mainUserIntID = mainUserIntID;
 	}
 
 	public String getSrcReplyID() {

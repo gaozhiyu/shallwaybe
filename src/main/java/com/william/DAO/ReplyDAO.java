@@ -40,23 +40,31 @@ public class ReplyDAO {
 	      Transaction tx = null;
 	      String id = UUID.randomUUID().toString().replaceAll("-", "");
 	      ReplyEntity replyEntity = new ReplyEntity();
-	      Date replyTime = new Date();	
+	      Date currentTime = new Date();	
 	      
 	      try{
 		         tx = session.beginTransaction();
 
 		         replyEntity.setId(id);
 		         replyEntity.setDateID(replyInDTO.getDateID());
+		         
+		         replyEntity.setMainUserIntID(replyInDTO.getMainUserIntID());
+		         
 		         replyEntity.setSrcReplyID(replyInDTO.getSrcReplyID());
 		         replyEntity.setSourceUserIntID(replyInDTO.getSourceUserIntID());
 		         replyEntity.setReplierIntID(replyInDTO.getReplierIntID());
-		         replyEntity.setReplyTime(replyTime);
+		         replyEntity.setReplyTime(currentTime);
 		         
 		         String replyContentsString = XssShieldUtil.stripXss(replyInDTO.getReplyContents());
 		         Blob replyContents = Hibernate.getLobCreator(session).createBlob(replyContentsString.getBytes());		         
 		         replyEntity.setReplyContents(replyContents);
 		         
 		         replyEntity.setDeleteStatus(false);
+		         
+		         replyEntity.setMainUserPushStatus(true);
+		         replyEntity.setMainUserPushTime(currentTime);
+		         replyEntity.setSourceUserPushStatus(true);
+		         replyEntity.setSourceUserPushTime(currentTime);
 		         
 		         session.save(replyEntity);
 		         tx.commit();
@@ -87,6 +95,7 @@ public class ReplyDAO {
 		      query.setString(0, dateID);
 		      query.addScalar("id", new StringType());
 		      query.addScalar("DateID", new StringType());
+		      query.addScalar("MainUserIntID", new StringType());
 		      query.addScalar("SrcReplyID", new StringType());
 		      query.addScalar("SourceUserIntID", new StringType());		      
 		      query.addScalar("SourceUserNickname", new StringType());
@@ -95,6 +104,10 @@ public class ReplyDAO {
 		      query.addScalar("replierNickname", new StringType());
 		      query.addScalar("ReplyContents", new BlobType());
 		      query.addScalar("DeleteStatus", new BooleanType());
+		      query.addScalar("MainUserPushStatus", new BooleanType());
+		      query.addScalar("MainUserPushTime", new TimestampType());
+		      query.addScalar("SourceUserPushStatus", new BooleanType());
+		      query.addScalar("SourceUserPushTime", new TimestampType());
 		      
 		      query.setResultTransformer(Transformers.aliasToBean(ReplyOutDTO.class));
 		      List<ReplyOutDTO> replyList = query.list();	
@@ -155,6 +168,194 @@ public class ReplyDAO {
 	         session.close(); 
 	      }		
 		
+	}
+	
+	public ReplyOutDTO[] pushReplyToMainUser(String mainUserIntID) throws SQLException{ 
+		Session session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction tx = null;
+	    ReplyOutDTO[] replyArray = null;
+	    byte[] bdata= null;
+	    Blob blob=null;
+	      
+	    try{
+		      tx = session.beginTransaction();
+
+		      String sql = "select a.*, getNickname(a.sourceUserIntID) as sourceUserNickname, getNickname(a.replierintid) as replierNickname from reply a where a.mainuserintid = ? and a.deletestatus = false and a.mainuserpushstatus =false order by replytime asc;";
+		      SQLQuery query = session.createSQLQuery(sql);  
+		      query.setString(0, mainUserIntID);
+		      query.addScalar("id", new StringType());
+		      query.addScalar("DateID", new StringType());
+		      query.addScalar("MainUserIntID", new StringType());
+		      query.addScalar("SrcReplyID", new StringType());
+		      query.addScalar("SourceUserIntID", new StringType());		      
+		      query.addScalar("SourceUserNickname", new StringType());
+		      query.addScalar("ReplierIntID", new StringType());
+		      query.addScalar("ReplyTime", new TimestampType());
+		      query.addScalar("replierNickname", new StringType());
+		      query.addScalar("ReplyContents", new BlobType());
+		      query.addScalar("DeleteStatus", new BooleanType());
+		      query.addScalar("MainUserPushStatus", new BooleanType());
+		      query.addScalar("MainUserPushTime", new TimestampType());
+		      query.addScalar("SourceUserPushStatus", new BooleanType());
+		      query.addScalar("SourceUserPushTime", new TimestampType());
+		      
+		      query.setResultTransformer(Transformers.aliasToBean(ReplyOutDTO.class));
+		      List<ReplyOutDTO> replyList = query.list();	
+		      replyArray = new ReplyOutDTO[replyList.size()];
+	    	  
+		      if (replyList!=null && replyList.size()>0){
+		    	  for (int i=0;i<replyList.size();i++){
+		    		  replyArray[i] = replyList.get(i);
+		    		  
+ 		    		  blob = replyArray[i].getReplyContents();
+		    		  bdata = blob.getBytes(1, (int) blob.length());
+					  String replyContents = new String(bdata);
+					  replyArray[i].setReplyContentsStr(replyContents);
+					  
+		    	  }
+		      }
+	
+		      tx.commit();   
+		    }catch (HibernateException e) {
+		      if (tx!=null) tx.rollback();
+		      e.printStackTrace(); 
+		    }finally {
+		      session.close(); 
+		    }	
+	    return replyArray;	
+	}
+
+	public ReplyOutDTO[] pushReplyToSourceUser(String sourceUserIntID) throws SQLException{ 
+		Session session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction tx = null;
+	    ReplyOutDTO[] replyArray = null;
+	    byte[] bdata= null;
+	    Blob blob=null;
+	      
+	    try{
+		      tx = session.beginTransaction();
+
+		      String sql = "select a.*, getNickname(a.sourceUserIntID) as sourceUserNickname, getNickname(a.replierintid) as replierNickname from reply a where a.sourceuserintid = ? and a.deletestatus = false  and a.sourceuserpushstatus = false order by replytime asc;";
+		      SQLQuery query = session.createSQLQuery(sql);  
+		      query.setString(0, sourceUserIntID);
+		      query.addScalar("id", new StringType());
+		      query.addScalar("DateID", new StringType());
+		      query.addScalar("MainUserIntID", new StringType());
+		      query.addScalar("SrcReplyID", new StringType());
+		      query.addScalar("SourceUserIntID", new StringType());		      
+		      query.addScalar("SourceUserNickname", new StringType());
+		      query.addScalar("ReplierIntID", new StringType());
+		      query.addScalar("ReplyTime", new TimestampType());
+		      query.addScalar("replierNickname", new StringType());
+		      query.addScalar("ReplyContents", new BlobType());
+		      query.addScalar("DeleteStatus", new BooleanType());
+		      query.addScalar("MainUserPushStatus", new BooleanType());
+		      query.addScalar("MainUserPushTime", new TimestampType());
+		      query.addScalar("SourceUserPushStatus", new BooleanType());
+		      query.addScalar("SourceUserPushTime", new TimestampType());
+		      
+		      query.setResultTransformer(Transformers.aliasToBean(ReplyOutDTO.class));
+		      List<ReplyOutDTO> replyList = query.list();	
+		      replyArray = new ReplyOutDTO[replyList.size()];
+	    	  
+		      if (replyList!=null && replyList.size()>0){
+		    	  for (int i=0;i<replyList.size();i++){
+		    		  replyArray[i] = replyList.get(i);
+		    		  
+ 		    		  blob = replyArray[i].getReplyContents();
+		    		  bdata = blob.getBytes(1, (int) blob.length());
+					  String replyContents = new String(bdata);
+					  replyArray[i].setReplyContentsStr(replyContents);
+					  
+		    	  }
+		      }
+	
+		      tx.commit();   
+		    }catch (HibernateException e) {
+		      if (tx!=null) tx.rollback();
+		      e.printStackTrace(); 
+		    }finally {
+		      session.close(); 
+		    }	
+	    return replyArray;	
+	}
+	
+	public boolean updateMainUserPushStatus(String id, Boolean status){
+		
+		  Session session = HibernateUtil.getSessionFactory().openSession();
+	      Transaction tx = null;
+	      Boolean flag =false;
+	      ReplyEntity replyEntity = new ReplyEntity();
+	      Date currentTime = new Date();
+
+	      try{
+	         tx = session.beginTransaction();
+	         
+		      String sql = "select * from reply where ID = ? and deletestatus =false";
+		      SQLQuery query = session.createSQLQuery(sql);
+		      query.setString(0, id);
+//		      query.setString(1, userIntID);
+		      query.addEntity(ReplyEntity.class);
+		      
+		      @SuppressWarnings("unchecked")
+		      List<ReplyEntity> replyList = query.list();	
+		      
+		      if (replyList!=null && replyList.size()>0 ){
+		    	  replyEntity = replyList.get(0);
+		    	  replyEntity.setMainUserPushStatus(status);
+		    	  replyEntity.setMainUserPushTime(currentTime);
+		      }
+		      
+	         session.update(replyEntity);
+	         tx.commit();
+	         flag=true;
+	      }catch (HibernateException e) {
+	         if (tx!=null) tx.rollback();
+	         e.printStackTrace(); 
+	      }finally {
+	         session.close(); 
+	      }	
+	      
+	      return flag;
+	}
+	
+	public boolean updateSourceUserPushStatus(String id, Boolean status){
+		
+		  Session session = HibernateUtil.getSessionFactory().openSession();
+	      Transaction tx = null;
+	      Boolean flag =false;
+	      ReplyEntity replyEntity = new ReplyEntity();
+	      Date currentTime = new Date();
+
+	      try{
+	         tx = session.beginTransaction();
+	         
+		      String sql = "select * from reply where ID = ? and deletestatus =false";
+		      SQLQuery query = session.createSQLQuery(sql);
+		      query.setString(0, id);
+//		      query.setString(1, userIntID);
+		      query.addEntity(ReplyEntity.class);
+		      
+		      @SuppressWarnings("unchecked")
+		      List<ReplyEntity> replyList = query.list();	
+		      
+		      if (replyList!=null && replyList.size()>0 ){
+		    	  replyEntity = replyList.get(0);
+		    	  replyEntity.setSourceUserPushStatus(status);
+		    	  replyEntity.setSourceUserPushTime(currentTime);
+		      }
+		      
+	         session.update(replyEntity);
+	         tx.commit();
+	         flag=true;
+	      }catch (HibernateException e) {
+	         if (tx!=null) tx.rollback();
+	         e.printStackTrace(); 
+	      }finally {
+	         session.close(); 
+	      }	
+	      
+	      return flag;
 	}
 
 }

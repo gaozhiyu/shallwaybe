@@ -11,6 +11,7 @@ public class ReplyOutDTO{
 	private BigInteger sequenceID;
 	private String id;
 	private String dateID;
+	private String mainUserIntID;
 	private String srcReplyID;
 	private String sourceUserIntID;
 	private String sourceUserNickname;
@@ -20,6 +21,10 @@ public class ReplyOutDTO{
 	private String replyContentsStr;
 	private transient Blob replyContents;
 	private Boolean deleteStatus;
+	private Boolean mainUserPushStatus;
+	private Date mainUserPushTime;
+	private Boolean sourceUserPushStatus;
+	private Date sourceUserPushTime;
 	private ReplyOutDTO[] sbsqReplyArray;
 	
 	
@@ -27,27 +32,19 @@ public class ReplyOutDTO{
 		return sbsqReplyArray;
 	}
 
-
-
 	public void setSbsqReplyArray(ReplyOutDTO[] sbsqReplyArray) {
 		this.sbsqReplyArray = sbsqReplyArray;
 	}
 
-
-
-	public ReplyOutDTO() {
-		super();
-	}
-	
-
-
-	public ReplyOutDTO(BigInteger sequenceID, String id, String dateID, String srcReplyID, String sourceUserIntID,
-			String sourceUserNickname, String replierIntID, String replierNickname, Date replyTime,
-			String replyContentsStr, Blob replyContents, Boolean deleteStatus) {
+	public ReplyOutDTO(BigInteger sequenceID, String id, String dateID, String mainUserIntID, String srcReplyID,
+			String sourceUserIntID, String sourceUserNickname, String replierIntID, String replierNickname,
+			Date replyTime, String replyContentsStr, Blob replyContents, Boolean deleteStatus,
+			Boolean mainUserPushStatus, Date mainUserPushTime, Boolean sourceUserPushStatus, Date sourceUserPushTime) {
 		super();
 		this.sequenceID = sequenceID;
 		this.id = id;
 		this.dateID = dateID;
+		this.mainUserIntID = mainUserIntID;
 		this.srcReplyID = srcReplyID;
 		this.sourceUserIntID = sourceUserIntID;
 		this.sourceUserNickname = sourceUserNickname;
@@ -57,9 +54,15 @@ public class ReplyOutDTO{
 		this.replyContentsStr = replyContentsStr;
 		this.replyContents = replyContents;
 		this.deleteStatus = deleteStatus;
+		this.mainUserPushStatus = mainUserPushStatus;
+		this.mainUserPushTime = mainUserPushTime;
+		this.sourceUserPushStatus = sourceUserPushStatus;
+		this.sourceUserPushTime = sourceUserPushTime;
 	}
 
-
+	public ReplyOutDTO() {
+		super();
+	}
 
 	public BigInteger getSequenceID() {
 		return sequenceID;
@@ -85,7 +88,14 @@ public class ReplyOutDTO{
 		this.dateID = dateID;
 	}
 
-	
+	public String getMainUserIntID() {
+		return mainUserIntID;
+	}
+
+	public void setMainUserIntID(String mainUserIntID) {
+		this.mainUserIntID = mainUserIntID;
+	}
+
 	public String getSrcReplyID() {
 		return srcReplyID;
 	}
@@ -166,5 +176,37 @@ public class ReplyOutDTO{
 	public void setDeleteStatus(Boolean deleteStatus) {
 		this.deleteStatus = deleteStatus;
 	}
-			
+
+	public Boolean getMainUserPushStatus() {
+		return mainUserPushStatus;
+	}
+
+	public void setMainUserPushStatus(Boolean mainUserPushStatus) {
+		this.mainUserPushStatus = mainUserPushStatus;
+	}
+
+	public Date getMainUserPushTime() {
+		return mainUserPushTime;
+	}
+
+	public void setMainUserPushTime(Date mainUserPushTime) {
+		this.mainUserPushTime = mainUserPushTime;
+	}
+
+	public Boolean getSourceUserPushStatus() {
+		return sourceUserPushStatus;
+	}
+
+	public void setSourceUserPushStatus(Boolean sourceUserPushStatus) {
+		this.sourceUserPushStatus = sourceUserPushStatus;
+	}
+
+	public Date getSourceUserPushTime() {
+		return sourceUserPushTime;
+	}
+
+	public void setSourceUserPushTime(Date sourceUserPushTime) {
+		this.sourceUserPushTime = sourceUserPushTime;
+	}
+	
 }
