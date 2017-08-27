@@ -95,12 +95,17 @@ create table reply (
    sequenceid bigint unsigned not null auto_increment,
    id varchar(64) not null,
    dateid varchar(64) not null,
+   mainuserintid varchar(64) not null,
    srcreplyid varchar(64),
    sourceuserintid varchar(64) not null,
    replierintid varchar(64) not null,
    replytime timestamp default current_timestamp,
    replycontents blob not null,
    deletestatus boolean default false,
+   mainuserpushstatus boolean default true,
+   mainuserpushtime timestamp default current_timestamp,
+   sourceuserpushstatus boolean default true,
+   sourceuserpushtime timestamp default current_timestamp,
    primary key (sequenceid),
    unique (id)
 )character set = utf8;
