@@ -16,6 +16,7 @@ import com.william.to.FollowInDTO;
 import com.william.to.ReplyInDTO;
 import com.william.to.ReplyOutDTO;
 import com.william.to.ShallWayOutDTO;
+import com.william.util.FileUtil;
 import com.william.vo.CommonVO;
 import com.william.vo.DateDetailVO;
 import com.william.vo.ReplyVO;
@@ -66,7 +67,7 @@ public class ReplyAndFollowService {
 	
 
 	
-public ReplyVO getDateAndReply(DateInDTO inDTO) throws SQLException{
+public ReplyVO getDateAndReply(DateInDTO inDTO) throws Exception{
 		
 		//inDTO.setProvince(inDTO.getCity().substring(0, 1));//TODO change in future
 		ReplyVO replyVO = new ReplyVO();
@@ -84,7 +85,7 @@ public ReplyVO getDateAndReply(DateInDTO inDTO) throws SQLException{
 	}
 	
 	
-private ReplyOutDTO[] getReply(String dateID) throws SQLException{
+private ReplyOutDTO[] getReply(String dateID) throws Exception{
 		
 		List<ReplyOutDTO> firstReplyList = new ArrayList<ReplyOutDTO>();
 		ReplyDAO replyDAO = ReplyDAO.getInstance();
@@ -92,6 +93,8 @@ private ReplyOutDTO[] getReply(String dateID) throws SQLException{
 		ReplyOutDTO[] replyList = replyDAO.readReply(dateID);
 		
 		for (ReplyOutDTO reply:  replyList){
+			//added image here
+			reply.setProfilePhoto(FileUtil.getFileData(reply.getReplierIntID()));
 			if (reply.getSrcReplyID() == null){
 				firstReplyList.add(reply);
 			}

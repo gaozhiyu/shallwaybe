@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import com.william.DAO.ProfileDAO;
 import com.william.to.ProfileUpdateDTO;
 import com.william.util.FileUtil;
+import com.william.util.ImageUtil;
 import com.william.util.Position;
 
 public class FileUploadServlet extends HttpServlet {
@@ -53,7 +54,7 @@ public class FileUploadServlet extends HttpServlet {
 	        profileTo.setProfilePhoto(currentTime);
 			pDAO.updateProfile(profileTo);
 			System.out.println("Update the db profile");
-			
+			ImageUtil.imageResize(userid);
 	        
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -26,8 +26,21 @@ public class ReplyOutDTO{
 	private Boolean sourceUserPushStatus;
 	private Date sourceUserPushTime;
 	private ReplyOutDTO[] sbsqReplyArray;
+	private byte[] profilePhoto;
 	
 	
+	public byte[] getProfilePhoto() {
+		return profilePhoto;
+	}
+
+
+
+	public void setProfilePhoto(byte[] profilePhoto) {
+		this.profilePhoto = profilePhoto;
+	}
+
+
+
 	public ReplyOutDTO[] getSbsqReplyArray() {
 		return sbsqReplyArray;
 	}
