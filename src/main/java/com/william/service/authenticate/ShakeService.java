@@ -32,7 +32,7 @@ public class ShakeService {
 			for(ShakeDTO dto: shakeList){
 				try {
 					//TODO william
-					dto.setProfilePhtot(FileUtil.getFileData(dto.getUserIntID()));
+					dto.setProfilePhoto(FileUtil.getFileData(dto.getUserIntID()));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

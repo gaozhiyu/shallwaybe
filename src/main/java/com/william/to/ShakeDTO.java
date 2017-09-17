@@ -15,19 +15,19 @@ public class ShakeDTO extends CommonInput{
 	private Date photoFlag;
 	private double weight;
 	private Date lastshaketimeraw;
-	private byte[] profilePhtot;
+	private byte[] profilePhoto;
 
 
 
 
-	public byte[] getProfilePhtot() {
-		return profilePhtot;
+	public byte[] getProfilePhoto() {
+		return profilePhoto;
 	}
 
 
 
-	public void setProfilePhtot(byte[] profilePhtot) {
-		this.profilePhtot = profilePhtot;
+	public void setProfilePhoto(byte[] profilePhoto) {
+		this.profilePhoto = profilePhoto;
 	}
 
 
