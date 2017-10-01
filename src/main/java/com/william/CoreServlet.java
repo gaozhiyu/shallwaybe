@@ -70,13 +70,16 @@ public class CoreServlet extends HttpServlet {
 			
 			Cookie[] cookies = request.getCookies();
 			Cookie cookie = null;
+			Cookie useridRtrvCookie = null;
 			if (cookies != null) {
 				for (int i = 0; i < cookies.length; i++) {
 					if("sesionCookie".equals(cookies[i].getName()))
 						cookie = cookies[i];
+					if("userCookie".equals(cookies[i].getName()))
+						useridRtrvCookie = cookies[i];
 				}
 			}
-			Object returnValue = invokeService(request.getRequestURI(), utilJson, cookie==null?null:cookie.getValue());
+			Object returnValue = invokeService(request.getRequestURI(), utilJson, cookie==null?null:cookie.getValue(),useridRtrvCookie==null?null:useridRtrvCookie.getValue());
 
 			ObjectMapper mapper = new ObjectMapper();
 			String str = "";
@@ -135,7 +138,7 @@ public class CoreServlet extends HttpServlet {
 		}
 	}
 
-	public Object invokeService(String uri, String utilJson, String sessionID) {
+	public Object invokeService(String uri, String utilJson, String sessionID, String loginuserid) {
 		System.out.println(uri);
 		ObjectMapper objectMapper = new ObjectMapper();
 		String[] uriArray = uri.split("/");
@@ -185,6 +188,8 @@ public class CoreServlet extends HttpServlet {
 							if (params[i] instanceof CommonInput) {
 								Method d = type.getMethod("setSessionID", String.class);
 								d.invoke(params[i], sessionID);
+								Method d2 = type.getMethod("setLoginuserid", String.class);
+								d2.invoke(params[i], loginuserid);
 							}
 						}
 					} catch (Exception e) {
