@@ -52,6 +52,7 @@ public class LoginService {
 				result.setUsername(profileEntity.getEmail());
 				result.setUserid(profileEntity.getUserIntID());
 				result.setNickname(profileEntity.getNickname());
+				result.setSessionID(input.getSessionID());
 				result.setStatus("Y");
 				if(profileEntity.getWrongTryPWD()!=0){
 					try {
