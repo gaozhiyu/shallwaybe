@@ -6,9 +6,13 @@ import java.util.regex.Pattern;
 public class ReplyInDTO {
 	
 	private String dateID;
+	// The guy post the message
 	private String mainUserIntID;
+	// The replyid coming from the first reply of replyblock 
 	private String srcReplyID;
+	// The userid of the reply coming from the first reply of replyblock
 	private String sourceUserIntID;
+	// the id for each replyer
     private String replierIntID;
 	private String replyContents;
 	
