@@ -9,10 +9,10 @@ public class TestPushNotification {
 	
 	@Test
 	public void testPushMsgToAndroid(){
-		String regid="APA91bFmkaJT5TNZ5XRQfOiD8Slee6xK7-tUDJEmYS61fzi6RrrnlrOB4_gwlIl8oOFjzYp80O-aXcp6wNQLssfp_lph1THBKGf3urFYe9eXnOO2HWuswvVMq7_IVkcIie-TxiRrzItm";
+		String regid="APA91bFlhLLzDUF-k5wZnqwv2YALZoPNPGPaoSwdMQHE2nU8XH1vPop5gg9ODnlrqkM-kV5SGDJ0C0FwCkAfEVmgWb7kxfqn22GhsEt2wAE-NzbXqX-Yw-97jrVqtDJc5X4-eerbuyeP";
 		
 		SendNotificationUtil test = new SendNotificationUtil();
-		test.pushNotificationToGCM(regid, "test");
+		test.pushNotificationToGCM(regid, "cc8079f38f92437b866b933ac8a0660d");
 		
 	}
 }

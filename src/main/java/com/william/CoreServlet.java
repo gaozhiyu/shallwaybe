@@ -58,7 +58,7 @@ public class CoreServlet extends HttpServlet {
 	public void doProcess(HttpServletRequest request, HttpServletResponse response) {
 		PrintWriter out;
 		try {
-
+			response.setContentType("application/json; charset=UTF-8");
 			out = response.getWriter();
 			ServletInputStream is = request.getInputStream();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
