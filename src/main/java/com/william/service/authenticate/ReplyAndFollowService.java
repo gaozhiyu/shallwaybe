@@ -4,6 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.william.DAO.MyFollowDAO;
 import com.william.DAO.ReplyDAO;
 import com.william.DAO.ShallWayDAO;
@@ -24,7 +28,7 @@ public class ReplyAndFollowService {
 	
 	private SimpleDateFormat df =new SimpleDateFormat("dd/MM/yyyy");
 
-	public CommonVO addDateReply(ReplyInDTO inDTO){
+	public CommonVO addDateReply(ReplyInDTO inDTO) throws Exception{
 		ReplyDAO replyDAO = ReplyDAO.getInstance();
 		CommonVO cvo = new CommonVO();
 		if(!inDTO.isValid()){
@@ -33,14 +37,22 @@ public class ReplyAndFollowService {
 		}
 		replyDAO.addReply(inDTO);
 		//SendNotificationUtil //test = new SendNotificationUtil();
+		JSONObject msgObject = new JSONObject(); 
+		msgObject.put("dateid", inDTO.getDateID());
+		msgObject.put("from", inDTO.getReplierIntID());
+		msgObject.put("to", inDTO.getSourceUserIntID());
+		msgObject.put("content", inDTO.getReplyContents());
+		JSONObject finalObject = new JSONObject();
+		finalObject.put("message", msgObject.toString());
+		finalObject.put("title", "你有一条消息/you have a msg : " + inDTO.getReplyContents());
 		if(inDTO.getSourceUserIntID()!=null && !"".equals(inDTO.getSourceUserIntID())){
 			//String message = inDTO.get;
 			String regid = JedisUtil.get(inDTO.getSourceUserIntID(), NameConstants.REGID);
-			SendNotificationUtil.pushNotificationToGCM(regid, inDTO.getReplyContents());
+			SendNotificationUtil.pushNotificationToGCM(regid, finalObject.toString());
 		}
 		if(!(""+inDTO.getSourceUserIntID()).equals(inDTO.getMainUserIntID())){
 			String regid = JedisUtil.get(inDTO.getMainUserIntID(), NameConstants.REGID);
-			SendNotificationUtil.pushNotificationToGCM(regid, inDTO.getReplyContents());
+			SendNotificationUtil.pushNotificationToGCM(regid, finalObject.toString());
 		}
 		cvo.setStatus("Y");
 		return cvo;
