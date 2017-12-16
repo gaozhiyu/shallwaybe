@@ -1,15 +1,13 @@
 package com.william.service.authenticate;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.william.DAO.FollowDAO;
 import com.william.DAO.MyFollowDAO;
 import com.william.DAO.ReplyDAO;
 import com.william.DAO.ShallWayDAO;
-import com.william.DAO.WorldCitiesDAO;
+import com.william.constant.NameConstants;
 import com.william.entity.FollowEntity;
 import com.william.to.DateInDTO;
 import com.william.to.FollowInDTO;
@@ -17,8 +15,9 @@ import com.william.to.ReplyInDTO;
 import com.william.to.ReplyOutDTO;
 import com.william.to.ShallWayOutDTO;
 import com.william.util.FileUtil;
+import com.william.util.JedisUtil;
+import com.william.util.SendNotificationUtil;
 import com.william.vo.CommonVO;
-import com.william.vo.DateDetailVO;
 import com.william.vo.ReplyVO;
 
 public class ReplyAndFollowService {
@@ -33,7 +32,16 @@ public class ReplyAndFollowService {
 			return cvo;
 		}
 		replyDAO.addReply(inDTO);
-		
+		//SendNotificationUtil //test = new SendNotificationUtil();
+		if(inDTO.getSourceUserIntID()!=null && !"".equals(inDTO.getSourceUserIntID())){
+			//String message = inDTO.get;
+			String regid = JedisUtil.get(inDTO.getSourceUserIntID(), NameConstants.REGID);
+			SendNotificationUtil.pushNotificationToGCM(regid, inDTO.getReplyContents());
+		}
+		if(!(""+inDTO.getSourceUserIntID()).equals(inDTO.getMainUserIntID())){
+			String regid = JedisUtil.get(inDTO.getMainUserIntID(), NameConstants.REGID);
+			SendNotificationUtil.pushNotificationToGCM(regid, inDTO.getReplyContents());
+		}
 		cvo.setStatus("Y");
 		return cvo;
 	}

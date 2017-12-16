@@ -6,6 +6,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import com.william.DAO.ProfileDAO;
+import com.william.constant.NameConstants;
 import com.william.entity.ProfileEntity;
 import com.william.to.LoginResultInDTO;
 import com.william.to.LoginResultOutDTO;
@@ -17,6 +18,7 @@ import com.william.util.CryptWithMD5Util;
 import com.william.util.ERRORCode;
 import com.william.util.EmailServiceUtil;
 import com.william.util.FieldPassFilterUtil;
+import com.william.util.JedisUtil;
 import com.william.vo.CommonVO;
 import com.william.vo.EmailVO;
 
@@ -43,6 +45,9 @@ public class LoginService {
 				result.setUserid(profileEntity.getUserIntID());
 				result.setNickname(profileEntity.getNickname());
 				result.setStatus("Y");
+				if(cto.getRegid()!=null && !"".equals(cto.getRegid()))
+					JedisUtil.set(profileEntity.getUserIntID(), NameConstants.REGID, cto.getRegid());
+				// Push the notification
 				if(profileEntity.getWrongTryPWD()!=0){
 					try {
 						ProfileUpdateDTO profileTo = new ProfileUpdateDTO();

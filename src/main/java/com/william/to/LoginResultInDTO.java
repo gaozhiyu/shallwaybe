@@ -1,8 +1,11 @@
 package com.william.to;
 
-public class LoginResultInDTO {
+import com.william.vo.CommonInput;
+
+public class LoginResultInDTO extends CommonInput{
 	private String username;
 	private String password;
+	private String regid;
 	
 	
 	public String getUsername() {
@@ -17,5 +20,12 @@ public class LoginResultInDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getRegid() {
+		return regid;
+	}
+	public void setRegid(String regid) {
+		this.regid = regid;
+	}
+	
 	
 }

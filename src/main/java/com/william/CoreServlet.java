@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.william.DAO.MessageDAO;
+import com.william.constant.NameConstants;
 import com.william.filter.LogFile;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.MessageOutDTO;
@@ -101,7 +102,7 @@ public class CoreServlet extends HttpServlet {
 						response.addCookie(sidcookie);
 						response.addCookie(useridCookie);
 						logger.info("Sessionid\t" + sessionId);
-						JedisUtil.set(tmp.getUserid(), sessionId);
+						JedisUtil.setAppValue(tmp.getUserid(), sessionId);
 						// JedisUtil.set(sessionId, tmp.getUserid());//fixme
 						// remove this line
 						// Logic to logout previous login;
@@ -231,9 +232,9 @@ public class CoreServlet extends HttpServlet {
 
 		server.addEventListener("chatevent", LogFile.class, new DataListener<LogFile>() {
 			public void onData(SocketIOClient client, LogFile data, AckRequest ackSender) {
-				String uuid = JedisUtil.get(data.getToID(), "chat");
+				String uuid = JedisUtil.get(data.getToID(), NameConstants.CHAT);
 				String fromId = data.getFromID();
-				//if((""+client.getSessionId().toString()).equals(JedisUtil.get(data.getFromID(), "chat"))){
+				//if((""+client.getSessionId().toString()).equals(JedisUtil.get(data.getFromID(), NameConstants.CHAT))){
 					//System.out.println("ID is valid");
 				
 				//TODO　blacklist check
@@ -256,7 +257,7 @@ public class CoreServlet extends HttpServlet {
 
 				String key = client.get("id");
 				// TODO
-				JedisUtil.hdel(key, "chat");
+				JedisUtil.hdel(key, NameConstants.CHAT);
 
 			}
 		});
@@ -275,9 +276,9 @@ public class CoreServlet extends HttpServlet {
 				if (strList != null && strList.size() > 0 && sessList != null && sessList.size() > 0) {
 					String userid = strList.get(0);
 					String httpSessionID = sessList.get(0);
-					if((""+httpSessionID).equals(JedisUtil.get(userid))){
+					if((""+httpSessionID).equals(JedisUtil.getAppValue(userid))){
 						client.set("id", strList.get(0));
-						JedisUtil.set(strList.get(0), "chat", client.getSessionId().toString());
+						JedisUtil.set(strList.get(0), NameConstants.CHAT, client.getSessionId().toString());
 						MessageDAO messageDAO = MessageDAO.getInstance();
 						try {
 							MessageOutDTO[] msgArray = messageDAO.retrieveMessage(userid);

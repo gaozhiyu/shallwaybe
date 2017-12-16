@@ -5,8 +5,10 @@ import java.text.ParseException;
 import org.apache.log4j.Logger;
 
 import com.william.DAO.ProfileDAO;
+import com.william.constant.NameConstants;
 import com.william.entity.ProfileEntity;
 import com.william.to.CredentailInDTO;
+import com.william.to.LoginResultInDTO;
 import com.william.to.LoginResultOutDTO;
 import com.william.to.ProfileInDTO;
 import com.william.to.ProfileUpdateDTO;
@@ -34,7 +36,7 @@ public class LoginService {
 		return result;
 	}
 	
-	public LoginResultOutDTO loginViaCookie (CommonInput input){
+	public LoginResultOutDTO loginViaCookie (LoginResultInDTO input){
 
 		logger.info("Excute loginViaCookie print method ");
 		 //= new LoginResultOutDTO();
@@ -53,6 +55,8 @@ public class LoginService {
 				result.setUserid(profileEntity.getUserIntID());
 				result.setNickname(profileEntity.getNickname());
 				result.setSessionID(input.getSessionID());
+				if(input.getRegid()!=null && !"".equals(input.getRegid()))
+					JedisUtil.set(profileEntity.getUserIntID(), NameConstants.REGID, input.getRegid());
 				result.setStatus("Y");
 				if(profileEntity.getWrongTryPWD()!=0){
 					try {

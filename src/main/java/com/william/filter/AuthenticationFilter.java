@@ -54,7 +54,7 @@ public class AuthenticationFilter implements Filter {
 				result.setStatus("FAILURE");
 				System.out.println("Unauthorized access request");
 				response.getWriter().write(new ObjectMapper().writeValueAsString(result));
-			} else if (("" + id).equals("" + JedisUtil.get(userid))) {
+			} else if (("" + id).equals("" + JedisUtil.getAppValue(userid))) {
 				// pass the request along the filter chain
 				chain.doFilter(request, response);
 				System.out.println("authorized access request");

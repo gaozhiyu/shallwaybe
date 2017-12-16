@@ -14,7 +14,7 @@ public class SendNotificationUtil {
 		/**
 		 * gcmRegId is the id which android app will give to server (one time)
 		 **/
-		public boolean pushNotificationToGCM(String gcmRegId, String message) {
+		public static boolean pushNotificationToGCM(String gcmRegId, String message) {
 			final String GCM_API_KEY = FileUtil.getProperties().getProperty("gcmapiKey","AAAAzTIanJk:APA91bHraawMANpeTvilMY7snaFfbDLeAOv4znIeFTd16gue23geBs_qyRiImJOiRR0lcQS1WLQw20LgmDxZuGRgcxTG2D7ytazOxRRJjcMtyMGMHg3aSl28CSodYyefA_XNZ3ZxzNm2");
 			final int retries = 3;
 			Result result =null;

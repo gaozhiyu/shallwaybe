@@ -160,14 +160,14 @@ public class ShallWayInDTO {
     		inputValid =false;
     	}
     	
-    	String countryString ="^[\u4e00-\u9fa5a-zA-Z]+$";
+    	String countryString ="^[\u4e00-\u9fa5 a-zA-Z]+$";
     	boolean countryMatch = Pattern.matches(countryString, this.getCountry());
     	if (countryMatch == false){
     		sb.append("\nCountry is not valid!");
     		inputValid =false;
     	}
     	
-    	String provinceString ="^[\u4e00-\u9fa5a-zA-Z]+$";
+    	String provinceString ="^[\u4e00-\u9fa5 a-zA-Z]+$";
     	boolean provinceMatch = Pattern.matches(provinceString, this.getProvince());
     	if (provinceMatch == false){
     		sb.append("\nProvince is not valid!");

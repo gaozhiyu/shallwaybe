@@ -36,7 +36,7 @@ public class ProfileService {
 
 		String sessionid = "";
 		if (!"".equals("" + inDTO.getUserIntID()))
-			sessionid = JedisUtil.get(inDTO.getUserIntID());
+			sessionid = JedisUtil.getAppValue(inDTO.getUserIntID());
 
 		ProfileDAO pDAO = ProfileDAO.getInstance();
 		UpdateProfileVO cvo = new UpdateProfileVO();

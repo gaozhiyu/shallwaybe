@@ -1,5 +1,7 @@
 package com.william.util;
 
+import com.william.constant.NameConstants;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -16,15 +18,13 @@ public class JedisUtil {
 		return pool;
 	}
 	
-	public static void set(String key, String value){
-		set(key, "APP", value);
-		//getinstance().set(key, value);	
-		//getinstance().expire(key, 15*60);
+	public static void setAppValue(String key, String value){
+		set(key, NameConstants.APP, value);
 	}
 	
 	
-	public static String get(String key){  
-		return get(key, "APP");
+	public static String getAppValue(String key){  
+		return get(key, NameConstants.APP);
 	}
 	
 	
@@ -61,9 +61,9 @@ public class JedisUtil {
 	public static void main(String[] args){
 	      System.out.println("Connection to server sucessfully");
 	      //set the data in redis string
-	      set("tutorial-name", "Redis tutorial");
+	      setAppValue("tutorial-name", "Redis tutorial");
 	     // Get the stored data and print it
-	     System.out.println("Stored string in redis:: "+ get("tutorial-name"));
+	     System.out.println("Stored string in redis:: "+ getAppValue("tutorial-name"));
 	}
 
 	public static void set(String key, String field, String value) {
