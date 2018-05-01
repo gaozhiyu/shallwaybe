@@ -22,7 +22,7 @@ public class EmailServiceUtil {
             // using the default credential provider chain. The first place the chain looks for the credentials is in environment variables 
             // AWS_ACCESS_KEY_ID and AWS_SECRET_KEY. 
             // For more information, see http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html
-            BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAIY2OIOFMQXPFLR5Q", "+RbNGDY0GwHI1Q9jEsIWpiKins3o4LPuR+nEox+O");
+            BasicAWSCredentials awsCreds = new BasicAWSCredentials("", "");
 
 
             client = new AmazonSimpleEmailServiceClient(awsCreds);
